@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/29/20 8:34 AM
- * Last modified 8/29/20 8:32 AM
+ * Created by Elias Fazel on 8/29/20 8:40 AM
+ * Last modified 8/29/20 8:39 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,8 +12,8 @@ package net.geeksempire.vicinity.android
 
 import android.app.Application
 import com.google.firebase.analytics.FirebaseAnalytics
-import net.geeksempire.vicinity.android.Utils.DependencyInjections.DaggerDependencyGraph
-import net.geeksempire.vicinity.android.Utils.DependencyInjections.DependencyGraph
+import net.geeksempire.vicinity.android.DependencyInjections.DaggerDependencyGraph
+import net.geeksempire.vicinity.android.DependencyInjections.DependencyGraph
 
 class VicinityApplication : Application() {
 

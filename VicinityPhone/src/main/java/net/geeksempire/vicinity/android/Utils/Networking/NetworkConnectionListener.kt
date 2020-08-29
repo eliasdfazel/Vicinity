@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/29/20 8:34 AM
- * Last modified 8/29/20 8:23 AM
+ * Created by Elias Fazel on 8/29/20 8:40 AM
+ * Last modified 8/29/20 8:40 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -24,8 +24,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import kotlinx.android.synthetic.main.offline_indicator.view.*
+import net.geeksempire.vicinity.android.DependencyInjections.Scopes.ActivityScope
 import net.geeksempire.vicinity.android.R
-import net.geeksempire.vicinity.android.Utils.DependencyInjections.Scopes.ActivityScope
 import javax.inject.Inject
 
 interface NetworkConnectionListenerInterface {

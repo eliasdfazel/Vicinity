@@ -1,22 +1,22 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/29/20 8:34 AM
- * Last modified 8/29/20 8:27 AM
+ * Created by Elias Fazel on 8/29/20 8:40 AM
+ * Last modified 8/29/20 8:40 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geeksempire.vicinity.android.Utils.DependencyInjections
+package net.geeksempire.vicinity.android.DependencyInjections
 
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
+import net.geeksempire.vicinity.android.DependencyInjections.Modules.Network.NetworkCheckpointModule
+import net.geeksempire.vicinity.android.DependencyInjections.Modules.SubDependencyGraphs
+import net.geeksempire.vicinity.android.DependencyInjections.SubComponents.NetworkSubDependencyGraph
 import net.geeksempire.vicinity.android.EntryConfiguration
-import net.geeksempire.vicinity.android.Utils.DependencyInjections.Modules.Network.NetworkCheckpointModule
-import net.geeksempire.vicinity.android.Utils.DependencyInjections.Modules.SubDependencyGraphs
-import net.geeksempire.vicinity.android.Utils.DependencyInjections.SubComponents.NetworkSubDependencyGraph
 import javax.inject.Singleton
 
 @Singleton
