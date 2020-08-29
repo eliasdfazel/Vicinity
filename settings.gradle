@@ -1,0 +1,2 @@
+include ':VicinityPhone'
+rootProject.name = "Vicinity"
