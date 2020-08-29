@@ -1,6 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+<!--
+  ~ Copyright © 2020 By Geeks Empire.
+  ~
+  ~ Created by Elias Fazel on 8/29/20 7:54 AM
+  ~ Last modified 8/29/20 7:54 AM
+  ~
+  ~ Licensed Under MIT License.
+  ~ https://opensource.org/licenses/MIT
+  -->
+
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <color name="default_color">#237DAE</color>
+    <color name="default_color_light">#008dda</color>
+    <color name="default_color_light_transparent">#80008dda</color>
+    <color name="default_color_dark">#0a415e</color>
+    <color name="default_color_dark_transparent">#800a415e</color>
+    <color name="default_color_transparent">#33237dae</color>
+    <color name="default_color_transparent_high">#22237dae</color>
+    <color name="default_color_transparent_twice">#80237dae</color>
+
+    <color name="default_color_game">#ae2357</color>
+    <color name="default_color_game_light">#FF005D</color>
+    <color name="default_color_game_dark">#760F35</color>
+    <color name="default_color_game_transparent">#80ae2357</color>
+
+    <color name="red">#9b000e</color>
+    <color name="red_transparent">#4d9b000e</color>
+    <color name="green">#007b08</color>
+    <color name="cyberGreen">#40ff84</color>
+    <color name="yellow">#ffb506</color>
+    <color name="yellow_transparent">#80ffb506</color>
+    <color name="light_blue">#9CB9F7</color>
+    <color name="brown">#800909</color>
+    <color name="pink">#FE5475</color>
+    <color name="light_pink">#f79caf</color>
+    <color name="cyan">#1FD4AF</color>
+    <color name="purple">#be0193</color>
+
+    <color name="light">#f2f7ff</color>
+    <color name="lighter">#fafbff</color>
+    <color name="light_transparent">#b7f2f7ff</color>
+    <color name="light_transparent_high">#83F2F7FF</color>
+
+    <color name="dark">#0a0f18</color>
+    <color name="darker">#070b12</color>
+    <color name="dark_transparent">#b30a0f18</color>
+    <color name="dark_transparent_high">#220A0F18</color>
+    <color name="dark_transparent_50">#b30a0f18</color>
+
+    <color name="instagramOne">#8a3ab9</color>
+    <color name="instagramTwo">#fbad50</color>
+    <color name="instagramThree">#e95950</color>
+
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">
+        @color/default_color_game
+    </color>
+
 </resources>

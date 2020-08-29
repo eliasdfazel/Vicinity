@@ -1,10 +1,38 @@
+<!--
+  ~ Copyright © 2020 By Geeks Empire.
+  ~
+  ~ Created by Elias Fazel on 8/29/20 7:54 AM
+  ~ Last modified 8/29/20 7:48 AM
+  ~
+  ~ Licensed Under MIT License.
+  ~ https://opensource.org/licenses/MIT
+  -->
+
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+
+    <style name="GeeksEmpire.Material" parent="Theme.MaterialComponents.Light.NoActionBar">
+
+        <item name="android:colorPrimary">@color/default_color</item>
+        <item name="android:colorPrimaryDark">@color/default_color_dark</item>
+        <item name="android:colorAccent">@color/default_color_light</item>
+
+        <item name="colorPrimary">@color/default_color</item>
+        <item name="colorPrimaryDark">@color/default_color_dark</item>
+        <item name="colorAccent">@color/default_color_light</item>
+
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+
+        <item name="android:windowContentTransitions">true</item>
+
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+
     </style>
 
 </resources>
