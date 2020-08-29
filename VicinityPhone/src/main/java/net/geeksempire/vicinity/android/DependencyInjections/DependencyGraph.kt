@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/29/20 8:40 AM
- * Last modified 8/29/20 8:40 AM
+ * Created by Elias Fazel on 8/29/20 9:22 AM
+ * Last modified 8/29/20 9:22 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -31,4 +31,5 @@ interface DependencyGraph {
     fun subDependencyGraph(): NetworkSubDependencyGraph.Factory
 
     fun inject(entryConfiguration: EntryConfiguration)
+
 }
