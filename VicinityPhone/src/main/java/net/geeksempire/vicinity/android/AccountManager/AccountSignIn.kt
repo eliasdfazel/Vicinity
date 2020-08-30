@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/30/20 10:12 AM
- * Last modified 8/30/20 10:12 AM
+ * Created by Elias Fazel on 8/30/20 10:22 AM
+ * Last modified 8/30/20 10:17 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,6 +10,7 @@
 
 package net.geeksempire.vicinity.android.AccountManager
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,8 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
+import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
 import net.geeksempire.vicinity.android.VicinityApplication
@@ -55,7 +58,7 @@ class AccountSignIn : AppCompatActivity() {
 
         if (firebaseAuth.currentUser == null) {
 
-            userInformation.startSignInProcess()
+//            userInformation.startSignInProcess()
 
         } else {
 
@@ -87,7 +90,8 @@ class AccountSignIn : AppCompatActivity() {
 
                             userInformationIO.saveUserInformation(accountName)
 
-
+                            startActivity(Intent(applicationContext, MapsOfSociety::class.java),
+                                ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_in_right, 0).toBundle())
 
                         }
 
