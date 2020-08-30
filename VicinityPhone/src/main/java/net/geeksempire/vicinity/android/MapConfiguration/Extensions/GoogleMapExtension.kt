@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/30/20 9:21 AM
- * Last modified 8/30/20 9:15 AM
+ * Created by Elias Fazel on 8/30/20 9:25 AM
+ * Last modified 8/30/20 9:24 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -42,4 +42,12 @@ fun MapsOfSociety.setupGoogleMap() {
     /*If Style Selected as Minimal Dark | Change Color of Status Bar & Vicinity Circle Color to LIGHT*/
     //googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
     //initGoogleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(applicationContext, R.raw.map_minimal_dark_style))
+}
+
+fun MapsOfSociety.drawVicinity() {
+
+    readyGoogleMap.clear()
+
+
+
 }
