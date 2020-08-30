@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/30/20 9:15 AM
- * Last modified 8/30/20 9:15 AM
+ * Created by Elias Fazel on 8/30/20 9:21 AM
+ * Last modified 8/30/20 9:21 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -177,7 +177,19 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
                     .position(it)
                     .title("${firebaseUser?.displayName}"))
 
-            readyGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(it))
+            readyGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it, 15.0f))
+
+            googleMap.setOnCircleClickListener {
+
+
+
+            }
+
+            googleMap.setOnPolygonClickListener {
+
+
+
+            }
 
         }
 

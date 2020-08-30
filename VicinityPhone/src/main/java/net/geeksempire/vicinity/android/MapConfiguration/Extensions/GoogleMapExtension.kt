@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/30/20 6:54 AM
- * Last modified 8/30/20 6:49 AM
+ * Created by Elias Fazel on 8/30/20 9:21 AM
+ * Last modified 8/30/20 9:15 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -13,23 +13,23 @@ package net.geeksempire.vicinity.android.MapConfiguration.Extensions
 import com.google.android.gms.maps.GoogleMap
 import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
 
-fun MapsOfSociety.MapExtension() {
+fun MapsOfSociety.setupGoogleMap() {
     googleMapIsReady = true
 
-    readyGoogleMap.setOnMapClickListener(this@MapExtension)
-    readyGoogleMap.setOnMapLongClickListener(this@MapExtension)
+    readyGoogleMap.setOnMapClickListener(this@setupGoogleMap)
+    readyGoogleMap.setOnMapLongClickListener(this@setupGoogleMap)
 
-    readyGoogleMap.setOnMarkerClickListener(this@MapExtension)
+    readyGoogleMap.setOnMarkerClickListener(this@setupGoogleMap)
 
-    readyGoogleMap.setOnCameraMoveListener(this@MapExtension)
-    readyGoogleMap.setOnCameraIdleListener(this@MapExtension)
+    readyGoogleMap.setOnCameraMoveListener(this@setupGoogleMap)
+    readyGoogleMap.setOnCameraIdleListener(this@setupGoogleMap)
 
     readyGoogleMap.uiSettings.setAllGesturesEnabled(true)
     readyGoogleMap.uiSettings.isZoomControlsEnabled = false
     readyGoogleMap.uiSettings.isMapToolbarEnabled = false
     readyGoogleMap.uiSettings.isCompassEnabled = false
 
-    readyGoogleMap.isTrafficEnabled = true
+    readyGoogleMap.isTrafficEnabled = false
 
     /*If Style Selected as Detailed*/
     readyGoogleMap.mapType = GoogleMap.MAP_TYPE_HYBRID
