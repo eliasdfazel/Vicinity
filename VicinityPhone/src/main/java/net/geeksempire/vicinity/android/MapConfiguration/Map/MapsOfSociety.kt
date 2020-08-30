@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/30/20 9:25 AM
- * Last modified 8/30/20 9:25 AM
+ * Created by Elias Fazel on 8/30/20 9:53 AM
+ * Last modified 8/30/20 9:53 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -26,8 +26,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.drawVicinity
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.getLocationData
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.setupGoogleMap
@@ -69,7 +70,7 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
     var userLatitudeLongitude: LatLng? = null
 
-    val firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+    val firebaseUser: FirebaseUser? = Firebase.auth.currentUser
 
     @Inject lateinit var networkCheckpoint: NetworkCheckpoint
 
