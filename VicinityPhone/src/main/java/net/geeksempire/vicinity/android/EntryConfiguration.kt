@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/30/20 5:14 AM
- * Last modified 8/30/20 5:11 AM
+ * Created by Elias Fazel on 8/30/20 5:34 AM
+ * Last modified 8/30/20 5:27 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -45,48 +45,40 @@ class EntryConfiguration : AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-    }
-
     override fun onRequestPermissionsResult(requestCode: Int, permissionsList: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissionsList, grantResults)
 
         when (requestCode) {
             EntryConfiguration.PermissionRequestCode -> {
 
-                if (checkSelfPermission(Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED
+                if (checkSelfPermission(Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED
+                    && checkSelfPermission(Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED
                     && checkSelfPermission(Manifest.permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED
                     && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                     && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                    && checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
                     && checkSelfPermission(Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED) {
 
-                    //
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+
+                        if (checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+                            //open next ui
+
+                        } else {
+
+                            runtimePermissionMessage()
+
+                        }
+
+                    } else {
+
+                        //open next ui
+
+                    }
 
                 } else {
 
-                    SnackbarBuilder(applicationContext).show (
-                        rootView = entryConfigurationViewBinding.rootView,
-                        messageText= getString(R.string.permissionMessage),
-                        messageDuration = Snackbar.LENGTH_INDEFINITE,
-                        actionButtonText = R.string.grantPermission,
-                        snackbarActionHandlerInterface = object : SnackbarActionHandlerInterface {
-
-                            override fun onActionButtonClicked(snackbar: Snackbar) {
-                                super.onActionButtonClicked(snackbar)
-
-                                runtimePermission()
-
-                            }
-
-                        }
-                    )
+                    runtimePermissionMessage()
 
                 }
 
@@ -113,6 +105,27 @@ class EntryConfiguration : AppCompatActivity() {
         requestPermissions(
             permissionsList.toTypedArray(),
             EntryConfiguration.PermissionRequestCode
+        )
+
+    }
+
+    private fun runtimePermissionMessage() {
+
+        SnackbarBuilder(applicationContext).show (
+            rootView = entryConfigurationViewBinding.rootView,
+            messageText= getString(R.string.permissionMessage),
+            messageDuration = Snackbar.LENGTH_INDEFINITE,
+            actionButtonText = R.string.grantPermission,
+            snackbarActionHandlerInterface = object : SnackbarActionHandlerInterface {
+
+                override fun onActionButtonClicked(snackbar: Snackbar) {
+                    super.onActionButtonClicked(snackbar)
+
+                    runtimePermission()
+
+                }
+
+            }
         )
 
     }
