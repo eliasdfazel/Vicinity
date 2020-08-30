@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/30/20 6:54 AM
- * Last modified 8/30/20 6:54 AM
+ * Created by Elias Fazel on 8/30/20 9:15 AM
+ * Last modified 8/30/20 9:15 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,9 +12,14 @@ package net.geeksempire.vicinity.android.MapConfiguration.Map
 
 import android.app.ActivityOptions
 import android.app.PictureInPictureParams
+import android.content.Context
 import android.content.Intent
+import android.location.LocationManager
 import android.os.Bundle
+import android.os.StrictMode
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -22,7 +27,13 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import net.geeksempire.vicinity.android.MapConfiguration.Extensions.getLocationData
+import net.geeksempire.vicinity.android.MapConfiguration.Extensions.setupGoogleMap
 import net.geeksempire.vicinity.android.R
+import net.geeksempire.vicinity.android.Utils.Location.LocationCheckpoint
+import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListenerInterface
 import net.geeksempire.vicinity.android.VicinityApplication
@@ -34,13 +45,33 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
     GoogleMap.OnMapLongClickListener, GoogleMap.OnMapClickListener,
     GoogleMap.OnCameraMoveListener, GoogleMap.OnCameraIdleListener {
 
+    companion object {
+        const val GpsEnableRequestCode: Int = 111
+    }
+
+    val locationCheckpoint: LocationCheckpoint = LocationCheckpoint()
+
+    val fusedLocationClient: FusedLocationProviderClient by lazy {
+        LocationServices.getFusedLocationProviderClient(this@MapsOfSociety)
+    }
+
     lateinit var readyGoogleMap: GoogleMap
 
-    private val mapView: SupportMapFragment by lazy {
+    val mapView: SupportMapFragment by lazy {
         supportFragmentManager.findFragmentById(R.id.mapView) as SupportMapFragment
     }
 
+    val locationManager: LocationManager by lazy {
+        applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    }
+
     var googleMapIsReady: Boolean = false
+
+    var userLatitudeLongitude: LatLng? = null
+
+    val firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+
+    @Inject lateinit var networkCheckpoint: NetworkCheckpoint
 
     @Inject lateinit var networkConnectionListener: NetworkConnectionListener
 
@@ -58,6 +89,9 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
             .inject(this@MapsOfSociety)
 
         networkConnectionListener.networkConnectionListenerInterface = this@MapsOfSociety
+
+        val builderStrictMode = StrictMode.VmPolicy.Builder()
+        StrictMode.setVmPolicy(builderStrictMode.build())
 
     }
 
@@ -94,13 +128,16 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
     override fun networkAvailable() {
 
-        /*
-        *
-        * Start Maps Operations
-        *
-        * */
-        mapView.getMapAsync(this@MapsOfSociety)
+        if (networkCheckpoint.networkConnection() && locationCheckpoint.gpsAvailable(applicationContext)) {
 
+
+            getLocationData()
+
+        } else {
+
+            locationCheckpoint.turnOnGps(this@MapsOfSociety)
+
+        }
 
     }
 
@@ -108,38 +145,63 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            MapsOfSociety.GpsEnableRequestCode -> {
+
+                if (networkCheckpoint.networkConnection() && locationCheckpoint.gpsAvailable(applicationContext)) {
+
+                    getLocationData()
+
+                } else {
+
+
+
+                }
+
+            }
+        }
+    }
+
     override fun onMapReady(googleMap: GoogleMap) {
         readyGoogleMap = googleMap
 
+        setupGoogleMap()
 
+        userLatitudeLongitude?.let {
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        readyGoogleMap.addMarker(
-            MarkerOptions()
-                .position(sydney)
-                .title("Marker in Sydney"))
-        readyGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+            readyGoogleMap.addMarker(
+                MarkerOptions()
+                    .position(it)
+                    .title("${firebaseUser?.displayName}"))
+
+            readyGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(it))
+
+        }
+
     }
 
     override fun onMarkerClick(marker: Marker?): Boolean {
-        TODO("Not yet implemented")
+
+        return true
     }
 
     override fun onMapLongClick(latLng: LatLng?) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onMapClick(latLng: LatLng?) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onCameraMove() {
-        TODO("Not yet implemented")
+
     }
 
     override fun onCameraIdle() {
-        TODO("Not yet implemented")
+
     }
 
 }
