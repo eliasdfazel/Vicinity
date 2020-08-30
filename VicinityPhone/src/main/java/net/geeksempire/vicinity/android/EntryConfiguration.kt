@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/30/20 5:34 AM
- * Last modified 8/30/20 5:27 AM
+ * Created by Elias Fazel on 8/30/20 6:05 AM
+ * Last modified 8/30/20 6:00 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -11,11 +11,16 @@
 package net.geeksempire.vicinity.android
 
 import android.Manifest
+import android.app.ActivityOptions
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
+import net.geeksempire.vicinity.android.Utils.Networking.NetworkSettingCallback
 import net.geeksempire.vicinity.android.Utils.UI.NotifyUser.SnackbarActionHandlerInterface
 import net.geeksempire.vicinity.android.Utils.UI.NotifyUser.SnackbarBuilder
 import net.geeksempire.vicinity.android.databinding.EntryConfigurationViewBinding
@@ -45,6 +50,11 @@ class EntryConfiguration : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+
+        this@EntryConfiguration.finish()
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissionsList: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissionsList, grantResults)
 
@@ -62,7 +72,7 @@ class EntryConfiguration : AppCompatActivity() {
 
                         if (checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-                            //open next ui
+                            navigateToMap()
 
                         } else {
 
@@ -72,7 +82,7 @@ class EntryConfiguration : AppCompatActivity() {
 
                     } else {
 
-                        //open next ui
+                        navigateToMap()
 
                     }
 
@@ -130,4 +140,45 @@ class EntryConfiguration : AppCompatActivity() {
 
     }
 
+    private fun navigateToMap() {
+
+        if (networkCheckpoint.networkConnection()) {
+
+            startActivity(Intent(applicationContext, MapsOfSociety::class.java),
+                ActivityOptions.makeCustomAnimation(applicationContext, R.anim.fade_in, 0).toBundle())
+
+        } else {
+
+            SnackbarBuilder(applicationContext).show (
+                rootView = entryConfigurationViewBinding.rootView,
+                messageText= getString(R.string.noInternetConnectionText),
+                messageDuration = Snackbar.LENGTH_INDEFINITE,
+                actionButtonText = R.string.turnOnText,
+                snackbarActionHandlerInterface = object : SnackbarActionHandlerInterface {
+
+                    override fun onActionButtonClicked(snackbar: Snackbar) {
+                        super.onActionButtonClicked(snackbar)
+
+                        if (!networkCheckpoint.networkConnection()) {
+
+                            startActivityForResult(
+                                Intent(Settings.ACTION_WIFI_SETTINGS)
+                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                                NetworkSettingCallback.WifiSetting
+                            )
+
+                        } else {
+
+                            snackbar.dismiss()
+
+                        }
+
+                    }
+
+                }
+            )
+
+        }
+
+    }
 }
