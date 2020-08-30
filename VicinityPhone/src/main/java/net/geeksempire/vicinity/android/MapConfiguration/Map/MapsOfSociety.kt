@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/30/20 6:05 AM
- * Last modified 8/30/20 6:05 AM
+ * Created by Elias Fazel on 8/30/20 6:54 AM
+ * Last modified 8/30/20 6:54 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -15,13 +15,32 @@ import android.app.PictureInPictureParams
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
+import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListenerInterface
 import net.geeksempire.vicinity.android.VicinityApplication
 import net.geeksempire.vicinity.android.databinding.MapsViewBinding
 import javax.inject.Inject
 
-class MapsOfSociety : AppCompatActivity(), NetworkConnectionListenerInterface {
+class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnectionListenerInterface,
+    GoogleMap.OnMarkerClickListener,
+    GoogleMap.OnMapLongClickListener, GoogleMap.OnMapClickListener,
+    GoogleMap.OnCameraMoveListener, GoogleMap.OnCameraIdleListener {
+
+    lateinit var readyGoogleMap: GoogleMap
+
+    private val mapView: SupportMapFragment by lazy {
+        supportFragmentManager.findFragmentById(R.id.mapView) as SupportMapFragment
+    }
+
+    var googleMapIsReady: Boolean = false
 
     @Inject lateinit var networkConnectionListener: NetworkConnectionListener
 
@@ -39,8 +58,6 @@ class MapsOfSociety : AppCompatActivity(), NetworkConnectionListenerInterface {
             .inject(this@MapsOfSociety)
 
         networkConnectionListener.networkConnectionListenerInterface = this@MapsOfSociety
-
-
 
     }
 
@@ -82,11 +99,47 @@ class MapsOfSociety : AppCompatActivity(), NetworkConnectionListenerInterface {
         * Start Maps Operations
         *
         * */
+        mapView.getMapAsync(this@MapsOfSociety)
+
 
     }
 
     override fun networkLost() {
 
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        readyGoogleMap = googleMap
+
+
+
+        // Add a marker in Sydney and move the camera
+        val sydney = LatLng(-34.0, 151.0)
+        readyGoogleMap.addMarker(
+            MarkerOptions()
+                .position(sydney)
+                .title("Marker in Sydney"))
+        readyGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    }
+
+    override fun onMarkerClick(marker: Marker?): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun onMapLongClick(latLng: LatLng?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onMapClick(latLng: LatLng?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onCameraMove() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onCameraIdle() {
+        TODO("Not yet implemented")
     }
 
 }
