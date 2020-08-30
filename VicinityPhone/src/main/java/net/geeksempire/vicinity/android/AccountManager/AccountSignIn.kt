@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/30/20 10:10 AM
- * Last modified 8/30/20 10:04 AM
+ * Created by Elias Fazel on 8/30/20 10:12 AM
+ * Last modified 8/30/20 10:12 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -30,11 +30,11 @@ class AccountSignIn : AppCompatActivity() {
         UserInformation(this@AccountSignIn)
     }
 
-    val userInformationIO: UserInformationIO by lazy {
+    private val userInformationIO: UserInformationIO by lazy {
         UserInformationIO(applicationContext)
     }
 
-    val firebaseAuth = Firebase.auth
+    private val firebaseAuth = Firebase.auth
 
     @Inject lateinit var networkCheckpoint: NetworkCheckpoint
 
