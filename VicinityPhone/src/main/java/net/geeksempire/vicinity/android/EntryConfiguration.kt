@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/30/20 9:53 AM
- * Last modified 8/30/20 9:53 AM
+ * Created by Elias Fazel on 8/30/20 10:10 AM
+ * Last modified 8/30/20 10:10 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -17,14 +17,10 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.common.api.ApiException
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import net.geeksempire.vicinity.android.AccountManager.UserInformation
-import net.geeksempire.vicinity.android.AccountManager.UserInformationIO
+import net.geeksempire.vicinity.android.AccountManager.AccountSignIn
 import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkSettingCallback
@@ -34,12 +30,6 @@ import net.geeksempire.vicinity.android.databinding.EntryConfigurationViewBindin
 import javax.inject.Inject
 
 class EntryConfiguration : AppCompatActivity() {
-
-    val firebaseAuth = Firebase.auth
-
-    val userInformationIO: UserInformationIO by lazy {
-        UserInformationIO(this@EntryConfiguration)
-    }
 
     @Inject
     lateinit var networkCheckpoint: NetworkCheckpoint
@@ -66,46 +56,6 @@ class EntryConfiguration : AppCompatActivity() {
     override fun onBackPressed() {
 
         this@EntryConfiguration.finish()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        data?.let {
-
-            when (requestCode) {
-                UserInformation.GoogleSignInRequestCode -> {
-
-                    val googleSignInAccountTask = GoogleSignIn.getSignedInAccountFromIntent(data)
-                    val googleSignInAccount = googleSignInAccountTask.getResult(ApiException::class.java)
-
-                    val authCredential = GoogleAuthProvider.getCredential(googleSignInAccount?.idToken, null)
-                    firebaseAuth.signInWithCredential(authCredential).addOnSuccessListener {
-
-                        val firebaseUser = firebaseAuth.currentUser
-
-                        if (firebaseUser != null) {
-
-                            val accountName: String = firebaseUser.email.toString()
-
-                            userInformationIO.saveUserInformation(accountName)
-
-
-
-                        }
-
-                    }.addOnFailureListener {
-
-
-                    }
-
-                }
-                else -> {
-
-                }
-            }
-
-        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissionsList: Array<out String>, grantResults: IntArray) {
@@ -195,41 +145,52 @@ class EntryConfiguration : AppCompatActivity() {
 
     private fun navigateToMap() {
 
-        if (networkCheckpoint.networkConnection()) {
+        val firebaseUser = Firebase.auth.currentUser
 
-            startActivity(Intent(applicationContext, MapsOfSociety::class.java),
-                ActivityOptions.makeCustomAnimation(applicationContext, R.anim.fade_in, 0).toBundle())
+        if (firebaseUser == null) {
+
+            startActivity(Intent(applicationContext, AccountSignIn::class.java),
+                ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_in_right, 0).toBundle())
 
         } else {
 
-            SnackbarBuilder(applicationContext).show (
-                rootView = entryConfigurationViewBinding.rootView,
-                messageText= getString(R.string.noInternetConnectionText),
-                messageDuration = Snackbar.LENGTH_INDEFINITE,
-                actionButtonText = R.string.turnOnText,
-                snackbarActionHandlerInterface = object : SnackbarActionHandlerInterface {
+            if (networkCheckpoint.networkConnection()) {
 
-                    override fun onActionButtonClicked(snackbar: Snackbar) {
-                        super.onActionButtonClicked(snackbar)
+                startActivity(Intent(applicationContext, MapsOfSociety::class.java),
+                    ActivityOptions.makeCustomAnimation(applicationContext, R.anim.fade_in, 0).toBundle())
 
-                        if (!networkCheckpoint.networkConnection()) {
+            } else {
 
-                            startActivityForResult(
-                                Intent(Settings.ACTION_WIFI_SETTINGS)
-                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                                NetworkSettingCallback.WifiSetting
-                            )
+                SnackbarBuilder(applicationContext).show (
+                    rootView = entryConfigurationViewBinding.rootView,
+                    messageText= getString(R.string.noInternetConnectionText),
+                    messageDuration = Snackbar.LENGTH_INDEFINITE,
+                    actionButtonText = R.string.turnOnText,
+                    snackbarActionHandlerInterface = object : SnackbarActionHandlerInterface {
 
-                        } else {
+                        override fun onActionButtonClicked(snackbar: Snackbar) {
+                            super.onActionButtonClicked(snackbar)
 
-                            snackbar.dismiss()
+                            if (!networkCheckpoint.networkConnection()) {
+
+                                startActivityForResult(
+                                    Intent(Settings.ACTION_WIFI_SETTINGS)
+                                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                                    NetworkSettingCallback.WifiSetting
+                                )
+
+                            } else {
+
+                                snackbar.dismiss()
+
+                            }
 
                         }
 
                     }
+                )
 
-                }
-            )
+            }
 
         }
 
