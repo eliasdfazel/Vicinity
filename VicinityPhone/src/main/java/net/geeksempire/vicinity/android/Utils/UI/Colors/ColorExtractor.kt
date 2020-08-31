@@ -1,14 +1,14 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/31/20 8:35 AM
- * Last modified 6/28/20 2:44 PM
+ * Created by Elias Fazel on 8/31/20 9:56 AM
+ * Last modified 8/31/20 9:03 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package com.abanabsalan.aban.magazine.Utils.UI.Colors
+package net.geeksempire.vicinity.android.Utils.UI.Colors
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -16,8 +16,8 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import androidx.core.graphics.ColorUtils
 import androidx.palette.graphics.Palette
-import com.abanabsalan.aban.magazine.R
-import com.abanabsalan.aban.magazine.Utils.UI.Images.drawableToBitmap
+import net.geeksempire.vicinity.android.R
+import net.geeksempire.vicinity.android.Utils.UI.Images.drawableToBitmap
 
 fun extractDominantColor(context: Context, drawable: Drawable): Int {
 

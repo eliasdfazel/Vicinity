@@ -1,14 +1,14 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/31/20 8:35 AM
- * Last modified 6/26/20 7:05 PM
+ * Created by Elias Fazel on 8/31/20 9:56 AM
+ * Last modified 8/31/20 9:01 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package com.abanabsalan.aban.magazine.Utils.UI.Colors
+package net.geeksempire.vicinity.android.Utils.UI.Colors
 
 import android.graphics.Color
 import kotlin.math.roundToInt

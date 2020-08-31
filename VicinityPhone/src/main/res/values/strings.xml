@@ -1,8 +1,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 8/31/20 8:25 AM
-  ~ Last modified 8/31/20 7:11 AM
+  ~ Created by Elias Fazel on 8/31/20 9:56 AM
+  ~ Last modified 8/31/20 9:22 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -19,7 +19,7 @@
 
     <string name="turnOnText">Turn On</string>
 
-    <string name="welcomeText">Welcome…!</string>
+    <string name="welcomeText">Welcome %1$s To Vicinity…!</string>
 
     <string name="inAppUpdateDescription">An Update Has Just Been Installed</string>
     <string name="inAppUpdateAction">
