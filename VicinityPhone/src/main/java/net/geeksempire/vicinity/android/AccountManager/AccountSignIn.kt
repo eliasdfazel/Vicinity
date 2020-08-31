@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/31/20 8:25 AM
- * Last modified 8/31/20 8:20 AM
+ * Created by Elias Fazel on 8/31/20 8:35 AM
+ * Last modified 8/31/20 8:35 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -19,6 +19,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import net.geeksempire.vicinity.android.AccountManager.Extensions.accountManagerSetupUI
 import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
@@ -49,6 +50,8 @@ class AccountSignIn : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         accountViewBinding = AccountViewBinding.inflate(layoutInflater)
         setContentView(accountViewBinding.root)
+
+        accountManagerSetupUI()
 
         (application as VicinityApplication)
             .dependencyGraph
