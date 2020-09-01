@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/1/20 4:35 AM
- * Last modified 9/1/20 4:28 AM
+ * Created by Elias Fazel on 9/1/20 5:11 AM
+ * Last modified 9/1/20 5:08 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -34,6 +34,7 @@ import net.geeksempire.vicinity.android.MapConfiguration.Extensions.drawVicinity
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.getLocationData
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.setupGoogleMap
 import net.geeksempire.vicinity.android.MapConfiguration.LocationDataHolder.MapsLiveData
+import net.geeksempire.vicinity.android.MapConfiguration.Utils.MapsMarker
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Location.LocationCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
@@ -72,9 +73,15 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
         applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
 
-    var googleMapIsReady: Boolean = false
+    lateinit var userMapMarker: Marker
+
+    val mapsMarker: MapsMarker by lazy {
+        MapsMarker(this@MapsOfSociety, firebaseUser, readyGoogleMap, userMapMarker)
+    }
 
     var userLatitudeLongitude: LatLng? = null
+
+    var googleMapIsReady: Boolean = false
 
     val firebaseUser: FirebaseUser? = Firebase.auth.currentUser
 
