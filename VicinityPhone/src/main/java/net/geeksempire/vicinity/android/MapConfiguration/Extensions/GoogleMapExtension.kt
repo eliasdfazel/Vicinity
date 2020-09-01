@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/30/20 9:25 AM
- * Last modified 8/30/20 9:24 AM
+ * Created by Elias Fazel on 9/1/20 4:37 AM
+ * Last modified 9/1/20 4:37 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -29,14 +29,10 @@ fun MapsOfSociety.setupGoogleMap() {
     readyGoogleMap.uiSettings.isMapToolbarEnabled = false
     readyGoogleMap.uiSettings.isCompassEnabled = false
 
-    readyGoogleMap.isTrafficEnabled = false
+    readyGoogleMap.isTrafficEnabled = true
 
     /*If Style Selected as Detailed*/
     readyGoogleMap.mapType = GoogleMap.MAP_TYPE_HYBRID
-    //No Style
-
-    /*If Style Selected as Minimal Light | Change Color of Status Bar & Vicinity Circle Color to DARK*/
-    //googleMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
     //No Style
 
     /*If Style Selected as Minimal Dark | Change Color of Status Bar & Vicinity Circle Color to LIGHT*/
