@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/30/20 9:53 AM
- * Last modified 8/30/20 9:53 AM
+ * Created by Elias Fazel on 9/1/20 4:35 AM
+ * Last modified 9/1/20 4:28 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -18,6 +18,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.StrictMode
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -32,6 +33,7 @@ import com.google.firebase.ktx.Firebase
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.drawVicinity
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.getLocationData
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.setupGoogleMap
+import net.geeksempire.vicinity.android.MapConfiguration.LocationDataHolder.MapsLiveData
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Location.LocationCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
@@ -48,6 +50,10 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
     companion object {
         const val GpsEnableRequestCode: Int = 111
+    }
+
+    val mapsLiveData: MapsLiveData by lazy {
+        ViewModelProvider(this@MapsOfSociety).get(MapsLiveData::class.java)
     }
 
     val locationCheckpoint: LocationCheckpoint = LocationCheckpoint()
