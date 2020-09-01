@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/1/20 9:44 AM
- * Last modified 9/1/20 9:44 AM
+ * Created by Elias Fazel on 9/1/20 10:10 AM
+ * Last modified 9/1/20 10:10 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -55,13 +55,21 @@ fun MapsOfSociety.drawVicinity() {
 
         readyGoogleMap.clear()
 
+//        val circleOptions = CircleOptions()
+//            .center(communityLatLong)
+//            .radius(if (listDistance[0] > vicinityRadius) { vicinitySafeArea } else { vicinityRadius })
+//            .strokeColor(getColor(R.color.light))
+//            .fillColor(getColor(R.color.light_transparent_vicinity))
+//            .strokeWidth(3.70f)
+//            .clickable(true)
+//        readyGoogleMap.addCircle(circleOptions)
+
         userMapMarker = readyGoogleMap.addMarker(
             MarkerOptions()
                 .position(userLatitudeLongitude)
                 .title(firebaseUser?.displayName)
                 .snippet(firebaseUser?.email)
         )
-        userMapMarker.tag = ""
 
         Glide.with(this@drawVicinity)
             .asDrawable()
