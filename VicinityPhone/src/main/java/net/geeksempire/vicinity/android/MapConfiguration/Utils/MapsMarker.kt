@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/1/20 5:11 AM
- * Last modified 9/1/20 5:08 AM
+ * Created by Elias Fazel on 9/1/20 9:44 AM
+ * Last modified 9/1/20 9:39 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -24,7 +24,9 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.firebase.auth.FirebaseUser
+import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.UI.Images.drawableToBitmap
+import net.geeksempire.vicinity.android.Utils.UI.Images.getCircularBitmapWithWhiteBorder
 
 class MapsMarker (private val context: AppCompatActivity, private val firebaseUser: FirebaseUser?,
                   private val googleMap: GoogleMap, private val mapMarker: Marker) {
@@ -46,12 +48,19 @@ class MapsMarker (private val context: AppCompatActivity, private val firebaseUs
 
                     context.runOnUiThread {
 
-                        val bitmapDescriptorIcon: BitmapDescriptor = BitmapDescriptorFactory.fromBitmap(resource?.let { drawableToBitmap(it) })
+                        resource?.let {
 
-                        mapMarker.position = (locationLatitudeLongitude)
-                        mapMarker.title = (firebaseUser?.displayName)
-                        mapMarker.snippet = (firebaseUser?.email)
-                        mapMarker.setIcon(bitmapDescriptorIcon)
+                            val resourcesBitmap = getCircularBitmapWithWhiteBorder(drawableToBitmap(it), 7, context.getColor(R.color.default_color_light))
+                            val bitmapDescriptorIcon: BitmapDescriptor = BitmapDescriptorFactory.fromBitmap(resourcesBitmap)
+
+                            mapMarker.position = (locationLatitudeLongitude)
+                            mapMarker.title = ("{$firebaseUser.displayName}")
+                            mapMarker.snippet = ("{$firebaseUser.email}")
+                            mapMarker.isDraggable = false
+                            mapMarker.tag = "${locationLatitudeLongitude}"
+                            mapMarker.setIcon(bitmapDescriptorIcon)
+
+                        }
 
                     }
 

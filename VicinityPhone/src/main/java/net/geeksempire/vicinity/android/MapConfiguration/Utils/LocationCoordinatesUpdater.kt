@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/1/20 4:35 AM
- * Last modified 9/1/20 4:34 AM
+ * Created by Elias Fazel on 9/1/20 9:44 AM
+ * Last modified 9/1/20 8:49 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -38,7 +38,7 @@ class LocationCoordinatesUpdater (private val context: Context, private val maps
     val locationLatitudeLongitude: LatLng
         get() = LatLng(getLatitude(), getLongitude())
 
-    init {
+    fun startProcess() {
 
         if ((context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
             && (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {

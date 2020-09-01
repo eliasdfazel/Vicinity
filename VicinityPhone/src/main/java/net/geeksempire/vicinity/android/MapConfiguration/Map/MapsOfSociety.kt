@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/1/20 5:11 AM
- * Last modified 9/1/20 5:08 AM
+ * Created by Elias Fazel on 9/1/20 9:44 AM
+ * Last modified 9/1/20 8:48 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -30,6 +30,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import net.geeksempire.chat.vicinity.Util.MapsUtil.LocationCoordinatesUpdater
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.drawVicinity
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.getLocationData
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.setupGoogleMap
@@ -77,6 +78,10 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
     val mapsMarker: MapsMarker by lazy {
         MapsMarker(this@MapsOfSociety, firebaseUser, readyGoogleMap, userMapMarker)
+    }
+
+    val locationCoordinatesUpdater: LocationCoordinatesUpdater by lazy {
+        LocationCoordinatesUpdater(applicationContext, mapsLiveData)
     }
 
     var userLatitudeLongitude: LatLng? = null

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/1/20 5:11 AM
- * Last modified 9/1/20 5:11 AM
+ * Created by Elias Fazel on 9/1/20 9:44 AM
+ * Last modified 9/1/20 9:44 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -86,8 +86,11 @@ fun MapsOfSociety.drawVicinity() {
                                 .title(firebaseUser?.displayName)
                                 .snippet(firebaseUser?.email)
                         )
+                        userMapMarker.isDraggable = false
 
-                        mapsMarker.updateUserMarkerLocation(userLatitudeLongitude)
+                        mapsLiveData.currentLocationData.postValue(userLatitudeLongitude)
+
+                        locationCoordinatesUpdater.startProcess()
 
                     }
 
