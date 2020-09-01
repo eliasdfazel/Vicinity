@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/1/20 9:44 AM
- * Last modified 9/1/20 8:48 AM
+ * Created by Elias Fazel on 9/1/20 9:58 AM
+ * Last modified 9/1/20 9:56 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -213,7 +213,7 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
     override fun onMarkerClick(marker: Marker?): Boolean {
 
-        return true
+        return false
     }
 
     override fun onMapLongClick(latLng: LatLng?) {

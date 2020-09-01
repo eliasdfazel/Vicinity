@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/1/20 9:44 AM
- * Last modified 9/1/20 9:39 AM
+ * Created by Elias Fazel on 9/1/20 9:58 AM
+ * Last modified 9/1/20 9:57 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -54,11 +54,12 @@ class MapsMarker (private val context: AppCompatActivity, private val firebaseUs
                             val bitmapDescriptorIcon: BitmapDescriptor = BitmapDescriptorFactory.fromBitmap(resourcesBitmap)
 
                             mapMarker.position = (locationLatitudeLongitude)
-                            mapMarker.title = ("{$firebaseUser.displayName}")
-                            mapMarker.snippet = ("{$firebaseUser.email}")
-                            mapMarker.isDraggable = false
+                            mapMarker.title = ("${firebaseUser?.displayName}")
+                            mapMarker.snippet = ("${firebaseUser?.email}")
                             mapMarker.tag = "${locationLatitudeLongitude}"
+                            mapMarker.isDraggable = false
                             mapMarker.setIcon(bitmapDescriptorIcon)
+                            mapMarker.showInfoWindow()
 
                         }
 
