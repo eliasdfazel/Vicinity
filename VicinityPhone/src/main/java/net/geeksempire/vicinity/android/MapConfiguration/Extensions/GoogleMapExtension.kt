@@ -38,6 +38,7 @@ fun MapsOfSociety.setupGoogleMap() {
     /*If Style Selected as Minimal Dark | Change Color of Status Bar & Vicinity Circle Color to LIGHT*/
     //googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
     //initGoogleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(applicationContext, R.raw.map_minimal_dark_style))
+
 }
 
 fun MapsOfSociety.drawVicinity() {
