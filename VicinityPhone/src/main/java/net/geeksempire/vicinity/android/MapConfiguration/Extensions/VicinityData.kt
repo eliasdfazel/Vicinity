@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/3/20 10:15 AM
- * Last modified 9/3/20 10:15 AM
+ * Created by Elias Fazel on 9/3/20 10:56 AM
+ * Last modified 9/3/20 10:56 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -35,13 +35,13 @@ fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitud
                     val communityLatitude = documentSnapshot["Latitude"].toString().toDouble()
                     val communityLongitude = documentSnapshot["Longitude"].toString().toDouble()
 
-                    if (vicinityCalculations.insideVicinity(userLatitudeLongitude, LatLng(communityLatitude, communityLongitude))) {
+                    if (vicinityCalculations.joinVicinity(userLatitudeLongitude, LatLng(communityLatitude, communityLongitude))) {
 
 
 
                         break@vicinityDocument
 
-                    } else {
+                    } else { //Create New Vicinity
 
 
 
