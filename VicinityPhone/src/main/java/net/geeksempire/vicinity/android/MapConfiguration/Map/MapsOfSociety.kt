@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/3/20 9:02 AM
- * Last modified 9/3/20 9:02 AM
+ * Created by Elias Fazel on 9/3/20 10:15 AM
+ * Last modified 9/3/20 9:53 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -41,6 +41,7 @@ import net.geeksempire.vicinity.android.MapConfiguration.LocationDataHolder.Maps
 import net.geeksempire.vicinity.android.MapConfiguration.Utils.MapsMarker
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.CountryInformation
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.CountryInformationInterface
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.VicinityCalculations
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Location.LocationCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
@@ -96,6 +97,8 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
     var nameOfCountry: String? = null
 
     val countryInformation: CountryInformation = CountryInformation()
+
+    val vicinityCalculations: VicinityCalculations = VicinityCalculations()
 
     val deviceSystemInformation: DeviceSystemInformation by lazy {
         DeviceSystemInformation(applicationContext)

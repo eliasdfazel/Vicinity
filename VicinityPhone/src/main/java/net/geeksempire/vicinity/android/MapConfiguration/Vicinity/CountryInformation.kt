@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/3/20 8:48 AM
- * Last modified 9/3/20 8:40 AM
+ * Created by Elias Fazel on 9/3/20 10:15 AM
+ * Last modified 9/3/20 9:46 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,6 +10,7 @@
 
 package net.geeksempire.vicinity.android.MapConfiguration.Vicinity
 
+import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -34,6 +35,7 @@ class CountryInformation {
         databaseReferenceCountriesLocation.addListenerForSingleValueEvent(object :
             ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+                Log.d(this@CountryInformation.javaClass.simpleName, dataSnapshot.child("Country").value.toString())
 
                 countryInformationInterface.countryNameReady(dataSnapshot.child("Country").value.toString())
 
