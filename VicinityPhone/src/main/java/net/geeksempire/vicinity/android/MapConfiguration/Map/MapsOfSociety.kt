@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/3/20 8:56 AM
- * Last modified 9/3/20 8:55 AM
+ * Created by Elias Fazel on 9/3/20 9:02 AM
+ * Last modified 9/3/20 9:02 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -35,6 +35,7 @@ import net.geeksempire.chat.vicinity.Util.MapsUtil.LocationCoordinatesUpdater
 import net.geeksempire.vicinity.android.EntryConfiguration
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.addInitialMarker
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.getLocationData
+import net.geeksempire.vicinity.android.MapConfiguration.Extensions.loadVicinityData
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.setupGoogleMap
 import net.geeksempire.vicinity.android.MapConfiguration.LocationDataHolder.MapsLiveData
 import net.geeksempire.vicinity.android.MapConfiguration.Utils.MapsMarker
@@ -92,6 +93,7 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
     }
 
     var userLatitudeLongitude: LatLng? = null
+    var nameOfCountry: String? = null
 
     val countryInformation: CountryInformation = CountryInformation()
 
@@ -216,7 +218,13 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
                     override fun countryNameReady(nameOfCountry: String) {
 
+                        this@MapsOfSociety.nameOfCountry = nameOfCountry
 
+                        userLatitudeLongitude?.let { userLatitudeLongitude ->
+
+                            loadVicinityData(nameOfCountry, userLatitudeLongitude)
+
+                        }
 
                     }
 
