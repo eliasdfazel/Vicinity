@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/1/20 9:58 AM
- * Last modified 9/1/20 9:56 AM
+ * Created by Elias Fazel on 9/3/20 8:48 AM
+ * Last modified 9/3/20 8:48 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -31,16 +31,19 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import net.geeksempire.chat.vicinity.Util.MapsUtil.LocationCoordinatesUpdater
-import net.geeksempire.vicinity.android.MapConfiguration.Extensions.drawVicinity
+import net.geeksempire.vicinity.android.MapConfiguration.Extensions.addInitialMarker
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.getLocationData
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.setupGoogleMap
 import net.geeksempire.vicinity.android.MapConfiguration.LocationDataHolder.MapsLiveData
 import net.geeksempire.vicinity.android.MapConfiguration.Utils.MapsMarker
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.CountryInformation
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.CountryInformationInterface
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Location.LocationCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListenerInterface
+import net.geeksempire.vicinity.android.Utils.System.DeviceSystemInformation
 import net.geeksempire.vicinity.android.VicinityApplication
 import net.geeksempire.vicinity.android.databinding.MapsViewBinding
 import javax.inject.Inject
@@ -85,6 +88,12 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
     }
 
     var userLatitudeLongitude: LatLng? = null
+
+    val countryInformation: CountryInformation = CountryInformation()
+
+    val deviceSystemInformation: DeviceSystemInformation by lazy {
+        DeviceSystemInformation(applicationContext)
+    }
 
     var googleMapIsReady: Boolean = false
 
@@ -193,7 +202,17 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
             readyGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it, 15.0f))
 
-            drawVicinity()
+            addInitialMarker()
+
+            countryInformation.getCurrentCountryName(deviceSystemInformation.getCountryIso(), object : CountryInformationInterface {
+
+                override fun countryNameReady(nameOfCountry: String) {
+
+                    
+
+                }
+
+            })
 
             googleMap.setOnCircleClickListener {
 

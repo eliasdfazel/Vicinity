@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/1/20 10:10 AM
- * Last modified 9/1/20 10:10 AM
+ * Created by Elias Fazel on 9/3/20 8:48 AM
+ * Last modified 9/3/20 8:09 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -39,30 +39,14 @@ fun MapsOfSociety.setupGoogleMap() {
 
     readyGoogleMap.isTrafficEnabled = true
 
-    /*If Style Selected as Detailed*/
     readyGoogleMap.mapType = GoogleMap.MAP_TYPE_HYBRID
-    //No Style
-
-    /*If Style Selected as Minimal Dark | Change Color of Status Bar & Vicinity Circle Color to LIGHT*/
-    //googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
     //initGoogleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(applicationContext, R.raw.map_minimal_dark_style))
 
 }
 
-fun MapsOfSociety.drawVicinity() {
+fun MapsOfSociety.addInitialMarker() {
 
     userLatitudeLongitude?.let { userLatitudeLongitude ->
-
-        readyGoogleMap.clear()
-
-//        val circleOptions = CircleOptions()
-//            .center(communityLatLong)
-//            .radius(if (listDistance[0] > vicinityRadius) { vicinitySafeArea } else { vicinityRadius })
-//            .strokeColor(getColor(R.color.light))
-//            .fillColor(getColor(R.color.light_transparent_vicinity))
-//            .strokeWidth(3.70f)
-//            .clickable(true)
-//        readyGoogleMap.addCircle(circleOptions)
 
         userMapMarker = readyGoogleMap.addMarker(
             MarkerOptions()
@@ -71,7 +55,7 @@ fun MapsOfSociety.drawVicinity() {
                 .snippet(firebaseUser?.email)
         )
 
-        Glide.with(this@drawVicinity)
+        Glide.with(this@addInitialMarker)
             .asDrawable()
             .load(firebaseUser?.photoUrl)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -107,6 +91,25 @@ fun MapsOfSociety.drawVicinity() {
 
             })
             .submit()
+
+    }
+
+}
+
+fun MapsOfSociety.drawVicinity() {
+
+    userLatitudeLongitude?.let { userLatitudeLongitude ->
+
+        readyGoogleMap.clear()
+
+//        val circleOptions = CircleOptions()
+//            .center(communityLatLong)
+//            .radius(if (listDistance[0] > vicinityRadius) { vicinitySafeArea } else { vicinityRadius })
+//            .strokeColor(getColor(R.color.light))
+//            .fillColor(getColor(R.color.light_transparent_vicinity))
+//            .strokeWidth(3.70f)
+//            .clickable(true)
+//        readyGoogleMap.addCircle(circleOptions)
 
     }
 
