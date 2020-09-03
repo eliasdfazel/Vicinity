@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/3/20 8:48 AM
- * Last modified 9/3/20 8:48 AM
+ * Created by Elias Fazel on 9/3/20 8:55 AM
+ * Last modified 9/3/20 8:54 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -27,10 +27,12 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import net.geeksempire.chat.vicinity.Util.MapsUtil.LocationCoordinatesUpdater
+import net.geeksempire.vicinity.android.EntryConfiguration
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.addInitialMarker
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.getLocationData
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.setupGoogleMap
@@ -44,6 +46,8 @@ import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListenerInterface
 import net.geeksempire.vicinity.android.Utils.System.DeviceSystemInformation
+import net.geeksempire.vicinity.android.Utils.UI.NotifyUser.SnackbarActionHandlerInterface
+import net.geeksempire.vicinity.android.Utils.UI.NotifyUser.SnackbarBuilder
 import net.geeksempire.vicinity.android.VicinityApplication
 import net.geeksempire.vicinity.android.databinding.MapsViewBinding
 import javax.inject.Inject
@@ -204,15 +208,42 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
             addInitialMarker()
 
-            countryInformation.getCurrentCountryName(deviceSystemInformation.getCountryIso(), object : CountryInformationInterface {
+            val countryIso = deviceSystemInformation.getCountryIso()
 
-                override fun countryNameReady(nameOfCountry: String) {
+            if (countryIso != "Undefined") {
 
-                    
+                countryInformation.getCurrentCountryName(deviceSystemInformation.getCountryIso(), object : CountryInformationInterface {
 
-                }
+                    override fun countryNameReady(nameOfCountry: String) {
 
-            })
+
+
+                    }
+
+                })
+
+            } else {
+
+                SnackbarBuilder(applicationContext).show (
+                    rootView = mapsViewBinding.rootView,
+                    messageText= getString(R.string.undefinedCountry),
+                    messageDuration = Snackbar.LENGTH_INDEFINITE,
+                    actionButtonText = R.string.retryText,
+                    snackbarActionHandlerInterface = object : SnackbarActionHandlerInterface {
+
+                        override fun onActionButtonClicked(snackbar: Snackbar) {
+                            super.onActionButtonClicked(snackbar)
+
+                            startActivity(Intent(applicationContext, EntryConfiguration::class.java))
+
+                            this@MapsOfSociety.finish()
+
+                        }
+
+                    }
+                )
+
+            }
 
             googleMap.setOnCircleClickListener {
 
