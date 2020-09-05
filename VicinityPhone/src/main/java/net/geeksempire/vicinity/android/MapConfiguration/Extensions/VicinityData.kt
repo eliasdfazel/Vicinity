@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/5/20 11:05 AM
- * Last modified 9/5/20 11:02 AM
+ * Created by Elias Fazel on 9/5/20 11:48 AM
+ * Last modified 9/5/20 11:47 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -30,12 +30,12 @@ fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitud
 
                     vicinityDocument@ for (documentSnapshot in it.documents) {
 
-                        val communityLatitude = documentSnapshot["Latitude"].toString().toDouble()
-                        val communityLongitude = documentSnapshot["Longitude"].toString().toDouble()
+                        val communityLatitude = documentSnapshot["centerLatitude"].toString().toDouble()
+                        val communityLongitude = documentSnapshot["centerLongitude"].toString().toDouble()
 
                         if (vicinityCalculations.joinVicinity(userLatitudeLongitude, LatLng(communityLatitude, communityLongitude))) {
 
-
+                            joinVicinity.join()
 
                             break@vicinityDocument
 
@@ -49,7 +49,8 @@ fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitud
 
                             createVicinity.create(
                                 PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName, locationLatitudeLongitude),
-                                vicinityData
+                                vicinityData,
+                                userLatitudeLongitude
                             )
 
                         }
@@ -70,7 +71,8 @@ fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitud
 
                     createVicinity.create(
                         PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName, locationLatitudeLongitude),
-                        vicinityData
+                        vicinityData,
+                        userLatitudeLongitude
                     )
 
                 }

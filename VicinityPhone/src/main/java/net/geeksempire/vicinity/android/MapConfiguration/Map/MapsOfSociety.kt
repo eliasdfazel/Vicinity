@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/5/20 11:05 AM
- * Last modified 9/5/20 9:50 AM
+ * Created by Elias Fazel on 9/5/20 11:48 AM
+ * Last modified 9/5/20 11:47 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -44,6 +44,7 @@ import net.geeksempire.vicinity.android.MapConfiguration.Utils.MapsMarker
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.CountryInformation
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.CountryInformationInterface
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.Operations.CreateVicinity
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.Operations.JoinVicinity
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.VicinityCalculations
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Location.LocationCheckpoint
@@ -108,7 +109,11 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
     val vicinityCalculations: VicinityCalculations = VicinityCalculations()
 
     val createVicinity: CreateVicinity by lazy {
-        CreateVicinity(firestoreDatabase)
+        CreateVicinity(applicationContext, readyGoogleMap, firestoreDatabase)
+    }
+
+    val joinVicinity: JoinVicinity by lazy {
+        JoinVicinity(applicationContext, readyGoogleMap, firestoreDatabase)
     }
 
     val deviceSystemInformation: DeviceSystemInformation by lazy {

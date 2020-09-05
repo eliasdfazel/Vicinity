@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/3/20 8:48 AM
- * Last modified 9/3/20 8:09 AM
+ * Created by Elias Fazel on 9/5/20 11:48 AM
+ * Last modified 9/5/20 11:20 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -91,25 +91,6 @@ fun MapsOfSociety.addInitialMarker() {
 
             })
             .submit()
-
-    }
-
-}
-
-fun MapsOfSociety.drawVicinity() {
-
-    userLatitudeLongitude?.let { userLatitudeLongitude ->
-
-        readyGoogleMap.clear()
-
-//        val circleOptions = CircleOptions()
-//            .center(communityLatLong)
-//            .radius(if (listDistance[0] > vicinityRadius) { vicinitySafeArea } else { vicinityRadius })
-//            .strokeColor(getColor(R.color.light))
-//            .fillColor(getColor(R.color.light_transparent_vicinity))
-//            .strokeWidth(3.70f)
-//            .clickable(true)
-//        readyGoogleMap.addCircle(circleOptions)
 
     }
 
