@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/3/20 10:56 AM
- * Last modified 9/3/20 10:56 AM
+ * Created by Elias Fazel on 9/5/20 8:30 AM
+ * Last modified 9/5/20 7:55 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -28,29 +28,36 @@ fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitud
         .addOnSuccessListener {
             Log.d(this@loadVicinityData.javaClass.simpleName, it.toString())
 
-            userLatitudeLongitude?.let { userLatitudeLongitude ->
+            if (it.isEmpty) {
 
-                vicinityDocument@ for (documentSnapshot in it.documents) {
+                userLatitudeLongitude?.let { userLatitudeLongitude ->
 
-                    val communityLatitude = documentSnapshot["Latitude"].toString().toDouble()
-                    val communityLongitude = documentSnapshot["Longitude"].toString().toDouble()
+                    vicinityDocument@ for (documentSnapshot in it.documents) {
 
-                    if (vicinityCalculations.joinVicinity(userLatitudeLongitude, LatLng(communityLatitude, communityLongitude))) {
+                        val communityLatitude = documentSnapshot["Latitude"].toString().toDouble()
+                        val communityLongitude = documentSnapshot["Longitude"].toString().toDouble()
 
-
-
-                        break@vicinityDocument
-
-                    } else { //Create New Vicinity
+                        if (vicinityCalculations.joinVicinity(userLatitudeLongitude, LatLng(communityLatitude, communityLongitude))) {
 
 
+
+                            break@vicinityDocument
+
+                        } else { /*Create New Vicinity*/
+
+
+
+                        }
 
                     }
 
                 }
 
-            }
+            } else {/*Create New Vicinity*/
 
+
+
+            }
 
         }.addOnFailureListener {
 
