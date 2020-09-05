@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/3/20 8:48 AM
- * Last modified 9/3/20 7:59 AM
+ * Created by Elias Fazel on 9/5/20 11:05 AM
+ * Last modified 9/5/20 10:31 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,6 +12,7 @@ package net.geeksempire.vicinity.android.Utils.System
 
 import android.content.Context
 import android.telephony.TelephonyManager
+import java.util.*
 
 class DeviceSystemInformation (private val context: Context) {
 
@@ -33,6 +34,6 @@ class DeviceSystemInformation (private val context: Context) {
             countryISO = "Undefined"
         }
 
-        return countryISO
+        return countryISO.toUpperCase(Locale.getDefault())
     }
 }

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/3/20 10:15 AM
- * Last modified 9/3/20 9:46 AM
+ * Created by Elias Fazel on 9/5/20 11:05 AM
+ * Last modified 9/5/20 10:31 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -32,8 +32,8 @@ class CountryInformation {
             .child("CountriesInformation")
             .child(countryIso)
 
-        databaseReferenceCountriesLocation.addListenerForSingleValueEvent(object :
-            ValueEventListener {
+        databaseReferenceCountriesLocation.addListenerForSingleValueEvent(object : ValueEventListener {
+
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 Log.d(this@CountryInformation.javaClass.simpleName, dataSnapshot.child("Country").value.toString())
 
@@ -44,6 +44,7 @@ class CountryInformation {
             override fun onCancelled(databaseError: DatabaseError) {
 
             }
+
         })
 
     }

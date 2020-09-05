@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/3/20 10:15 AM
- * Last modified 9/3/20 9:53 AM
+ * Created by Elias Fazel on 9/5/20 11:05 AM
+ * Last modified 9/5/20 9:50 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -30,6 +30,8 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import net.geeksempire.chat.vicinity.Util.MapsUtil.LocationCoordinatesUpdater
 import net.geeksempire.vicinity.android.EntryConfiguration
@@ -41,6 +43,7 @@ import net.geeksempire.vicinity.android.MapConfiguration.LocationDataHolder.Maps
 import net.geeksempire.vicinity.android.MapConfiguration.Utils.MapsMarker
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.CountryInformation
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.CountryInformationInterface
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.Operations.CreateVicinity
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.VicinityCalculations
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Location.LocationCheckpoint
@@ -62,6 +65,10 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
     companion object {
         const val GpsEnableRequestCode: Int = 111
     }
+
+    val firestoreDatabase: FirebaseFirestore = Firebase.firestore
+
+    val firebaseUser: FirebaseUser? = Firebase.auth.currentUser
 
     val mapsLiveData: MapsLiveData by lazy {
         ViewModelProvider(this@MapsOfSociety).get(MapsLiveData::class.java)
@@ -100,13 +107,15 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
     val vicinityCalculations: VicinityCalculations = VicinityCalculations()
 
+    val createVicinity: CreateVicinity by lazy {
+        CreateVicinity(firestoreDatabase)
+    }
+
     val deviceSystemInformation: DeviceSystemInformation by lazy {
         DeviceSystemInformation(applicationContext)
     }
 
     var googleMapIsReady: Boolean = false
-
-    val firebaseUser: FirebaseUser? = Firebase.auth.currentUser
 
     @Inject lateinit var networkCheckpoint: NetworkCheckpoint
 
