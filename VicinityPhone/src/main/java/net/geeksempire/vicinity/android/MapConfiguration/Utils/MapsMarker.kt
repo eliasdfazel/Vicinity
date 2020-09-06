@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/5/20 11:48 AM
- * Last modified 9/5/20 11:46 AM
+ * Created by Elias Fazel on 9/6/20 7:50 AM
+ * Last modified 9/6/20 7:49 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -64,7 +64,7 @@ class MapsMarker (private val context: AppCompatActivity, private val firebaseUs
 
                             Handler().postDelayed({
                                 mapMarker.hideInfoWindow()
-                            }, 3000)
+                            }, 5000)
 
                         }
 

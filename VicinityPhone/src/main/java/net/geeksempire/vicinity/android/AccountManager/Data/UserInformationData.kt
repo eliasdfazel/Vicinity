@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/5/20 8:30 AM
- * Last modified 9/5/20 8:09 AM
+ * Created by Elias Fazel on 9/6/20 7:50 AM
+ * Last modified 9/6/20 7:35 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -16,4 +16,4 @@ data class UserInformationData (var userIdentification: String, var userEmailAdd
                                 var userLatitude: String, var userLongitude: String,
                                 var userState: String,
                                 var userLastSignIn:  FieldValue,
-                                var userSignUpDate:  FieldValue = FieldValue.serverTimestamp())
+                                var userJointDate:  FieldValue = FieldValue.serverTimestamp())

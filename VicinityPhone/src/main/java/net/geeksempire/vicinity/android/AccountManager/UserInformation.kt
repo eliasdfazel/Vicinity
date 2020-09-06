@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/30/20 10:10 AM
- * Last modified 8/30/20 10:10 AM
+ * Created by Elias Fazel on 9/6/20 7:50 AM
+ * Last modified 9/6/20 7:43 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -19,6 +19,11 @@ class UserInformation(private val context: AccountSignIn) {
 
     companion object {
         const val GoogleSignInRequestCode = 103
+
+        fun userInformationDatabasePath(vicinityDatabasePath: String, userIdentification: String) : String {
+
+            return vicinityDatabasePath + "/" + "People" + "/" + userIdentification
+        }
     }
 
     fun startSignInProcess() {

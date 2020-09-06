@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/5/20 11:48 AM
- * Last modified 9/5/20 11:47 AM
+ * Created by Elias Fazel on 9/6/20 7:50 AM
+ * Last modified 9/6/20 7:37 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,6 +12,8 @@ package net.geeksempire.vicinity.android.MapConfiguration.Extensions
 
 import android.util.Log
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.firestore.FieldValue
+import net.geeksempire.vicinity.android.AccountManager.Data.UserInformationData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoint.PublicCommunicationEndpoint
 import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.Operations.VicinityData
@@ -33,7 +35,8 @@ fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitud
                         val communityLatitude = documentSnapshot["centerLatitude"].toString().toDouble()
                         val communityLongitude = documentSnapshot["centerLongitude"].toString().toDouble()
 
-                        if (vicinityCalculations.joinVicinity(userLatitudeLongitude, LatLng(communityLatitude, communityLongitude))) {
+                        if (!it.isEmpty
+                            && vicinityCalculations.joinVicinity(userLatitudeLongitude, LatLng(communityLatitude, communityLongitude))) {
 
                             joinVicinity.join()
 
@@ -41,17 +44,32 @@ fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitud
 
                         } else { /*Create New Vicinity*/
 
-                            val vicinityData: VicinityData = VicinityData(
-                                centerLatitude = userLatitudeLongitude.latitude.toString(), centerLongitude = userLatitudeLongitude.longitude.toString(),
-                                countryName = countryName,  cityName = "",
-                                knownAddress = "", approximateIpAddress = ""
-                            )
+                            firebaseUser?.let {
 
-                            createVicinity.create(
-                                PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName, locationLatitudeLongitude),
-                                vicinityData,
-                                userLatitudeLongitude
-                            )
+                                val vicinityData: VicinityData = VicinityData(
+                                    centerLatitude = userLatitudeLongitude.latitude.toString(), centerLongitude = userLatitudeLongitude.longitude.toString(),
+                                    countryName = countryName,  cityName = "",
+                                    knownAddress = "", approximateIpAddress = ""
+                                )
+
+                                val userInformationData: UserInformationData = UserInformationData(
+                                    userIdentification = firebaseUser.uid,
+                                    userEmailAddress = firebaseUser.email.toString(),
+                                    userDisplayName = firebaseUser.displayName.toString(),
+                                    userProfileImage = firebaseUser.photoUrl.toString(),
+                                    userLatitude = userLatitudeLongitude.latitude.toString(), userLongitude = userLatitudeLongitude.longitude.toString(),
+                                    userState = "true",
+                                    userLastSignIn = FieldValue.serverTimestamp(),
+                                    userJointDate = FieldValue.serverTimestamp()
+                                )
+
+                                createVicinity.create(
+                                    PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName, locationLatitudeLongitude),
+                                    vicinityData,
+                                    userInformationData,
+                                    userLatitudeLongitude
+                                )
+                            }
 
                         }
 
@@ -63,17 +81,32 @@ fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitud
 
                 userLatitudeLongitude?.let { userLatitudeLongitude ->
 
-                    val vicinityData: VicinityData = VicinityData(
-                        centerLatitude = userLatitudeLongitude.latitude.toString(), centerLongitude = userLatitudeLongitude.longitude.toString(),
-                        countryName = countryName,  cityName = "",
-                        knownAddress = "", approximateIpAddress = ""
-                    )
+                    firebaseUser?.let {
 
-                    createVicinity.create(
-                        PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName, locationLatitudeLongitude),
-                        vicinityData,
-                        userLatitudeLongitude
-                    )
+                        val vicinityData: VicinityData = VicinityData(
+                            centerLatitude = userLatitudeLongitude.latitude.toString(), centerLongitude = userLatitudeLongitude.longitude.toString(),
+                            countryName = countryName,  cityName = "",
+                            knownAddress = "", approximateIpAddress = ""
+                        )
+
+                        val userInformationData: UserInformationData = UserInformationData(
+                            userIdentification = firebaseUser.uid,
+                            userEmailAddress = firebaseUser.email.toString(),
+                            userDisplayName = firebaseUser.displayName.toString(),
+                            userProfileImage = firebaseUser.photoUrl.toString(),
+                            userLatitude = userLatitudeLongitude.latitude.toString(), userLongitude = userLatitudeLongitude.longitude.toString(),
+                            userState = "true",
+                            userLastSignIn = FieldValue.serverTimestamp(),
+                            userJointDate = FieldValue.serverTimestamp()
+                        )
+
+                        createVicinity.create(
+                            PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName, locationLatitudeLongitude),
+                            vicinityData,
+                            userInformationData,
+                            userLatitudeLongitude
+                        )
+                    }
 
                 }
 
