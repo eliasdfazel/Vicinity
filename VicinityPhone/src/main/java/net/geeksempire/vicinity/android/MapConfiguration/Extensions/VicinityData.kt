@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/6/20 8:01 AM
- * Last modified 9/6/20 7:58 AM
+ * Created by Elias Fazel on 9/6/20 8:36 AM
+ * Last modified 9/6/20 8:35 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -17,6 +17,7 @@ import net.geeksempire.vicinity.android.AccountManager.Data.UserInformationData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoint.PublicCommunicationEndpoint
 import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.Operations.VicinityData
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.Operations.VicinityUserInformation
 
 fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitude: LatLng) {
 
@@ -61,6 +62,10 @@ fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitud
                                     userInformationData,
                                     userLatitudeLongitude
                                 )
+
+                                val vicinityUserInformation: VicinityUserInformation = VicinityUserInformation(firestoreDatabase, PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName, LatLng(communityLatitude, communityLongitude)))
+
+                                vicinityUserInformation.showAllVicinityUsers(this@loadVicinityData, readyGoogleMap, firebaseUser)
 
                             }
 

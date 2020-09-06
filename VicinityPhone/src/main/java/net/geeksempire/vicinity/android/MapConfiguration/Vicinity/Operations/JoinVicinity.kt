@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/6/20 7:56 AM
- * Last modified 9/6/20 7:52 AM
+ * Created by Elias Fazel on 9/6/20 8:36 AM
+ * Last modified 9/6/20 8:06 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -28,9 +28,9 @@ class JoinVicinity (private val context: Context, private val googleMap: GoogleM
             locationVicinity = LatLng(vicinityData.centerLatitude.toDouble(), vicinityData.centerLongitude.toDouble())
         )
 
-        val addUserInformationToVicinity: AddUserInformationToVicinity = AddUserInformationToVicinity(firestoreDatabase)
+        val vicinityUserInformation: VicinityUserInformation = VicinityUserInformation(firestoreDatabase, vicinityDatabasePath)
 
-        addUserInformationToVicinity.add(vicinityDatabasePath, userInformationData)
+        vicinityUserInformation.add(userInformationData)
 
     }
 

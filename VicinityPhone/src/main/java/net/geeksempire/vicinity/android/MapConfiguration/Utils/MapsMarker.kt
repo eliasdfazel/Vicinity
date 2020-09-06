@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/6/20 7:50 AM
- * Last modified 9/6/20 7:49 AM
+ * Created by Elias Fazel on 9/6/20 8:36 AM
+ * Last modified 9/6/20 8:29 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -47,26 +47,22 @@ class MapsMarker (private val context: AppCompatActivity, private val firebaseUs
 
                 override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
 
-                    context.runOnUiThread {
+                    resource?.let {
 
-                        resource?.let {
+                        val resourcesBitmap = getCircularBitmapWithWhiteBorder(drawableToBitmap(it), 7, context.getColor(R.color.default_color_light))
+                        val bitmapDescriptorIcon: BitmapDescriptor = BitmapDescriptorFactory.fromBitmap(resourcesBitmap)
 
-                            val resourcesBitmap = getCircularBitmapWithWhiteBorder(drawableToBitmap(it), 7, context.getColor(R.color.default_color_light))
-                            val bitmapDescriptorIcon: BitmapDescriptor = BitmapDescriptorFactory.fromBitmap(resourcesBitmap)
+                        mapMarker.position = (locationLatitudeLongitude)
+                        mapMarker.title = ("${firebaseUser?.displayName}")
+                        mapMarker.snippet = ("${firebaseUser?.email}")
+                        mapMarker.tag = "${locationLatitudeLongitude}"
+                        mapMarker.isDraggable = false
+                        mapMarker.setIcon(bitmapDescriptorIcon)
+                        mapMarker.showInfoWindow()
 
-                            mapMarker.position = (locationLatitudeLongitude)
-                            mapMarker.title = ("${firebaseUser?.displayName}")
-                            mapMarker.snippet = ("${firebaseUser?.email}")
-                            mapMarker.tag = "${locationLatitudeLongitude}"
-                            mapMarker.isDraggable = false
-                            mapMarker.setIcon(bitmapDescriptorIcon)
-                            mapMarker.showInfoWindow()
-
-                            Handler().postDelayed({
-                                mapMarker.hideInfoWindow()
-                            }, 5000)
-
-                        }
+                        Handler().postDelayed({
+                            mapMarker.hideInfoWindow()
+                        }, 5000)
 
                     }
 

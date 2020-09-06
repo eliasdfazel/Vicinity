@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/6/20 7:50 AM
- * Last modified 9/6/20 7:39 AM
+ * Created by Elias Fazel on 9/6/20 8:36 AM
+ * Last modified 9/6/20 8:07 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -35,9 +35,9 @@ class CreateVicinity (private val context: Context, private val googleMap: Googl
                     locationVicinity = LatLng(vicinityData.centerLatitude.toDouble(), vicinityData.centerLongitude.toDouble())
                 )
 
-                val addUserInformationToVicinity: AddUserInformationToVicinity = AddUserInformationToVicinity(firestoreDatabase)
+                val vicinityUserInformation: VicinityUserInformation = VicinityUserInformation(firestoreDatabase, vicinityDatabasePath)
 
-                addUserInformationToVicinity.add(vicinityDatabasePath, userInformationData)
+                vicinityUserInformation.add(userInformationData)
 
             }.addOnFailureListener {
                 Log.d(this@CreateVicinity.javaClass.simpleName, "Vicinity Failed To Create")
