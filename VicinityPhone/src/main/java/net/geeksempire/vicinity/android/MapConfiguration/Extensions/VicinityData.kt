@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/6/20 7:50 AM
- * Last modified 9/6/20 7:37 AM
+ * Created by Elias Fazel on 9/6/20 7:56 AM
+ * Last modified 9/6/20 7:53 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -38,7 +38,33 @@ fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitud
                         if (!it.isEmpty
                             && vicinityCalculations.joinVicinity(userLatitudeLongitude, LatLng(communityLatitude, communityLongitude))) {
 
-                            joinVicinity.join()
+                            firebaseUser?.let {
+
+                                val vicinityData: VicinityData = VicinityData(
+                                    centerLatitude = userLatitudeLongitude.latitude.toString(), centerLongitude = userLatitudeLongitude.longitude.toString(),
+                                    countryName = countryName,  cityName = "",
+                                    knownAddress = "", approximateIpAddress = ""
+                                )
+
+                                val userInformationData: UserInformationData = UserInformationData(
+                                    userIdentification = firebaseUser.uid,
+                                    userEmailAddress = firebaseUser.email.toString(),
+                                    userDisplayName = firebaseUser.displayName.toString(),
+                                    userProfileImage = firebaseUser.photoUrl.toString(),
+                                    userLatitude = userLatitudeLongitude.latitude.toString(), userLongitude = userLatitudeLongitude.longitude.toString(),
+                                    userState = "true",
+                                    userLastSignIn = FieldValue.serverTimestamp()
+                                )
+
+                                joinVicinity.join(
+                                    PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName, locationLatitudeLongitude),
+                                    vicinityData,
+                                    userInformationData,
+                                    userLatitudeLongitude
+                                )
+
+                            }
+
 
                             break@vicinityDocument
 
