@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/5/20 11:48 AM
- * Last modified 9/5/20 11:47 AM
+ * Created by Elias Fazel on 9/8/20 6:29 AM
+ * Last modified 9/8/20 6:29 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -34,6 +34,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import net.geeksempire.chat.vicinity.Util.MapsUtil.LocationCoordinatesUpdater
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoint.PublicCommunicationEndpoint
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.UI.PublicCommunity
 import net.geeksempire.vicinity.android.EntryConfiguration
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.addInitialMarker
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.getLocationData
@@ -46,6 +48,7 @@ import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.CountryInforma
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.Operations.CreateVicinity
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.Operations.JoinVicinity
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.VicinityCalculations
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.vicinityName
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Location.LocationCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
@@ -272,13 +275,13 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
             googleMap.setOnCircleClickListener {
 
+                PublicCommunicationEndpoint.CurrentCommunityCoordinates?.let {
 
+                    startActivity(Intent(applicationContext, PublicCommunity::class.java).apply {
+                        putExtra(PublicCommunity.Configurations.PublicCommunityName, vicinityName(it))
+                    }, ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_in_right, R.anim.fade_out).toBundle())
 
-            }
-
-            googleMap.setOnPolygonClickListener {
-
-
+                }
 
             }
 

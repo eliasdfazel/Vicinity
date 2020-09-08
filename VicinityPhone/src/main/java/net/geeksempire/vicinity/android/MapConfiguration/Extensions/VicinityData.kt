@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/6/20 8:36 AM
- * Last modified 9/6/20 8:35 AM
+ * Created by Elias Fazel on 9/8/20 6:29 AM
+ * Last modified 9/8/20 6:04 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -68,7 +68,6 @@ fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitud
                                 vicinityUserInformation.showAllVicinityUsers(this@loadVicinityData, readyGoogleMap, firebaseUser)
 
                             }
-
 
                             break@vicinityDocument
 
