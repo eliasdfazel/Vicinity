@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/8/20 6:29 AM
- * Last modified 9/8/20 6:29 AM
+ * Created by Elias Fazel on 9/8/20 10:55 AM
+ * Last modified 9/8/20 9:19 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -35,7 +35,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import net.geeksempire.chat.vicinity.Util.MapsUtil.LocationCoordinatesUpdater
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoint.PublicCommunicationEndpoint
-import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.UI.PublicCommunity
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity
 import net.geeksempire.vicinity.android.EntryConfiguration
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.addInitialMarker
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.getLocationData
@@ -275,11 +275,16 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
             googleMap.setOnCircleClickListener {
 
-                PublicCommunicationEndpoint.CurrentCommunityCoordinates?.let {
+                PublicCommunicationEndpoint.CurrentCommunityCoordinates?.let { currentCommunityCoordinates ->
 
-                    startActivity(Intent(applicationContext, PublicCommunity::class.java).apply {
-                        putExtra(PublicCommunity.Configurations.PublicCommunityName, vicinityName(it))
-                    }, ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_in_right, R.anim.fade_out).toBundle())
+                    nameOfCountry?.let { nameOfCountry ->
+
+                        startActivity(Intent(applicationContext, PublicCommunity::class.java).apply {
+                            putExtra(PublicCommunity.Configurations.PublicCommunityName, vicinityName(currentCommunityCoordinates))
+                            putExtra(PublicCommunity.Configurations.PublicCommunityDatabasePath, PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName = nameOfCountry, currentCommunityCoordinates))
+                        }, ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_in_right, R.anim.fade_out).toBundle())
+
+                    }
 
                 }
 

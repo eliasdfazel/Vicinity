@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/6/20 8:36 AM
- * Last modified 9/6/20 8:07 AM
+ * Created by Elias Fazel on 9/8/20 10:55 AM
+ * Last modified 9/8/20 8:18 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -15,7 +15,8 @@ import android.util.Log
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.FirebaseFirestore
-import net.geeksempire.vicinity.android.AccountManager.Data.UserInformationData
+import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationData
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.DataStructure.VicinityData
 
 class CreateVicinity (private val context: Context, private val googleMap: GoogleMap, private val firestoreDatabase: FirebaseFirestore) {
 

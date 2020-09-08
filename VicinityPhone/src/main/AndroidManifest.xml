@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/8/20 6:29 AM
-  ~ Last modified 9/8/20 5:20 AM
+  ~ Created by Elias Fazel on 9/8/20 10:55 AM
+  ~ Last modified 9/8/20 10:48 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -84,7 +84,9 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
-            android:name=".CommunicationConfiguration.Public.UI.PublicCommunity"
+            android:name=".CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity"
+            android:windowSoftInputMode="stateHidden"
+            android:configChanges="keyboardHidden"
             android:theme="@style/GeeksEmpire.Material.PublicCommunity">
             <intent-filter>
                 <action android:name="Public_Community_Action"/>
