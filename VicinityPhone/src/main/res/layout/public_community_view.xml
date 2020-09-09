@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/8/20 10:55 AM
-  ~ Last modified 9/8/20 10:54 AM
+  ~ Created by Elias Fazel on 9/9/20 4:27 AM
+  ~ Last modified 9/9/20 4:23 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -15,6 +15,7 @@
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light"
     tools:context=".CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity">
 
     <androidx.core.widget.NestedScrollView
@@ -23,7 +24,7 @@
         android:layout_height="match_parent"
         android:cacheColorHint="@android:color/transparent"
         android:fadingEdge="vertical"
-        android:fadingEdgeLength="37dp"
+        android:fadingEdgeLength="13dp"
         android:requiresFadingEdge="vertical"
         android:scrollbars="none"
         android:smoothScrollbar="true">
@@ -31,42 +32,26 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/scrollWrapper"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/messageRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:alwaysDrawnWithCache="true"
                 android:drawSelectorOnTop="true"
                 android:isScrollContainer="false"
                 android:nestedScrollingEnabled="false"
                 android:paddingHorizontal="13dp"
                 android:paddingVertical="13dp"
-                android:persistentDrawingCache="animation|scrolling"
-
-                apps:layout_constraintStart_toStartOf="parent"
-                apps:layout_constraintEnd_toEndOf="parent"
-                apps:layout_constraintTop_toTopOf="parent" />
+                android:persistentDrawingCache="animation|scrolling" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 
-
-
-
-
-
-
-
-
-
-
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/messageTypeSend"
+        android:id="@+id/messageContentWrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -77,59 +62,14 @@
         apps:layout_constraintStart_toStartOf="parent"
         apps:layout_constraintEnd_toEndOf="parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputMessageEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="1dp"
-            android:gravity="center_vertical"
-            android:imeOptions="actionSend"
-            android:hint="string/connectToPeople"
-            android:textColorHint="@color/default_color_light"
-            apps:boxBackgroundMode="outline"
-            apps:boxBackgroundColor="@android:color/transparent"
-            apps:boxCornerRadiusTopStart="7dp"
-            apps:boxCornerRadiusTopEnd="7dp"
-            apps:boxCornerRadiusBottomStart="7dp"
-            apps:boxCornerRadiusBottomEnd="7dp"
-            apps:boxStrokeColor="@color/default_color_game"
-            apps:boxStrokeWidth="2dp"
-            apps:hintEnabled="true"
-            apps:hintAnimationEnabled="true"
-            apps:hintTextColor="@color/default_color_light"
-            apps:errorEnabled="true"
-            apps:errorTextColor="@color/red"
-
-            apps:layout_constraintTop_toTopOf="parent"
-            apps:layout_constraintStart_toStartOf="parent"
-            apps:layout_constraintEnd_toEndOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textMessageContentView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="9dp"
-                android:gravity="center_vertical"
-                android:imeOptions="actionSend"
-                android:textSize="19sp"
-                android:textColor="@color/dark"
-                android:textColorHint="@color/dark"
-                android:cursorVisible="true"
-                android:focusable="true"
-                android:enabled="true" />
-        </com.google.android.material.textfield.TextInputLayout>
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/sendMessageView"
-            android:layout_width="match_parent"
-            android:layout_height="47dp"
-            android:layout_below="@id/textInputMessageEditText"
+            android:layout_width="51dp"
+            android:layout_height="51dp"
             android:layout_marginTop="-17dp"
             android:textAllCaps="false"
-            android:text="string/sendMessage"
-            android:textColor="@color/light"
-            android:textSize="13sp"
-            android:enabled="false"
+            android:contentDescription="@string/sendMessageText"
+
             apps:elevation="7dp"
             apps:cornerRadius="3dp"
             apps:backgroundTint="@color/default_color"
@@ -140,29 +80,49 @@
             apps:iconGravity="textEnd"
 
             apps:layout_constraintBottom_toBottomOf="parent"
-            apps:layout_constraintStart_toStartOf="parent"
             apps:layout_constraintEnd_toEndOf="parent"/>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textMessageContentLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:hint="@string/connectWithPeople"
+            android:textColorHint="@color/default_color_light"
+
+            apps:boxBackgroundMode="outline"
+            apps:boxBackgroundColor="@android:color/transparent"
+            apps:boxCornerRadiusTopStart="13dp"
+            apps:boxCornerRadiusTopEnd="13dp"
+            apps:boxCornerRadiusBottomStart="13dp"
+            apps:boxCornerRadiusBottomEnd="13dp"
+            apps:boxStrokeColor="@color/default_color_game"
+            apps:boxStrokeWidth="2dp"
+            apps:hintEnabled="true"
+            apps:hintAnimationEnabled="true"
+            apps:hintTextColor="@color/default_color_light"
+            apps:errorEnabled="true"
+            apps:errorTextColor="@color/red"
+
+            apps:layout_constraintTop_toTopOf="@id/sendMessageView"
+            apps:layout_constraintBottom_toBottomOf="@id/sendMessageView"
+            apps:layout_constraintStart_toStartOf="parent"
+            apps:layout_constraintEnd_toStartOf="@id/sendMessageView">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textMessageContentView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:imeOptions="actionSend"
+                android:textSize="19sp"
+                android:textColor="@color/dark"
+                android:textColorHint="@color/dark"
+                android:cursorVisible="true"
+                android:focusable="true"
+                android:enabled="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

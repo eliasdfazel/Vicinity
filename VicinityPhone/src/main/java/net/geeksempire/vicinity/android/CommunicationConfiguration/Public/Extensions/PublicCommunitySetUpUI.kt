@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/8/20 10:55 AM
- * Last modified 9/8/20 10:55 AM
+ * Created by Elias Fazel on 9/9/20 4:27 AM
+ * Last modified 9/9/20 4:03 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,15 +12,30 @@ package net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Exten
 
 import androidx.constraintlayout.widget.ConstraintLayout
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity
+import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.UI.Display.navigationBarHeight
 import net.geeksempire.vicinity.android.Utils.UI.Display.statusBarHeight
+import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
 
-fun PublicCommunity.publicCommunitySetUpUI() {
+fun PublicCommunity.publicCommunitySetupUI() {
 
-    publicCommunityViewBinding.scrollWrapper.setPadding(0, publicCommunityViewBinding.scrollWrapper.paddingTop + statusBarHeight(applicationContext), 0, 0)
+    when (overallTheme.checkThemeLightDark()) {
+        ThemeType.ThemeLight -> {
 
-    val sendButtonLayoutParams = publicCommunityViewBinding.sendMessageView.layoutParams as ConstraintLayout.LayoutParams
+            publicCommunityViewBinding.rootView.setBackgroundColor(getColor(R.color.light))
+
+        }
+        ThemeType.ThemeDark -> {
+
+            publicCommunityViewBinding.rootView.setBackgroundColor(getColor(R.color.dark))
+
+        }
+    }
+
+    publicCommunityViewBinding.scrollWrapper.setPadding(0, publicCommunityViewBinding.scrollWrapper.paddingTop + statusBarHeight(applicationContext), 0, publicCommunityViewBinding.messageContentWrapper.height)
+
+    val sendButtonLayoutParams = publicCommunityViewBinding.messageContentWrapper.layoutParams as ConstraintLayout.LayoutParams
     sendButtonLayoutParams.setMargins(0, 0, 0, navigationBarHeight(applicationContext))
-    publicCommunityViewBinding.sendMessageView.layoutParams = sendButtonLayoutParams
+    publicCommunityViewBinding.messageContentWrapper.layoutParams = sendButtonLayoutParams
 
 }

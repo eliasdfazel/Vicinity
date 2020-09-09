@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/8/20 10:55 AM
- * Last modified 9/8/20 10:55 AM
+ * Created by Elias Fazel on 9/9/20 4:27 AM
+ * Last modified 9/9/20 4:00 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -25,9 +25,10 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.DataStructure.PublicMessageData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunityPrepareMessage
-import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunitySetUpUI
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunitySetupUI
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.Adapter.PublicCommunityAdapter
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.Adapter.PublicCommunityViewHolder
+import net.geeksempire.vicinity.android.Utils.UI.Theme.OverallTheme
 import net.geeksempire.vicinity.android.databinding.PublicCommunityViewBinding
 
 class PublicCommunity : AppCompatActivity() {
@@ -35,6 +36,10 @@ class PublicCommunity : AppCompatActivity() {
     object Configurations {
         const val PublicCommunityName: String = "PublicCommunityName"
         const val PublicCommunityDatabasePath: String = "PublicCommunityDatabasePath"
+    }
+
+    val overallTheme: OverallTheme by lazy {
+        OverallTheme(applicationContext)
     }
 
     val firebaseFirestore: FirebaseFirestore = Firebase.firestore
@@ -50,12 +55,12 @@ class PublicCommunity : AppCompatActivity() {
         publicCommunityViewBinding = PublicCommunityViewBinding.inflate(layoutInflater)
         setContentView(publicCommunityViewBinding.root)
 
-        val publicCommunityName = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityName)
-        val publicCommunityMessagesDatabasePath = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityDatabasePath).plus("/Messages")
+        val publicCommunityName: String = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityName)
+        val publicCommunityMessagesDatabasePath: String = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityDatabasePath).plus("/Messages")
 
         FirebaseMessaging.getInstance().subscribeToTopic(publicCommunityName)
 
-        publicCommunitySetUpUI()
+        publicCommunitySetupUI()
 
         val linearLayoutManager = LinearLayoutManager(this@PublicCommunity, RecyclerView.VERTICAL, false)
         linearLayoutManager.stackFromEnd = false
