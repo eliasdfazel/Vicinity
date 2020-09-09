@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/9/20 8:32 AM
- * Last modified 9/9/20 8:31 AM
+ * Created by Elias Fazel on 9/9/20 8:34 AM
+ * Last modified 9/9/20 8:34 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -24,10 +24,8 @@ import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Calendar.formatToCurrentTimeZone
 import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
 
-class PublicCommunityAdapter(
-    private val context: PublicCommunity,
-    firebaseRecyclerOptions: FirestoreRecyclerOptions<PublicMessageData>
-) : FirestoreRecyclerAdapter<PublicMessageData, PublicCommunityViewHolder>(firebaseRecyclerOptions) {
+class PublicCommunityAdapter(private val context: PublicCommunity,
+    firebaseRecyclerOptions: FirestoreRecyclerOptions<PublicMessageData>) : FirestoreRecyclerAdapter<PublicMessageData, PublicCommunityViewHolder>(firebaseRecyclerOptions) {
 
     override fun getItemViewType(position: Int): Int {
 
