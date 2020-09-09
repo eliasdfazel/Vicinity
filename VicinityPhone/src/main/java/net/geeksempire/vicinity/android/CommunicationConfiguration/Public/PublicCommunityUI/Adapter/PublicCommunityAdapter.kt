@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/9/20 6:37 AM
- * Last modified 9/9/20 6:37 AM
+ * Created by Elias Fazel on 9/9/20 8:19 AM
+ * Last modified 9/9/20 8:16 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -82,7 +82,8 @@ class PublicCommunityAdapter(
             val dateFormat: DateFormat = SimpleDateFormat.getDateInstance(DateFormat.FULL, Locale.getDefault())
             val creationDate = dateFormat.format(it.toDate())
 
-            publicCommunityViewHolder.userMessageDate.text = creationDate //DateFormat.getDateInstance().format(it.toDate())
+            val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            publicCommunityViewHolder.userMessageDate.text = format.format(it.toDate()) //DateFormat.getDateInstance().format(it.toDate())
 
         }
 
