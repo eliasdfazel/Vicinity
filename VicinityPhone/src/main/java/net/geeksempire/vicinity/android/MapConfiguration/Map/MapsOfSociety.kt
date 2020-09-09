@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/8/20 10:55 AM
- * Last modified 9/8/20 9:19 AM
+ * Created by Elias Fazel on 9/9/20 8:55 AM
+ * Last modified 9/9/20 8:52 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -31,7 +31,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.firestoreSettings
 import com.google.firebase.ktx.Firebase
 import net.geeksempire.chat.vicinity.Util.MapsUtil.LocationCoordinatesUpdater
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoint.PublicCommunicationEndpoint
@@ -143,6 +145,13 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
             .inject(this@MapsOfSociety)
 
         networkConnectionListener.networkConnectionListenerInterface = this@MapsOfSociety
+
+        val firebaseFirestoreSettings = firestoreSettings {
+            isPersistenceEnabled = true
+            cacheSizeBytes = FirebaseFirestoreSettings.CACHE_SIZE_UNLIMITED
+        }
+
+        firestoreDatabase.firestoreSettings = firebaseFirestoreSettings
 
         val builderStrictMode = StrictMode.VmPolicy.Builder()
         StrictMode.setVmPolicy(builderStrictMode.build())
