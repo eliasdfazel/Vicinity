@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/9/20 6:13 AM
- * Last modified 9/9/20 6:08 AM
+ * Created by Elias Fazel on 9/9/20 6:37 AM
+ * Last modified 9/9/20 6:37 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -22,9 +22,14 @@ import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.DataSt
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
-class PublicCommunityAdapter (private val context: PublicCommunity,
-                              firebaseRecyclerOptions: FirestoreRecyclerOptions<PublicMessageData>) : FirestoreRecyclerAdapter<PublicMessageData, PublicCommunityViewHolder>(firebaseRecyclerOptions) {
+class PublicCommunityAdapter(
+    private val context: PublicCommunity,
+    firebaseRecyclerOptions: FirestoreRecyclerOptions<PublicMessageData>
+) : FirestoreRecyclerAdapter<PublicMessageData, PublicCommunityViewHolder>(firebaseRecyclerOptions) {
 
     override fun getItemViewType(position: Int): Int {
 
@@ -34,22 +39,36 @@ class PublicCommunityAdapter (private val context: PublicCommunity,
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): PublicCommunityViewHolder {
 
         return if (snapshots[viewType].userIdentifier == context.firebaseUser.uid) {
-            PublicCommunityViewHolder(LayoutInflater.from(context).inflate(R.layout.public_community_self_message_items, viewGroup, false))
+            PublicCommunityViewHolder(
+                LayoutInflater.from(context).inflate(
+                    R.layout.public_community_self_message_items,
+                    viewGroup,
+                    false
+                )
+            )
         } else {
-            PublicCommunityViewHolder(LayoutInflater.from(context).inflate(R.layout.public_community_others_message_items, viewGroup, false))
+            PublicCommunityViewHolder(
+                LayoutInflater.from(context).inflate(
+                    R.layout.public_community_others_message_items,
+                    viewGroup,
+                    false
+                )
+            )
         }
     }
 
-    override fun onBindViewHolder(publicCommunityViewHolder: PublicCommunityViewHolder, position: Int, publicMessageData: PublicMessageData) {
+    override fun onBindViewHolder(
+        publicCommunityViewHolder: PublicCommunityViewHolder,
+        position: Int,
+        publicMessageData: PublicMessageData
+    ) {
 
         when (context.overallTheme.checkThemeLightDark()) {
             ThemeType.ThemeLight -> {
 
 
-
             }
             ThemeType.ThemeDark -> {
-
 
 
             }
@@ -57,7 +76,15 @@ class PublicCommunityAdapter (private val context: PublicCommunity,
 
         publicCommunityViewHolder.userDisplayName.text = publicMessageData.userDisplayName
         publicCommunityViewHolder.userMessageTextContent.text = publicMessageData.userMessageTextContent
-        publicCommunityViewHolder.userMessageDate.text = publicMessageData.userMessageDate.toString()
+
+        publicMessageData.userMessageDate?.let {
+
+            val dateFormat: DateFormat = SimpleDateFormat.getDateInstance(DateFormat.FULL, Locale.getDefault())
+            val creationDate = dateFormat.format(it.toDate())
+
+            publicCommunityViewHolder.userMessageDate.text = creationDate //DateFormat.getDateInstance().format(it.toDate())
+
+        }
 
         Glide.with(context)
             .asDrawable()
