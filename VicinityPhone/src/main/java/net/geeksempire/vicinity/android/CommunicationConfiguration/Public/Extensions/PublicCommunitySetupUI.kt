@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/9/20 5:01 AM
- * Last modified 9/9/20 4:58 AM
+ * Created by Elias Fazel on 9/9/20 6:13 AM
+ * Last modified 9/9/20 6:10 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -32,7 +32,7 @@ fun PublicCommunity.publicCommunitySetupUI() {
         }
     }
 
-    publicCommunityViewBinding.scrollWrapper.setPadding(0, publicCommunityViewBinding.scrollWrapper.paddingTop + statusBarHeight(applicationContext), 0, publicCommunityViewBinding.messageContentWrapper.height)
+    publicCommunityViewBinding.scrollWrapper.setPadding(0, publicCommunityViewBinding.scrollWrapper.paddingTop + statusBarHeight(applicationContext), 0, 0)
 
     publicCommunityViewBinding.messageContentWrapper.post {
         val scrollWrapperLayoutParams = publicCommunityViewBinding.nestedScrollView.layoutParams as ConstraintLayout.LayoutParams
