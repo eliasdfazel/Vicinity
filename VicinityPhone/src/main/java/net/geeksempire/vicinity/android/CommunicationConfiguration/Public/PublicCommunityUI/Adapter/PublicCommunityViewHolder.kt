@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/9/20 6:13 AM
- * Last modified 9/9/20 6:02 AM
+ * Created by Elias Fazel on 9/9/20 11:07 AM
+ * Last modified 9/9/20 11:01 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -20,6 +20,7 @@ import net.geekstools.imageview.customshapes.ShapesImage
 class PublicCommunityViewHolder (view: View) : RecyclerView.ViewHolder(view) {
     val rootViewItem: ConstraintLayout = view.rootViewItem
     val userProfileImage: ShapesImage = view.userProfileImage
+    val messageContentWrapper: ConstraintLayout = view.messageContentWrapper
     val userDisplayName: TextView = view.userDisplayName
     val userMessageTextContent: TextView = view.userMessageTextContent
     val userMessageDate: TextView = view.userMessageDate

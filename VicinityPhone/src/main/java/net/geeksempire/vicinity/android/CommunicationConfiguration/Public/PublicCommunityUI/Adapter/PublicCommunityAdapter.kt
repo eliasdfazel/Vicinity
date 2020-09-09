@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/9/20 8:34 AM
- * Last modified 9/9/20 8:34 AM
+ * Created by Elias Fazel on 9/9/20 11:07 AM
+ * Last modified 9/9/20 11:06 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,11 +10,17 @@
 
 package net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.Adapter
 
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.LayerDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestoreException
@@ -22,6 +28,7 @@ import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.DataSt
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Calendar.formatToCurrentTimeZone
+import net.geeksempire.vicinity.android.Utils.UI.Colors.extractDominantColor
 import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
 
 class PublicCommunityAdapter(private val context: PublicCommunity,
@@ -53,11 +60,7 @@ class PublicCommunityAdapter(private val context: PublicCommunity,
         }
     }
 
-    override fun onBindViewHolder(
-        publicCommunityViewHolder: PublicCommunityViewHolder,
-        position: Int,
-        publicMessageData: PublicMessageData
-    ) {
+    override fun onBindViewHolder(publicCommunityViewHolder: PublicCommunityViewHolder, position: Int, publicMessageData: PublicMessageData) {
 
         when (context.overallTheme.checkThemeLightDark()) {
             ThemeType.ThemeLight -> {
@@ -83,7 +86,35 @@ class PublicCommunityAdapter(private val context: PublicCommunity,
             .asDrawable()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .load(publicMessageData.userProfileImage)
-            .into(publicCommunityViewHolder.userProfileImage)
+            .listener(object : RequestListener<Drawable> {
+
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+
+                    return false
+                }
+
+                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+
+                    context.runOnUiThread {
+
+                        resource?.let {
+
+                            val messageContentBackground: LayerDrawable = context.getDrawable(R.drawable.message_content_background) as LayerDrawable
+                            val temporaryBackground: Drawable = messageContentBackground.findDrawableByLayerId(R.id.temporaryBackground)
+                            temporaryBackground.setTint(extractDominantColor(context, it))
+
+                            publicCommunityViewHolder.messageContentWrapper.background = messageContentBackground
+
+                            publicCommunityViewHolder.userProfileImage.setImageDrawable(it)
+                        }
+
+                    }
+
+                    return false
+                }
+
+            })
+            .submit()
 
         publicCommunityViewHolder.rootViewItem.setOnClickListener {
 
