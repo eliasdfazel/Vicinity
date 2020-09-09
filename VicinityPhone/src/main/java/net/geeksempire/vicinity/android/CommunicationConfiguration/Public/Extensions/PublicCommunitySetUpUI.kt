@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/9/20 4:27 AM
- * Last modified 9/9/20 4:03 AM
+ * Created by Elias Fazel on 9/9/20 5:01 AM
+ * Last modified 9/9/20 4:58 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -34,8 +34,14 @@ fun PublicCommunity.publicCommunitySetupUI() {
 
     publicCommunityViewBinding.scrollWrapper.setPadding(0, publicCommunityViewBinding.scrollWrapper.paddingTop + statusBarHeight(applicationContext), 0, publicCommunityViewBinding.messageContentWrapper.height)
 
-    val sendButtonLayoutParams = publicCommunityViewBinding.messageContentWrapper.layoutParams as ConstraintLayout.LayoutParams
-    sendButtonLayoutParams.setMargins(0, 0, 0, navigationBarHeight(applicationContext))
-    publicCommunityViewBinding.messageContentWrapper.layoutParams = sendButtonLayoutParams
+    publicCommunityViewBinding.messageContentWrapper.post {
+        val scrollWrapperLayoutParams = publicCommunityViewBinding.nestedScrollView.layoutParams as ConstraintLayout.LayoutParams
+        scrollWrapperLayoutParams.setMargins(0, 0, 0, navigationBarHeight(applicationContext) + publicCommunityViewBinding.messageContentWrapper.height)
+        publicCommunityViewBinding.nestedScrollView.layoutParams = scrollWrapperLayoutParams
+    }
+
+    val messageContentWrapperLayoutParams = publicCommunityViewBinding.messageContentWrapper.layoutParams as ConstraintLayout.LayoutParams
+    messageContentWrapperLayoutParams.setMargins(0, 0, 0, navigationBarHeight(applicationContext))
+    publicCommunityViewBinding.messageContentWrapper.layoutParams = messageContentWrapperLayoutParams
 
 }
