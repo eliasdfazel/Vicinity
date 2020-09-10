@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/31/20 9:56 AM
- * Last modified 8/31/20 9:03 AM
+ * Created by Elias Fazel on 9/10/20 11:04 AM
+ * Last modified 9/10/20 10:51 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -18,6 +18,33 @@ import androidx.core.graphics.ColorUtils
 import androidx.palette.graphics.Palette
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.UI.Images.drawableToBitmap
+
+fun extractDominantColor(context: Context, bitmap: Bitmap): Int {
+
+    var dominantColor: Int = context.getColor(R.color.default_color)
+
+    var currentColor: Palette
+    try {
+        if (bitmap != null && !bitmap.isRecycled) {
+            currentColor = Palette.from(bitmap).generate()
+            val defaultColor: Int = context.getColor(R.color.default_color)
+            dominantColor = currentColor.getDominantColor(defaultColor)
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+
+        try {
+            if (bitmap != null && !bitmap.isRecycled) {
+                currentColor = Palette.from(bitmap).generate()
+                val defaultColor: Int = context.getColor(R.color.default_color)
+                dominantColor = currentColor.getMutedColor(defaultColor)
+            }
+        } catch (e1: Exception) {
+            e1.printStackTrace()
+        }
+    }
+    return dominantColor
+}
 
 fun extractDominantColor(context: Context, drawable: Drawable): Int {
 

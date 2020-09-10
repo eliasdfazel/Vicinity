@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/10/20 10:43 AM
- * Last modified 9/10/20 10:37 AM
+ * Created by Elias Fazel on 9/10/20 11:04 AM
+ * Last modified 9/10/20 10:54 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -84,7 +84,7 @@ class NotificationCreator (private val context: Context) {
             notificationManager.createNotificationChannel(notificationChannel)
         }
 
-        notificationManager.notify(notificationId, notificationBuilder.build())
+        notificationManager.notify(notificationId.toInt(), notificationBuilder.build())
     }
 
 }
