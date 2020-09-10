@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/30/20 9:15 AM
- * Last modified 8/30/20 9:10 AM
+ * Created by Elias Fazel on 9/10/20 10:43 AM
+ * Last modified 9/10/20 10:28 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -20,6 +20,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.location.LocationSettingsStatusCodes
 import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
+import net.geeksempire.vicinity.android.Utils.Preferences.ReadPreferences
 
 class LocationCheckpoint {
 
@@ -58,6 +59,13 @@ class LocationCheckpoint {
         val isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 
         return (isGpsEnabled && isNetworkEnabled)
+    }
+
+    fun knownLocationName(context: Context, vicinityCommunityName: String) : String? {
+
+        val readPreferences = ReadPreferences(context)
+
+        return readPreferences.readPreference("VicinityInformation", vicinityCommunityName, "Earth")
     }
 
 }
