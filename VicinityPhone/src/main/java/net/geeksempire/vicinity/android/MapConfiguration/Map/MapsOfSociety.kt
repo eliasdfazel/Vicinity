@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/9/20 8:55 AM
- * Last modified 9/9/20 8:52 AM
+ * Created by Elias Fazel on 9/10/20 8:09 AM
+ * Last modified 9/10/20 7:47 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -235,7 +235,7 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
         userLatitudeLongitude?.let {
 
-            readyGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it, 15.0f))
+            readyGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(it, 13.77f))
 
             addInitialMarker()
 

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/5/20 11:48 AM
- * Last modified 9/5/20 11:43 AM
+ * Created by Elias Fazel on 9/10/20 8:09 AM
+ * Last modified 9/10/20 7:48 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,6 +10,7 @@
 
 package net.geeksempire.vicinity.android.MapConfiguration.Vicinity.Operations
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.location.Location
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -43,7 +44,15 @@ class VicinityUserInterface (private val context: Context) {
 
         googleMap.addCircle(circleOptions)
 
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatitudeLongitude, 15.70f))
+        val valueAnimatorCameraMovement = ValueAnimator.ofFloat(13.77f, 15.70f)
+        valueAnimatorCameraMovement.duration = 753
+        valueAnimatorCameraMovement.addUpdateListener { animator ->
+            val animatorValue = animator.animatedValue as Float
+
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatitudeLongitude, animatorValue))
+
+        }
+        valueAnimatorCameraMovement.start()
 
     }
 

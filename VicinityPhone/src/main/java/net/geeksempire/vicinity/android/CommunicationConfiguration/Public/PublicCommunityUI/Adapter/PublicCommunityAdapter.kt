@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/9/20 11:07 AM
- * Last modified 9/9/20 11:06 AM
+ * Created by Elias Fazel on 9/10/20 8:09 AM
+ * Last modified 9/10/20 8:09 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -29,6 +29,7 @@ import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Public
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Calendar.formatToCurrentTimeZone
 import net.geeksempire.vicinity.android.Utils.UI.Colors.extractDominantColor
+import net.geeksempire.vicinity.android.Utils.UI.Colors.isColorDark
 import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
 
 class PublicCommunityAdapter(private val context: PublicCommunity,
@@ -42,21 +43,9 @@ class PublicCommunityAdapter(private val context: PublicCommunity,
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): PublicCommunityViewHolder {
 
         return if (snapshots[viewType].userIdentifier == context.firebaseUser.uid) {
-            PublicCommunityViewHolder(
-                LayoutInflater.from(context).inflate(
-                    R.layout.public_community_self_message_items,
-                    viewGroup,
-                    false
-                )
-            )
+            PublicCommunityViewHolder(LayoutInflater.from(context).inflate(R.layout.public_community_self_message_items, viewGroup, false))
         } else {
-            PublicCommunityViewHolder(
-                LayoutInflater.from(context).inflate(
-                    R.layout.public_community_others_message_items,
-                    viewGroup,
-                    false
-                )
-            )
+            PublicCommunityViewHolder(LayoutInflater.from(context).inflate(R.layout.public_community_others_message_items, viewGroup, false))
         }
     }
 
@@ -99,9 +88,30 @@ class PublicCommunityAdapter(private val context: PublicCommunity,
 
                         resource?.let {
 
-                            val messageContentBackground: LayerDrawable = context.getDrawable(R.drawable.message_content_background) as LayerDrawable
+                            val messageContentBackground: LayerDrawable = if (publicMessageData.userIdentifier == context.firebaseUser.uid) {
+                                context.getDrawable(R.drawable.message_self_content_background) as LayerDrawable
+                            } else {
+                                context.getDrawable(R.drawable.message_others_content_background) as LayerDrawable
+                            }
+
+                            val dominantColor = extractDominantColor(context, it)
+
                             val temporaryBackground: Drawable = messageContentBackground.findDrawableByLayerId(R.id.temporaryBackground)
-                            temporaryBackground.setTint(extractDominantColor(context, it))
+                            temporaryBackground.setTint(dominantColor)
+
+                            if (isColorDark(dominantColor)) {
+
+                                publicCommunityViewHolder.userDisplayName.setTextColor(context.getColor(R.color.light))
+                                publicCommunityViewHolder.userMessageTextContent.setTextColor(context.getColor(R.color.light))
+                                publicCommunityViewHolder.userMessageDate.setTextColor(context.getColor(R.color.light))
+
+                            } else {
+
+                                publicCommunityViewHolder.userDisplayName.setTextColor(context.getColor(R.color.dark))
+                                publicCommunityViewHolder.userMessageTextContent.setTextColor(context.getColor(R.color.dark))
+                                publicCommunityViewHolder.userMessageDate.setTextColor(context.getColor(R.color.dark))
+
+                            }
 
                             publicCommunityViewHolder.messageContentWrapper.background = messageContentBackground
 

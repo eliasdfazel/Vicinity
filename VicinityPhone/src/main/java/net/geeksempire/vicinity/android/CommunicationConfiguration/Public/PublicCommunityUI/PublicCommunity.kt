@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/9/20 8:55 AM
- * Last modified 9/9/20 8:54 AM
+ * Created by Elias Fazel on 9/10/20 8:09 AM
+ * Last modified 9/10/20 7:27 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -30,6 +30,7 @@ import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extens
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunitySetupUI
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.Adapter.PublicCommunityAdapter
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.Adapter.PublicCommunityViewHolder
+import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListenerInterface
@@ -147,6 +148,9 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
     }
 
     override fun onBackPressed() {
+
+        this@PublicCommunity.finish()
+        overridePendingTransition(R.anim.fade_in, R.anim.slide_out_right)
 
     }
 

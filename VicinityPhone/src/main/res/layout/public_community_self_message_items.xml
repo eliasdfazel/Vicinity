@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/9/20 11:07 AM
-  ~ Last modified 9/9/20 11:00 AM
+  ~ Created by Elias Fazel on 9/10/20 8:09 AM
+  ~ Last modified 9/10/20 8:07 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -15,8 +15,7 @@
     android:id="@+id/rootViewItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="1dp"
-    android:layout_marginEnd="3dp"
+    android:layout_marginHorizontal="3dp"
     android:layout_marginVertical="7dp"
     tools:context=".CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity">
 
@@ -26,7 +25,7 @@
         android:layout_height="71dp"
         android:scaleType="centerCrop"
 
-        apps:shapeDrawable="@drawable/message_profile_image_background"
+        apps:shapeDrawable="@drawable/message_self_profile_image_background"
 
         apps:layout_constraintTop_toTopOf="parent"
         apps:layout_constraintStart_toStartOf="parent"/>
@@ -35,8 +34,9 @@
         android:id="@+id/messageContentWrapper"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/message_content_background"
+        android:background="@drawable/message_self_content_background"
 
+        apps:layout_constraintWidth_min="177dp"
         apps:layout_constraintHeight_min="99dp"
 
         apps:layout_constraintTop_toTopOf="@id/userProfileImage"

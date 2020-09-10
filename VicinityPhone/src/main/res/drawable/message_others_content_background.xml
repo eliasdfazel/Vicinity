@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/9/20 11:07 AM
-  ~ Last modified 9/9/20 10:40 AM
+  ~ Created by Elias Fazel on 9/10/20 8:09 AM
+  ~ Last modified 9/10/20 7:04 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -18,8 +18,8 @@
             android:shape="rectangle">
 
             <corners
-                android:topLeftRadius="0dp"
-                android:topRightRadius="7dp"
+                android:topLeftRadius="7dp"
+                android:topRightRadius="0dp"
                 android:bottomLeftRadius="7dp"
                 android:bottomRightRadius="7dp"/>
 
