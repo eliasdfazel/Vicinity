@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/10/20 8:09 AM
-  ~ Last modified 9/10/20 8:07 AM
+  ~ Created by Elias Fazel on 9/10/20 8:32 AM
+  ~ Last modified 9/10/20 8:30 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -35,14 +35,15 @@
         android:id="@+id/messageContentWrapper"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="53dp"
         android:background="@drawable/message_others_content_background"
 
         apps:layout_constraintWidth_min="177dp"
         apps:layout_constraintHeight_min="99dp"
 
+        apps:layout_constraintStart_toStartOf="parent"
         apps:layout_constraintTop_toTopOf="@id/userProfileImage"
-        apps:layout_constraintEnd_toStartOf="@id/userProfileImage"
-        apps:layout_constraintStart_toStartOf="parent">
+        apps:layout_constraintEnd_toStartOf="@id/userProfileImage">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/userDisplayName"
@@ -63,7 +64,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingVertical="1dp"
-            android:paddingHorizontal="13dp"
+            android:paddingStart="13dp"
+            android:paddingEnd="23dp"
             android:gravity="top|start"
             android:textColor="@color/dark"
             android:textSize="27sp"

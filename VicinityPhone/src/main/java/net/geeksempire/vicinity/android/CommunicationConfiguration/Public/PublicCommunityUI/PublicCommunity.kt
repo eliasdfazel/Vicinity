@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/10/20 8:09 AM
- * Last modified 9/10/20 7:27 AM
+ * Created by Elias Fazel on 9/10/20 8:32 AM
+ * Last modified 9/10/20 8:31 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -120,10 +120,15 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                     .addOnSuccessListener {
 
                         /*remove text from editText*/
+                        publicCommunityViewBinding.textMessageContentView.text = null
+
+                        publicCommunityViewBinding.textMessageContentLayout.isErrorEnabled = true
+                        publicCommunityViewBinding.textMessageContentLayout.error = "test error"
 
                     }.addOnFailureListener {
 
                         /*show input error*/
+                        publicCommunityViewBinding.textMessageContentLayout.isErrorEnabled = true
 
                     }
 
