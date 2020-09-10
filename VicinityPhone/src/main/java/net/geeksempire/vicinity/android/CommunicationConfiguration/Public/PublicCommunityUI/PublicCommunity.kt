@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/10/20 9:23 AM
- * Last modified 9/10/20 9:23 AM
+ * Created by Elias Fazel on 9/10/20 9:38 AM
+ * Last modified 9/10/20 9:29 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -127,8 +127,9 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                         val linkedHashMapData: LinkedHashMap<Any, Any> = LinkedHashMap<Any, Any>()
                         linkedHashMapData["notificationTopic"] = publicCommunityName
                         linkedHashMapData["selfUid"] = firebaseUser.uid
+                        linkedHashMapData["selfDisplayName"] = firebaseUser.displayName.toString()
                         linkedHashMapData["publicCommunityAction"] = getString(R.string.publicCommunityAction)
-                        linkedHashMapData["communityName"] = publicCommunityName
+                        linkedHashMapData["publicCommunityName"] = publicCommunityName
                         linkedHashMapData["notificationLargeIcon"] = firebaseUser.photoUrl.toString()
                         linkedHashMapData["messageContent"] = publicCommunityViewBinding.textMessageContentView.text.toString()
 

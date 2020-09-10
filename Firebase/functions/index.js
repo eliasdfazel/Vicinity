@@ -14,44 +14,41 @@ const runtimeOptions = {
     timeoutSeconds: 313,
 }
 
-exports.publicCommunityNewMessageNotification = functions.https.onCall((data, context) => {
+exports.publicCommunityNewMessageNotification = functions.runWith(runtimeOptions).https.onCall((data, context) => {
 
-    //const EarthHemisphere = data.EarthHemisphere;
-
-    /*var postTitle = newestPostJson['title'].rendered;
-    var postSummary = newestPostJson['excerpt'].rendered.replace( /(<([^>]+)>)/ig, '');
-    var postFeaturedImage = newestPostJson['jetpack_featured_media_url'];
+    const notificationTopic = data.notificationTopic
+    const selfDisplayName = data.selfDisplayName
+    const selfUid = data.selfUid
+    const publicCommunityAction = data.publicCommunityAction
+    const publicCommunityName = data.publicCommunityName
+    const notificationLargeIcon = data.notificationLargeIcon
+    const messageContent = data.messageContent
 
     var message = {
         notification: {
-            title: postTitle,
-            body: postSummary
+            title: selfDisplayName,
+            body: messageContent
         },
         android: {
-            notification: {
-                image: '' + postFeaturedImage,
-                color: '#' + postColor
-            }
+            ttl: (3600 * 1000) * (1), // 1 hour in milliseconds
+
+            priority: 'high',
         },
         data: {
-            title: postTitle,
-            summary: postSummary,
-            color: '#' + postColor,
-            image: '' + postFeaturedImage
+            "selfDisplayName": selfDisplayName,
+            "selfUid": selfUid,
+            "publicCommunityAction": publicCommunityAction,
+            "publicCommunityName": publicCommunityName, 
+            "notificationLargeIcon": notificationLargeIcon,
+            "messageContent": messageContent
         },
-        topic: 'NewestPosts'
+        topic: notificationTopic
     };
 
-    admin.messaging().send(message)
-        .then((response) => {
-
-            res.status(200).send('Title: ' + postTitle + '<br/>' + 'Summary: ' + postSummary + '<br/>' + 'Color: ' + '#' + postColor + '<br/>' + 'Featured Image: ' + postFeaturedImage);
-
-        })
-        .catch((error) => {
-
-            res.status(200).send('Error: ' + error);
-
-        });*/
+    return admin.messaging().send(message).then((response) => {
+        console.log('Successfully Sent ::: ', response);
+    }).catch((error) => {
+        console.log('Error Sending Message ::: ', error);
+    });
 
 });
