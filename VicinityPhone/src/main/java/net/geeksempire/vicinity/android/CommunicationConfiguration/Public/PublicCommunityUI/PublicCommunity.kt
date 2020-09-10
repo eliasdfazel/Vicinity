@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/10/20 8:32 AM
- * Last modified 9/10/20 8:31 AM
+ * Created by Elias Fazel on 9/10/20 9:23 AM
+ * Last modified 9/10/20 9:23 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -23,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.firestoreSettings
+import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.DataStructure.PublicMessageData
@@ -55,6 +56,8 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
     val firebaseUser: FirebaseUser = Firebase.auth.currentUser!!
 
     private lateinit var firebaseRecyclerAdapter: FirestoreRecyclerAdapter<PublicMessageData, PublicCommunityViewHolder>
+
+    private val firebaseCloudFunctions: FirebaseFunctions = FirebaseFunctions.getInstance()
 
     @Inject lateinit var networkCheckpoint: NetworkCheckpoint
 
@@ -119,15 +122,23 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                     .add(publicCommunityPrepareMessage())
                     .addOnSuccessListener {
 
-                        /*remove text from editText*/
                         publicCommunityViewBinding.textMessageContentView.text = null
 
-                        publicCommunityViewBinding.textMessageContentLayout.isErrorEnabled = true
-                        publicCommunityViewBinding.textMessageContentLayout.error = "test error"
+                        val linkedHashMapData: LinkedHashMap<Any, Any> = LinkedHashMap<Any, Any>()
+                        linkedHashMapData["notificationTopic"] = publicCommunityName
+                        linkedHashMapData["selfUid"] = firebaseUser.uid
+                        linkedHashMapData["publicCommunityAction"] = getString(R.string.publicCommunityAction)
+                        linkedHashMapData["communityName"] = publicCommunityName
+                        linkedHashMapData["notificationLargeIcon"] = firebaseUser.photoUrl.toString()
+                        linkedHashMapData["messageContent"] = publicCommunityViewBinding.textMessageContentView.text.toString()
+
+                        firebaseCloudFunctions
+                            .getHttpsCallable("publicCommunityNewMessageNotification")
+                            .call(linkedHashMapData)
 
                     }.addOnFailureListener {
 
-                        /*show input error*/
+                        publicCommunityViewBinding.textMessageContentLayout.error = getString(R.string.messageSentError)
                         publicCommunityViewBinding.textMessageContentLayout.isErrorEnabled = true
 
                     }

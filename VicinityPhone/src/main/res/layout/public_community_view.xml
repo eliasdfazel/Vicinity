@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/9/20 6:13 AM
-  ~ Last modified 9/9/20 6:04 AM
+  ~ Created by Elias Fazel on 9/10/20 9:23 AM
+  ~ Last modified 9/10/20 8:47 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -70,6 +70,7 @@
             android:id="@+id/sendMessageView"
             android:layout_width="51dp"
             android:layout_height="51dp"
+            android:layout_margin="1dp"
             android:contentDescription="@string/sendMessageText"
             android:insetTop="0dp"
             android:insetBottom="0dp"
@@ -108,7 +109,7 @@
             apps:hintEnabled="true"
             apps:hintAnimationEnabled="true"
             apps:hintTextColor="@color/default_color_light"
-            apps:errorEnabled="true"
+            apps:errorEnabled="false"
             apps:errorTextColor="@color/red"
 
             apps:layout_constraintBottom_toBottomOf="parent"

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/9/20 6:13 AM
- * Last modified 9/9/20 6:10 AM
+ * Created by Elias Fazel on 9/10/20 9:23 AM
+ * Last modified 9/10/20 8:46 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -13,6 +13,7 @@ package net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Exten
 import androidx.constraintlayout.widget.ConstraintLayout
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity
 import net.geeksempire.vicinity.android.R
+import net.geeksempire.vicinity.android.Utils.UI.Display.DpToInteger
 import net.geeksempire.vicinity.android.Utils.UI.Display.navigationBarHeight
 import net.geeksempire.vicinity.android.Utils.UI.Display.statusBarHeight
 import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
@@ -41,7 +42,7 @@ fun PublicCommunity.publicCommunitySetupUI() {
     }
 
     val messageContentWrapperLayoutParams = publicCommunityViewBinding.messageContentWrapper.layoutParams as ConstraintLayout.LayoutParams
-    messageContentWrapperLayoutParams.setMargins(0, 0, 0, navigationBarHeight(applicationContext))
+    messageContentWrapperLayoutParams.setMargins(0, 0, 0, navigationBarHeight(applicationContext) + DpToInteger(applicationContext, 3))
     publicCommunityViewBinding.messageContentWrapper.layoutParams = messageContentWrapperLayoutParams
 
 }
