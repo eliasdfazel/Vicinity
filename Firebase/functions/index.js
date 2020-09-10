@@ -30,7 +30,7 @@ exports.publicCommunityNewMessageNotification = functions.runWith(runtimeOptions
             body: messageContent
         },
         android: {
-            ttl: (3600 * 1000) * (1), // 1 hour in milliseconds
+            ttl: (3600 * 1000) * (1), // 1 Hour in Milliseconds
 
             priority: 'high',
         },
