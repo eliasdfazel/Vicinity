@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/10/20 11:04 AM
- * Last modified 9/10/20 10:56 AM
+ * Created by Elias Fazel on 9/12/20 4:38 AM
+ * Last modified 9/12/20 4:25 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -13,6 +13,7 @@ package net.geeksempire.vicinity.android.Utils.RemoteTask
 import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.Bitmap
+import android.util.Log
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -36,6 +37,7 @@ class CloudNotificationHandler : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        Log.d(this@CloudNotificationHandler.javaClass.simpleName, "${remoteMessage.data}")
 
         val linkedHashMapData = remoteMessage.data
 
@@ -66,7 +68,7 @@ class CloudNotificationHandler : FirebaseMessagingService() {
                             largeIcon = bitmap,
                             notificationColor = extractDominantColor(applicationContext, bitmap),
                             notificationId = System.currentTimeMillis(),
-                            locationKnownName = locationCheckpoint.knownLocationName(applicationContext, vicinityName(LatLng(linkedHashMapData["publicCommunityName"].toString().toDouble(), linkedHashMapData["publicCommunityName"].toString().toDouble()))).toString(),
+                            locationKnownName = locationCheckpoint.knownLocationName(applicationContext, vicinityName(LatLng(linkedHashMapData["userLatitude"].toString().toDouble(), linkedHashMapData["userLongitude"].toString().toDouble()))).toString(),
                             pendingIntent = publicCommunityPendingIntent
                         )
 

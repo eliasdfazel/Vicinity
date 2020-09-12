@@ -16,15 +16,15 @@ const runtimeOptions = {
 
 exports.publicCommunityNewMessageNotification = functions.runWith(runtimeOptions).https.onCall((data, context) => {
 
-    const notificationTopic = data.notificationTopic
-    const selfDisplayName = data.selfDisplayName
-    const selfUid = data.selfUid
-    const publicCommunityAction = data.publicCommunityAction
-    const publicCommunityName = data.publicCommunityName
-    const notificationLargeIcon = data.notificationLargeIcon
-    const messageContent = data.messageContent
-
-    console.log('TOPIC >>> ', notificationTopic);
+    const notificationTopic = data.notificationTopic;
+    const selfDisplayName = data.selfDisplayName;
+    const selfUid = data.selfUid;
+    const publicCommunityAction = data.publicCommunityAction;
+    const userLatitude = data.userLatitude;
+    const userLongitude = data.userLongitude;
+    const publicCommunityName = data.publicCommunityName;
+    const notificationLargeIcon = data.notificationLargeIcon;
+    const messageContent = data.messageContent;
 
     var message = {
 
@@ -38,6 +38,8 @@ exports.publicCommunityNewMessageNotification = functions.runWith(runtimeOptions
             "selfDisplayName": selfDisplayName,
             "selfUid": selfUid,
             "publicCommunityAction": publicCommunityAction,
+            "userLatitude": userLatitude,
+            "userLongitude": userLongitude,
             "publicCommunityName": publicCommunityName, 
             "notificationLargeIcon": notificationLargeIcon,
             "messageContent": messageContent

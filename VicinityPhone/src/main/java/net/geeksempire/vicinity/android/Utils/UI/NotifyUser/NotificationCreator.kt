@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/10/20 11:04 AM
- * Last modified 9/10/20 10:54 AM
+ * Created by Elias Fazel on 9/12/20 4:38 AM
+ * Last modified 9/12/20 4:24 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -29,7 +29,7 @@ class NotificationCreator (private val context: Context) {
 
     fun create(notificationChannelId: String,
                titleText: String, contentText: String, largeIcon: Bitmap, notificationColor: Int, notificationId: Long,
-               locationKnownName: String,
+               locationKnownName: String?,
                pendingIntent: PendingIntent?) {
 
         val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
@@ -68,8 +68,11 @@ class NotificationCreator (private val context: Context) {
         if (pendingIntent != null) {
             notificationBuilder.setContentIntent(pendingIntent)
 
-            val builderActionNotification = Notification.Action.Builder(null, locationKnownName.toLowerCase(Locale.getDefault()), pendingIntent)
-            notificationBuilder.addAction(builderActionNotification.build())
+            locationKnownName?.let {
+                val builderActionNotification = Notification.Action.Builder(null, locationKnownName.toLowerCase(Locale.getDefault()), pendingIntent)
+                notificationBuilder.addAction(builderActionNotification.build())
+            }
+
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

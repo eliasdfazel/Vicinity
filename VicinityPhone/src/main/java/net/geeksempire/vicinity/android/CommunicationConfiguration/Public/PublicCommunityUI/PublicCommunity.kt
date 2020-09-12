@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/12/20 3:49 AM
- * Last modified 9/12/20 3:48 AM
+ * Created by Elias Fazel on 9/12/20 4:38 AM
+ * Last modified 9/12/20 4:13 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -11,11 +11,13 @@
 package net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -29,6 +31,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.DataStructure.PublicMessageData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunityPrepareMessage
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunityPrepareNotificationData
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunityPrepareNotificationTopic
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunitySetupUI
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.Adapter.PublicCommunityAdapter
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.Adapter.PublicCommunityViewHolder
@@ -46,6 +49,9 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
     object Configurations {
         const val PublicCommunityName: String = "PublicCommunityName"
         const val PublicCommunityDatabasePath: String = "PublicCommunityDatabasePath"
+
+        const val UserLocationLatitude: String = "UserLatitude"
+        const val UserLocationLongitude: String = "UserLongitude"
     }
 
     val overallTheme: OverallTheme by lazy {
@@ -89,10 +95,18 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
         val publicCommunityName: String = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityName)
         val publicCommunityMessagesDatabasePath: String = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityDatabasePath).plus("/Messages")
 
-        FirebaseMessaging.getInstance().subscribeToTopic(publicCommunityName)
+        val userLocation = LatLng(
+            intent.getDoubleExtra(PublicCommunity.Configurations.UserLocationLatitude, 0.0),
+            intent.getDoubleExtra(PublicCommunity.Configurations.UserLocationLongitude, 0.0)
+        )
+
+
+        FirebaseMessaging.getInstance().subscribeToTopic(publicCommunityPrepareNotificationTopic(publicCommunityName))
             .addOnSuccessListener {
+                Log.d(this@PublicCommunity.javaClass.simpleName, "Subscribed To ${publicCommunityName}")
 
             }.addOnFailureListener {
+                Log.d(this@PublicCommunity.javaClass.simpleName, "Failed To Subscribe")
 
             }
 
@@ -127,7 +141,10 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                         firebaseCloudFunctions
                             .getHttpsCallable("publicCommunityNewMessageNotification")
-                            .call(publicCommunityPrepareNotificationData(publicCommunityName))
+                            .call(publicCommunityPrepareNotificationData(publicCommunityName, userLocation))
+                            .continueWith {
+
+                            }
 
                     }.addOnFailureListener {
 
