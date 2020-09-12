@@ -20,8 +20,9 @@ exports.publicCommunityNewMessageNotification = functions.runWith(runtimeOptions
     const selfDisplayName = data.selfDisplayName;
     const selfUid = data.selfUid;
     const publicCommunityAction = data.publicCommunityAction;
-    const userLatitude = data.userLatitude;
-    const userLongitude = data.userLongitude;
+    const nameOfCountry = data.nameOfCountry
+    const vicinityLatitude = data.vicinityLatitude;
+    const vicinityLongitude = data.vicinityLongitude;
     const publicCommunityName = data.publicCommunityName;
     const notificationLargeIcon = data.notificationLargeIcon;
     const messageContent = data.messageContent;
@@ -38,9 +39,10 @@ exports.publicCommunityNewMessageNotification = functions.runWith(runtimeOptions
             "selfDisplayName": selfDisplayName,
             "selfUid": selfUid,
             "publicCommunityAction": publicCommunityAction,
-            "userLatitude": userLatitude,
-            "userLongitude": userLongitude,
-            "publicCommunityName": publicCommunityName, 
+            "nameOfCountry": nameOfCountry,
+            "vicinityLatitude": vicinityLatitude,
+            "vicinityLongitude": vicinityLongitude,
+            "publicCommunityName": publicCommunityName,
             "notificationLargeIcon": notificationLargeIcon,
             "messageContent": messageContent
         },

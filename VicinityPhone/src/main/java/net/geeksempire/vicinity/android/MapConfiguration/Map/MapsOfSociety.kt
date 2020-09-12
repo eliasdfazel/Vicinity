@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/12/20 4:38 AM
- * Last modified 9/12/20 4:11 AM
+ * Created by Elias Fazel on 9/12/20 5:17 AM
+ * Last modified 9/12/20 4:58 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -291,8 +291,9 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
                         startActivity(Intent(applicationContext, PublicCommunity::class.java).apply {
                             putExtra(PublicCommunity.Configurations.PublicCommunityName, vicinityName(currentCommunityCoordinates))
                             putExtra(PublicCommunity.Configurations.PublicCommunityDatabasePath, PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName = nameOfCountry, currentCommunityCoordinates))
-                            putExtra(PublicCommunity.Configurations.UserLocationLatitude, currentCommunityCoordinates.latitude)
-                            putExtra(PublicCommunity.Configurations.UserLocationLongitude, currentCommunityCoordinates.longitude)
+                            putExtra(PublicCommunity.Configurations.PublicCommunityCountryName, nameOfCountry)
+                            putExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude, currentCommunityCoordinates.latitude)
+                            putExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLongitude, currentCommunityCoordinates.longitude)
                         }, ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_in_right, R.anim.fade_out).toBundle())
 
                     }

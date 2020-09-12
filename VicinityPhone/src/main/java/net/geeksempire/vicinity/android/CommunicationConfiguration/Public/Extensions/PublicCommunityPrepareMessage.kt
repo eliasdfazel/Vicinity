@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/12/20 4:46 AM
- * Last modified 9/12/20 4:45 AM
+ * Created by Elias Fazel on 9/12/20 5:17 AM
+ * Last modified 9/12/20 5:00 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -30,7 +30,7 @@ fun PublicCommunity.publicCommunityPrepareMessage() : LinkedHashMap<String, Any>
     return publicMessageDataItem
 }
 
-fun PublicCommunity.publicCommunityPrepareNotificationData(messageContent: String, publicCommunityName: String, userLocation: LatLng) : LinkedHashMap<String, Any> {
+fun PublicCommunity.publicCommunityPrepareNotificationData(messageContent: String, publicCommunityName: String, publicCommunityCountryName: String,communityCenterVicinity: LatLng) : LinkedHashMap<String, Any> {
 
     val publicMessageDataItem: LinkedHashMap<String, Any> = LinkedHashMap<String, Any>()
 
@@ -38,8 +38,9 @@ fun PublicCommunity.publicCommunityPrepareNotificationData(messageContent: Strin
     publicMessageDataItem["selfUid"] = firebaseUser.uid
     publicMessageDataItem["selfDisplayName"] = firebaseUser.displayName.toString()
     publicMessageDataItem["publicCommunityAction"] = getString(R.string.publicCommunityAction)
-    publicMessageDataItem["userLatitude"] = userLocation.latitude.toString()
-    publicMessageDataItem["userLongitude"] = userLocation.longitude.toString()
+    publicMessageDataItem["nameOfCountry"] = publicCommunityCountryName
+    publicMessageDataItem["vicinityLatitude"] = communityCenterVicinity.latitude.toString()
+    publicMessageDataItem["vicinityLongitude"] = communityCenterVicinity.longitude.toString()
     publicMessageDataItem["publicCommunityName"] = publicCommunityName
     publicMessageDataItem["notificationLargeIcon"] = firebaseUser.photoUrl.toString()
     publicMessageDataItem["messageContent"] = messageContent

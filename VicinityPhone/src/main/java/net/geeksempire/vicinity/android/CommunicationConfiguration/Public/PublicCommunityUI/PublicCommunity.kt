@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/12/20 4:46 AM
- * Last modified 9/12/20 4:45 AM
+ * Created by Elias Fazel on 9/12/20 5:17 AM
+ * Last modified 9/12/20 5:00 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -50,8 +50,9 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
         const val PublicCommunityName: String = "PublicCommunityName"
         const val PublicCommunityDatabasePath: String = "PublicCommunityDatabasePath"
 
-        const val UserLocationLatitude: String = "UserLatitude"
-        const val UserLocationLongitude: String = "UserLongitude"
+        const val PublicCommunityCountryName: String = "CountryName"
+        const val PublicCommunityCenterLocationLatitude: String = "VicinityLatitude"
+        const val PublicCommunityCenterLocationLongitude: String = "VicinityLongitude"
     }
 
     val overallTheme: OverallTheme by lazy {
@@ -95,9 +96,11 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
         val publicCommunityName: String = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityName)
         val publicCommunityMessagesDatabasePath: String = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityDatabasePath).plus("/Messages")
 
-        val userLocation = LatLng(
-            intent.getDoubleExtra(PublicCommunity.Configurations.UserLocationLatitude, 0.0),
-            intent.getDoubleExtra(PublicCommunity.Configurations.UserLocationLongitude, 0.0)
+        val publicCommunityCountryName: String = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityCountryName)
+
+        val communityCenterVicinity = LatLng(
+            intent.getDoubleExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude, 0.0),
+            intent.getDoubleExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLongitude, 0.0)
         )
 
 
@@ -141,7 +144,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                         firebaseCloudFunctions
                             .getHttpsCallable("publicCommunityNewMessageNotification")
-                            .call(publicCommunityPrepareNotificationData(messageContent, publicCommunityName, userLocation))
+                            .call(publicCommunityPrepareNotificationData(messageContent, publicCommunityName, publicCommunityCountryName, communityCenterVicinity))
                             .continueWith {
 
                             }

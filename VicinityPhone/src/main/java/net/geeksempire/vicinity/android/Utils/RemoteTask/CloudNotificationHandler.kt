@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/12/20 4:38 AM
- * Last modified 9/12/20 4:25 AM
+ * Created by Elias Fazel on 9/12/20 5:17 AM
+ * Last modified 9/12/20 5:09 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -23,6 +23,8 @@ import com.bumptech.glide.request.target.Target
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoint.PublicCommunicationEndpoint
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.vicinityName
 import net.geeksempire.vicinity.android.Utils.Location.LocationCheckpoint
 import net.geeksempire.vicinity.android.Utils.UI.Colors.extractDominantColor
@@ -41,6 +43,9 @@ class CloudNotificationHandler : FirebaseMessagingService() {
 
         val linkedHashMapData = remoteMessage.data
 
+        val nameOfCountry = linkedHashMapData["nameOfCountry"].toString()
+        val vicinityLocation = LatLng(linkedHashMapData["vicinityLatitude"].toString().toDouble(), linkedHashMapData["vicinityLongitude"].toString().toDouble())
+
         Glide.with(applicationContext)
             .asBitmap()
             .load(linkedHashMapData["notificationLargeIcon"])
@@ -56,7 +61,11 @@ class CloudNotificationHandler : FirebaseMessagingService() {
                     resource?.let { bitmap ->
 
                         val publicCommunityIntent = Intent(linkedHashMapData["publicCommunityAction"].toString())
-                        publicCommunityIntent.putExtra("publicCommunityName", linkedHashMapData["publicCommunityName"])
+                        publicCommunityIntent.putExtra(PublicCommunity.Configurations.PublicCommunityName, linkedHashMapData["publicCommunityName"])
+                        publicCommunityIntent.putExtra(PublicCommunity.Configurations.PublicCommunityDatabasePath, PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName = nameOfCountry, vicinityLocation))
+                        publicCommunityIntent.putExtra(PublicCommunity.Configurations.PublicCommunityCountryName, nameOfCountry)
+                        publicCommunityIntent.putExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude, vicinityLocation.latitude)
+                        publicCommunityIntent.putExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLongitude, vicinityLocation.longitude)
                         publicCommunityIntent.putExtra("fromNotification", true)
 
                         val publicCommunityPendingIntent: PendingIntent = PendingIntent.getActivity(applicationContext, 666, publicCommunityIntent, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -68,7 +77,7 @@ class CloudNotificationHandler : FirebaseMessagingService() {
                             largeIcon = bitmap,
                             notificationColor = extractDominantColor(applicationContext, bitmap),
                             notificationId = System.currentTimeMillis(),
-                            locationKnownName = locationCheckpoint.knownLocationName(applicationContext, vicinityName(LatLng(linkedHashMapData["userLatitude"].toString().toDouble(), linkedHashMapData["userLongitude"].toString().toDouble()))).toString(),
+                            locationKnownName = locationCheckpoint.knownLocationName(applicationContext, vicinityName(vicinityLocation)).toString(),
                             pendingIntent = publicCommunityPendingIntent
                         )
 
