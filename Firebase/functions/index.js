@@ -24,16 +24,16 @@ exports.publicCommunityNewMessageNotification = functions.runWith(runtimeOptions
     const notificationLargeIcon = data.notificationLargeIcon
     const messageContent = data.messageContent
 
+    console.log('TOPIC >>> ', notificationTopic);
+
     var message = {
-        notification: {
-            title: selfDisplayName,
-            body: messageContent
-        },
+
         android: {
             ttl: (3600 * 1000) * (1), // 1 Hour in Milliseconds
 
             priority: 'high',
         },
+
         data: {
             "selfDisplayName": selfDisplayName,
             "selfUid": selfUid,
@@ -42,6 +42,7 @@ exports.publicCommunityNewMessageNotification = functions.runWith(runtimeOptions
             "notificationLargeIcon": notificationLargeIcon,
             "messageContent": messageContent
         },
+
         topic: notificationTopic
     };
 

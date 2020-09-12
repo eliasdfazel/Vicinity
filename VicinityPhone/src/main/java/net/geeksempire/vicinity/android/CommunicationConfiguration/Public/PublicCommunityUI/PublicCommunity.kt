@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/10/20 9:38 AM
- * Last modified 9/10/20 9:29 AM
+ * Created by Elias Fazel on 9/12/20 3:49 AM
+ * Last modified 9/12/20 3:48 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -28,6 +28,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.DataStructure.PublicMessageData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunityPrepareMessage
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunityPrepareNotificationData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunitySetupUI
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.Adapter.PublicCommunityAdapter
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.Adapter.PublicCommunityViewHolder
@@ -124,18 +125,9 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                         publicCommunityViewBinding.textMessageContentView.text = null
 
-                        val linkedHashMapData: LinkedHashMap<Any, Any> = LinkedHashMap<Any, Any>()
-                        linkedHashMapData["notificationTopic"] = publicCommunityName
-                        linkedHashMapData["selfUid"] = firebaseUser.uid
-                        linkedHashMapData["selfDisplayName"] = firebaseUser.displayName.toString()
-                        linkedHashMapData["publicCommunityAction"] = getString(R.string.publicCommunityAction)
-                        linkedHashMapData["publicCommunityName"] = publicCommunityName
-                        linkedHashMapData["notificationLargeIcon"] = firebaseUser.photoUrl.toString()
-                        linkedHashMapData["messageContent"] = publicCommunityViewBinding.textMessageContentView.text.toString()
-
                         firebaseCloudFunctions
                             .getHttpsCallable("publicCommunityNewMessageNotification")
-                            .call(linkedHashMapData)
+                            .call(publicCommunityPrepareNotificationData(publicCommunityName))
 
                     }.addOnFailureListener {
 
