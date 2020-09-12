@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/12/20 9:57 AM
- * Last modified 9/12/20 9:57 AM
+ * Created by Elias Fazel on 9/12/20 10:28 AM
+ * Last modified 9/12/20 10:13 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -169,7 +169,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                             val animationProgress = (valueAnimator.animatedValue as Float * 100).roundToInt()
 
-                            if (animationProgress > 96) {
+                            if (animationProgress == 96) {
 
                                 Handler().postDelayed({
 
@@ -212,7 +212,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                             val animationProgress = (valueAnimator.animatedValue as Float * 100).roundToInt()
 
-                            if (animationProgress > 96) {
+                            if (animationProgress == 96) {
 
                                 publicCommunityViewBinding.sendMessageView.setAnimation(R.raw.sending_animation)
 

@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/12/20 9:57 AM
-  ~ Last modified 9/12/20 9:33 AM
+  ~ Created by Elias Fazel on 9/12/20 10:28 AM
+  ~ Last modified 9/12/20 10:12 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -58,7 +58,6 @@
         android:id="@+id/messageContentWrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:paddingStart="7dp"
         android:paddingEnd="7dp"
         android:background="@color/light"
@@ -70,8 +69,9 @@
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/sendMessageView"
             android:layout_width="57dp"
-            android:layout_height="57dp"
-            android:layout_margin="1dp"
+            android:layout_height="66dp"
+            android:layout_marginHorizontal="1dp"
+            android:layout_marginBottom="7dp"
             android:contentDescription="@string/sendMessageText"
 
             apps:lottie_rawRes="@raw/sending_animation"
@@ -84,18 +84,18 @@
             android:id="@+id/textMessageContentLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:paddingBottom="11dp"
             android:hint="@string/connectWithPeople"
             android:textColorHint="@color/default_color_light"
 
             apps:boxBackgroundMode="outline"
-            apps:boxBackgroundColor="@android:color/transparent"
+            apps:boxBackgroundColor="@color/white"
             apps:boxCornerRadiusTopStart="51dp"
             apps:boxCornerRadiusTopEnd="51dp"
             apps:boxCornerRadiusBottomStart="51dp"
             apps:boxCornerRadiusBottomEnd="51dp"
             apps:boxStrokeColor="@color/default_color_game"
-            apps:boxStrokeWidth="2dp"
+            apps:boxStrokeWidth="1dp"
             apps:hintEnabled="true"
             apps:hintAnimationEnabled="true"
             apps:hintTextColor="@color/default_color_light"
@@ -112,8 +112,8 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="23dp"
                 android:paddingEnd="23dp"
+                android:paddingBottom="23dp"
                 android:gravity="center_vertical"
-                android:imeOptions="actionSend"
                 android:textSize="19sp"
                 android:textColor="@color/dark"
                 android:textColorHint="@color/dark"
