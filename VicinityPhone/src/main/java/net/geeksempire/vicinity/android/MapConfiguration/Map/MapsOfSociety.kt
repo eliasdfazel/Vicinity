@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/12/20 5:17 AM
- * Last modified 9/12/20 4:58 AM
+ * Created by Elias Fazel on 9/12/20 11:06 AM
+ * Last modified 9/12/20 11:04 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -17,7 +17,10 @@ import android.content.Intent
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.StrictMode
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -156,6 +159,16 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
         val builderStrictMode = StrictMode.VmPolicy.Builder()
         StrictMode.setVmPolicy(builderStrictMode.build())
 
+        mapsLiveData.currentLocationData.observe(this@MapsOfSociety, Observer { location ->
+
+            location?.let {
+
+                mapsMarker.updateUserMarkerLocation(it)
+
+            }
+
+        })
+
     }
 
     override fun onResume() {
@@ -220,7 +233,24 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
                 } else {
 
+                    Toast.makeText(applicationContext, getString(R.string.gpsIsOff), Toast.LENGTH_LONG).show()
 
+                    SnackbarBuilder(applicationContext).show (
+                        rootView = mapsViewBinding.rootView,
+                        messageText= getString(R.string.selectLocationManually),
+                        messageDuration = Snackbar.LENGTH_INDEFINITE,
+                        actionButtonText = android.R.string.ok,
+                        snackbarActionHandlerInterface = object : SnackbarActionHandlerInterface {
+
+                            override fun onActionButtonClicked(snackbar: Snackbar) {
+                                super.onActionButtonClicked(snackbar)
+
+                                mapView.getMapAsync(this@MapsOfSociety)
+
+                            }
+
+                        }
+                    )
 
                 }
 
@@ -312,6 +342,13 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
     }
 
     override fun onMapLongClick(latLng: LatLng?) {
+        Log.d(this@MapsOfSociety.javaClass.simpleName, "${latLng}")
+
+        latLng?.let {
+
+            userLatitudeLongitude = latLng
+
+        }
 
     }
 

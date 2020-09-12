@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/1/20 9:44 AM
- * Last modified 9/1/20 9:44 AM
+ * Created by Elias Fazel on 9/12/20 11:06 AM
+ * Last modified 9/12/20 11:06 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -13,7 +13,6 @@ package net.geeksempire.vicinity.android.MapConfiguration.Extensions
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
-import androidx.lifecycle.Observer
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -58,15 +57,5 @@ fun MapsOfSociety.getLocationData() {
         }, null)
 
     }
-
-    mapsLiveData.currentLocationData.observe(this@getLocationData, Observer { location ->
-
-        location?.let {
-
-            mapsMarker.updateUserMarkerLocation(it)
-
-        }
-
-    })
 
 }
