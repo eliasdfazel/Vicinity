@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/12/20 11:06 AM
- * Last modified 9/12/20 11:04 AM
+ * Created by Elias Fazel on 9/12/20 11:10 AM
+ * Last modified 9/12/20 11:08 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -347,6 +347,8 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
         latLng?.let {
 
             userLatitudeLongitude = latLng
+
+            mapView.getMapAsync(this@MapsOfSociety)
 
         }
 
