@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/12/20 10:28 AM
-  ~ Last modified 9/12/20 10:12 AM
+  ~ Created by Elias Fazel on 9/12/20 11:19 AM
+  ~ Last modified 9/12/20 11:17 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -125,5 +125,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <net.geeksempire.loadingspin.SpinKitView
+        android:id="@+id/loadingView"
+        android:layout_width="77dp"
+        android:layout_height="77dp"
+
+        apps:SpinKit_Style="CubeGrid"
+        apps:SpinKit_Color="@color/default_color"
+
+        apps:layout_constraintTop_toTopOf="parent"
+        apps:layout_constraintBottom_toBottomOf="parent"
+        apps:layout_constraintStart_toStartOf="parent"
+        apps:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/12/20 10:28 AM
- * Last modified 9/12/20 10:13 AM
+ * Created by Elias Fazel on 9/12/20 11:19 AM
+ * Last modified 9/12/20 11:16 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -13,6 +13,7 @@ package net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Publi
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -136,22 +137,26 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
         publicCommunityViewBinding.messageRecyclerView.layoutManager = linearLayoutManager
         publicCommunityViewBinding.messageRecyclerView.adapter = firebaseRecyclerAdapter
 
-        firebaseRecyclerAdapter.registerAdapterDataObserver(object :
-            RecyclerView.AdapterDataObserver() {
+        firebaseRecyclerAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 super.onItemRangeInserted(positionStart, itemCount)
+
                 val friendlyMessageCount = firebaseRecyclerAdapter.itemCount
-                val lastVisiblePosition =
-                    linearLayoutManager.findLastCompletelyVisibleItemPosition()
+                val lastVisiblePosition = linearLayoutManager.findLastCompletelyVisibleItemPosition()
+
                 if (lastVisiblePosition == -1 || positionStart >= friendlyMessageCount - 1 && lastVisiblePosition == positionStart - 1) {
                     Handler().postDelayed({
-                        publicCommunityViewBinding.nestedScrollView.smoothScrollTo(
-                            0,
-                            publicCommunityViewBinding.messageRecyclerView.height
-                        )
+
+                        publicCommunityViewBinding.nestedScrollView.smoothScrollTo(0, publicCommunityViewBinding.messageRecyclerView.height)
+
+                        publicCommunityViewBinding.loadingView.visibility = View.GONE
+
                     }, 500)
                 }
+
             }
+
         })
 
         publicCommunityViewBinding.sendMessageView.setOnClickListener {
