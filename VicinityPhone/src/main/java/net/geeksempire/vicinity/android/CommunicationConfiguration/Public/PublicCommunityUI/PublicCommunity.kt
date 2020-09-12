@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/12/20 5:17 AM
- * Last modified 9/12/20 5:00 AM
+ * Created by Elias Fazel on 9/12/20 6:57 AM
+ * Last modified 9/12/20 6:54 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -11,6 +11,7 @@
 package net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -65,6 +66,10 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
     private lateinit var firebaseRecyclerAdapter: FirestoreRecyclerAdapter<PublicMessageData, PublicCommunityViewHolder>
 
+    val linearLayoutManager: LinearLayoutManager by lazy {
+        LinearLayoutManager(this@PublicCommunity, RecyclerView.VERTICAL, false)
+    }
+
     private val firebaseCloudFunctions: FirebaseFunctions = FirebaseFunctions.getInstance()
 
     @Inject lateinit var networkCheckpoint: NetworkCheckpoint
@@ -115,7 +120,6 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
         publicCommunitySetupUI()
 
-        val linearLayoutManager = LinearLayoutManager(this@PublicCommunity, RecyclerView.VERTICAL, false)
         linearLayoutManager.stackFromEnd = false
 
         val publicMessageCollectionReference: Query = firestoreDatabase
@@ -130,6 +134,24 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
         publicCommunityViewBinding.messageRecyclerView.layoutManager = linearLayoutManager
         publicCommunityViewBinding.messageRecyclerView.adapter = firebaseRecyclerAdapter
+
+        firebaseRecyclerAdapter.registerAdapterDataObserver(object :
+            RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                super.onItemRangeInserted(positionStart, itemCount)
+                val friendlyMessageCount = firebaseRecyclerAdapter.itemCount
+                val lastVisiblePosition =
+                    linearLayoutManager.findLastCompletelyVisibleItemPosition()
+                if (lastVisiblePosition == -1 || positionStart >= friendlyMessageCount - 1 && lastVisiblePosition == positionStart - 1) {
+                    Handler().postDelayed({
+                        publicCommunityViewBinding.nestedScrollView.smoothScrollTo(
+                            0,
+                            publicCommunityViewBinding.messageRecyclerView.height
+                        )
+                    }, 500)
+                }
+            }
+        })
 
         publicCommunityViewBinding.sendMessageView.setOnClickListener {
 
@@ -150,6 +172,11 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                             }
 
                         publicCommunityViewBinding.textMessageContentView.text = null
+
+                        publicCommunityViewBinding.nestedScrollView.smoothScrollTo(
+                            0,
+                            publicCommunityViewBinding.messageRecyclerView.height
+                        )
 
                     }.addOnFailureListener {
 
