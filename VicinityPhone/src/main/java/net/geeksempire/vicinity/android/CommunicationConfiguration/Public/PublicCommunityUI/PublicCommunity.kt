@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/12/20 4:38 AM
- * Last modified 9/12/20 4:13 AM
+ * Created by Elias Fazel on 9/12/20 4:46 AM
+ * Last modified 9/12/20 4:45 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -137,14 +137,16 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                     .add(publicCommunityPrepareMessage())
                     .addOnSuccessListener {
 
-                        publicCommunityViewBinding.textMessageContentView.text = null
+                        val messageContent = publicCommunityViewBinding.textMessageContentView.text.toString()
 
                         firebaseCloudFunctions
                             .getHttpsCallable("publicCommunityNewMessageNotification")
-                            .call(publicCommunityPrepareNotificationData(publicCommunityName, userLocation))
+                            .call(publicCommunityPrepareNotificationData(messageContent, publicCommunityName, userLocation))
                             .continueWith {
 
                             }
+
+                        publicCommunityViewBinding.textMessageContentView.text = null
 
                     }.addOnFailureListener {
 

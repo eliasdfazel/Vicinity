@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/12/20 4:40 AM
- * Last modified 9/12/20 4:40 AM
+ * Created by Elias Fazel on 9/12/20 4:46 AM
+ * Last modified 9/12/20 4:41 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -47,21 +47,13 @@ class NotificationCreator (private val context: Context) {
             Notification.Builder(context)
         }
 
-        notificationBuilder.setContentTitle(
-            Html.fromHtml(
-                "<big><b>" + titleText + "</b></big> | " + "<small>" + locationKnownName + "</small>",
-                Html.FROM_HTML_MODE_LEGACY
-            )
-        )
-        notificationBuilder.setContentText(
-            Html.fromHtml(
-                "" + contentText + "",
-                Html.FROM_HTML_MODE_LEGACY
-            )
-        )
+        notificationBuilder.setContentTitle(Html.fromHtml("<big><b>" + titleText + "</b></big> | " + "<small>" + locationKnownName + "</small>", Html.FROM_HTML_MODE_LEGACY))
+        notificationBuilder.setContentText(Html.fromHtml("" + contentText + "", Html.FROM_HTML_MODE_LEGACY))
+
         notificationBuilder.setTicker(context.resources.getString(R.string.applicationName))
         notificationBuilder.setSmallIcon(R.drawable.world_map_dots)
         notificationBuilder.setLargeIcon(getCircularBitmapWithWhiteBorder(largeIcon, 0, Color.TRANSPARENT))
+
         notificationBuilder.setAutoCancel(true)
         notificationBuilder.setColor(notificationColor)
 
