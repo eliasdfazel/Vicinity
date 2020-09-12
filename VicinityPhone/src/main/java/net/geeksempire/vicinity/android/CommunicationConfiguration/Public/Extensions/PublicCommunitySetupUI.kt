@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/12/20 10:28 AM
- * Last modified 9/12/20 10:01 AM
+ * Created by Elias Fazel on 9/12/20 10:36 AM
+ * Last modified 9/12/20 10:31 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -27,6 +27,8 @@ fun PublicCommunity.publicCommunitySetupUI() {
 
             publicCommunityViewBinding.messageContentWrapper.setBackgroundColor(getColor(R.color.light))
 
+            publicCommunityViewBinding.textMessageContentLayout.boxBackgroundColor = getColor(R.color.white)
+
 
         }
         ThemeType.ThemeDark -> {
@@ -34,6 +36,8 @@ fun PublicCommunity.publicCommunitySetupUI() {
             publicCommunityViewBinding.rootView.setBackgroundColor(getColor(R.color.dark))
 
             publicCommunityViewBinding.messageContentWrapper.setBackgroundColor(getColor(R.color.dark))
+
+            publicCommunityViewBinding.textMessageContentLayout.boxBackgroundColor = getColor(R.color.black)
 
         }
     }
