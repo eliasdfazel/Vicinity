@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/12/20 6:57 AM
- * Last modified 9/12/20 6:54 AM
+ * Created by Elias Fazel on 9/12/20 9:57 AM
+ * Last modified 9/12/20 9:57 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -44,6 +44,7 @@ import net.geeksempire.vicinity.android.Utils.UI.Theme.OverallTheme
 import net.geeksempire.vicinity.android.VicinityApplication
 import net.geeksempire.vicinity.android.databinding.PublicCommunityViewBinding
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface {
 
@@ -162,6 +163,27 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                     .add(publicCommunityPrepareMessage())
                     .addOnSuccessListener {
 
+                        publicCommunityViewBinding.sendMessageView.setAnimation(R.raw.sending_animation)
+                        publicCommunityViewBinding.sendMessageView.playAnimation()
+                        publicCommunityViewBinding.sendMessageView.addAnimatorUpdateListener { valueAnimator ->
+
+                            val animationProgress = (valueAnimator.animatedValue as Float * 100).roundToInt()
+
+                            if (animationProgress > 96) {
+
+                                Handler().postDelayed({
+
+                                    val animationSpeed = publicCommunityViewBinding.sendMessageView.speed
+
+                                    publicCommunityViewBinding.sendMessageView.speed = -(animationSpeed)
+                                    publicCommunityViewBinding.sendMessageView.playAnimation()
+
+                                }, 157)
+
+                            }
+
+                        }
+
                         val messageContent = publicCommunityViewBinding.textMessageContentView.text.toString()
 
                         firebaseCloudFunctions
@@ -182,6 +204,21 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                         publicCommunityViewBinding.textMessageContentLayout.error = getString(R.string.messageSentError)
                         publicCommunityViewBinding.textMessageContentLayout.isErrorEnabled = true
+
+                        publicCommunityViewBinding.sendMessageView.setAnimation(R.raw.sending_animation_error)
+                        publicCommunityViewBinding.sendMessageView.playAnimation()
+
+                        publicCommunityViewBinding.sendMessageView.addAnimatorUpdateListener { valueAnimator ->
+
+                            val animationProgress = (valueAnimator.animatedValue as Float * 100).roundToInt()
+
+                            if (animationProgress > 96) {
+
+                                publicCommunityViewBinding.sendMessageView.setAnimation(R.raw.sending_animation)
+
+                            }
+
+                        }
 
                     }
 
