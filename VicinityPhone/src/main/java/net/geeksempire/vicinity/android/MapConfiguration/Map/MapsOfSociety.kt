@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/12/20 11:10 AM
- * Last modified 9/12/20 11:08 AM
+ * Created by Elias Fazel on 9/13/20 8:01 AM
+ * Last modified 9/13/20 7:51 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -42,10 +42,7 @@ import net.geeksempire.chat.vicinity.Util.MapsUtil.LocationCoordinatesUpdater
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoint.PublicCommunicationEndpoint
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity
 import net.geeksempire.vicinity.android.EntryConfiguration
-import net.geeksempire.vicinity.android.MapConfiguration.Extensions.addInitialMarker
-import net.geeksempire.vicinity.android.MapConfiguration.Extensions.getLocationData
-import net.geeksempire.vicinity.android.MapConfiguration.Extensions.loadVicinityData
-import net.geeksempire.vicinity.android.MapConfiguration.Extensions.setupGoogleMap
+import net.geeksempire.vicinity.android.MapConfiguration.Extensions.*
 import net.geeksempire.vicinity.android.MapConfiguration.LocationDataHolder.MapsLiveData
 import net.geeksempire.vicinity.android.MapConfiguration.Utils.MapsMarker
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.CountryInformation
@@ -146,6 +143,8 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
             .subDependencyGraph()
             .create(this@MapsOfSociety, mapsViewBinding.rootView)
             .inject(this@MapsOfSociety)
+
+        mapsOfSocietySetupUI()
 
         networkConnectionListener.networkConnectionListenerInterface = this@MapsOfSociety
 
