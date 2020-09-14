@@ -1,14 +1,14 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/30/20 9:53 AM
- * Last modified 8/30/20 9:46 AM
+ * Created by Elias Fazel on 9/14/20 8:30 AM
+ * Last modified 9/14/20 8:03 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geeksempire.vicinity.android.AccountManager
+package net.geeksempire.vicinity.android.AccountManager.Utils
 
 import android.content.Context
 import net.geeksempire.vicinity.android.Utils.Preferences.ReadPreferences

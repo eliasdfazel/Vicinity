@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/8/20 10:55 AM
- * Last modified 9/8/20 8:18 AM
+ * Created by Elias Fazel on 9/14/20 8:30 AM
+ * Last modified 9/14/20 8:03 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -27,7 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationData
-import net.geeksempire.vicinity.android.AccountManager.UserInformation
+import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.UI.Images.drawableToBitmap
 import net.geeksempire.vicinity.android.Utils.UI.Images.getCircularBitmapWithWhiteBorder

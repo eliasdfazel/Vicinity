@@ -1,21 +1,22 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/6/20 8:36 AM
- * Last modified 9/6/20 8:21 AM
+ * Created by Elias Fazel on 9/14/20 8:30 AM
+ * Last modified 9/14/20 8:03 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geeksempire.vicinity.android.AccountManager
+package net.geeksempire.vicinity.android.AccountManager.Utils
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import net.geeksempire.vicinity.android.AccountManager.UI.AccountInformation
 import net.geeksempire.vicinity.android.R
 
 
-class UserInformation(private val context: AccountSignIn) {
+class UserInformation(private val context: AccountInformation) {
 
     companion object {
         const val GoogleSignInRequestCode = 103
@@ -42,7 +43,7 @@ class UserInformation(private val context: AccountSignIn) {
 
             val googleSignInClient = GoogleSignIn.getClient(context, googleSignInOptions)
             googleSignInClient.signInIntent.run {
-                context.startActivityForResult(this@run, UserInformation.GoogleSignInRequestCode)
+                context.startActivityForResult(this@run, GoogleSignInRequestCode)
             }
 
         }

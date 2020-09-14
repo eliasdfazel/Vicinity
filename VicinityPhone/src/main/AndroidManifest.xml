@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/13/20 8:01 AM
-  ~ Last modified 9/13/20 7:57 AM
+  ~ Created by Elias Fazel on 9/14/20 8:30 AM
+  ~ Last modified 9/14/20 8:03 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -61,7 +61,7 @@
         </activity>
 
         <activity
-            android:name=".AccountManager.AccountSignIn"
+            android:name=".AccountManager.UI.AccountInformation"
             android:label="@string/applicationName"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher_round"

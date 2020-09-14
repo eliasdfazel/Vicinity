@@ -1,14 +1,14 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/6/20 7:50 AM
- * Last modified 9/6/20 7:41 AM
+ * Created by Elias Fazel on 9/14/20 8:30 AM
+ * Last modified 9/14/20 8:03 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geeksempire.vicinity.android.AccountManager
+package net.geeksempire.vicinity.android.AccountManager.UI
 
 import android.app.ActivityOptions
 import android.content.Intent
@@ -20,18 +20,25 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import net.geeksempire.vicinity.android.AccountManager.Extensions.accountManagerSetupUI
+import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
+import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformationIO
 import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
+import net.geeksempire.vicinity.android.Utils.UI.Theme.OverallTheme
 import net.geeksempire.vicinity.android.VicinityApplication
 import net.geeksempire.vicinity.android.databinding.AccountViewBinding
 import javax.inject.Inject
 
-class AccountSignIn : AppCompatActivity() {
+class AccountInformation : AppCompatActivity() {
+
+    val overallTheme: OverallTheme by lazy {
+        OverallTheme(applicationContext)
+    }
 
     private val userInformation: UserInformation by lazy {
-        UserInformation(this@AccountSignIn)
+        UserInformation(this@AccountInformation)
     }
 
     private val userInformationIO: UserInformationIO by lazy {
@@ -56,8 +63,8 @@ class AccountSignIn : AppCompatActivity() {
         (application as VicinityApplication)
             .dependencyGraph
             .subDependencyGraph()
-            .create(this@AccountSignIn, accountViewBinding.rootView)
-            .inject(this@AccountSignIn)
+            .create(this@AccountInformation, accountViewBinding.rootView)
+            .inject(this@AccountInformation)
 
         if (firebaseAuth.currentUser == null) {
 
@@ -110,6 +117,7 @@ class AccountSignIn : AppCompatActivity() {
             }
 
         }
+
     }
 
 }

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/30/20 10:10 AM
- * Last modified 8/30/20 10:10 AM
+ * Created by Elias Fazel on 9/14/20 8:30 AM
+ * Last modified 9/14/20 8:03 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -20,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import net.geeksempire.vicinity.android.AccountManager.AccountSignIn
+import net.geeksempire.vicinity.android.AccountManager.UI.AccountInformation
 import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkSettingCallback
@@ -149,7 +149,7 @@ class EntryConfiguration : AppCompatActivity() {
 
         if (firebaseUser == null) {
 
-            startActivity(Intent(applicationContext, AccountSignIn::class.java),
+            startActivity(Intent(applicationContext, AccountInformation::class.java),
                 ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_in_right, 0).toBundle())
 
         } else {

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 8/31/20 9:56 AM
- * Last modified 8/31/20 9:55 AM
+ * Created by Elias Fazel on 9/14/20 8:30 AM
+ * Last modified 9/14/20 8:14 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,10 +10,12 @@
 
 package net.geeksempire.vicinity.android.AccountManager.Extensions
 
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -21,18 +23,40 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import net.geeksempire.vicinity.android.AccountManager.AccountSignIn
+import net.geeksempire.vicinity.android.AccountManager.UI.AccountInformation
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.UI.Colors.extractDominantColor
 import net.geeksempire.vicinity.android.Utils.UI.Colors.extractVibrantColor
 import net.geeksempire.vicinity.android.Utils.UI.Colors.isColorDark
 import net.geeksempire.vicinity.android.Utils.UI.Colors.setColorAlpha
 import net.geeksempire.vicinity.android.Utils.UI.Display.statusBarHeight
+import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
 
-fun AccountSignIn.accountManagerSetupUI() {
+fun AccountInformation.accountManagerSetupUI() {
+
+    when (overallTheme.checkThemeLightDark()) {
+        ThemeType.ThemeLight -> {
+
+            accountViewBinding.rootView.setBackgroundColor(getColor(R.color.white))
+
+            accountViewBinding.welcomeTextView.setTextColor(getColor(R.color.dark))
+
+        }
+        ThemeType.ThemeDark -> {
+
+            accountViewBinding.rootView.setBackgroundColor(getColor(R.color.black))
+
+            accountViewBinding.welcomeTextView.setTextColor(getColor(R.color.light))
+
+        }
+    }
+
+    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+    window.navigationBarColor = Color.TRANSPARENT
+    window.statusBarColor = Color.TRANSPARENT
 
     accountViewBinding.welcomeTextView.text = getString(R.string.welcomeText, if (firebaseAuth.currentUser != null) {
-        firebaseAuth.currentUser!!.displayName
+        firebaseAuth.currentUser?.displayName
     } else {
         ""
     })

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/9/20 8:55 AM
- * Last modified 9/9/20 8:53 AM
+ * Created by Elias Fazel on 9/14/20 8:30 AM
+ * Last modified 9/14/20 8:03 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import dagger.BindsInstance
 import dagger.Subcomponent
-import net.geeksempire.vicinity.android.AccountManager.AccountSignIn
+import net.geeksempire.vicinity.android.AccountManager.UI.AccountInformation
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity
 import net.geeksempire.vicinity.android.DependencyInjections.Modules.Network.NetworkCheckpointModule
 import net.geeksempire.vicinity.android.DependencyInjections.Modules.Network.NetworkConnectionModule
@@ -30,7 +30,7 @@ interface NetworkSubDependencyGraph {
         fun create(@BindsInstance appCompatActivity: AppCompatActivity, @BindsInstance constraintLayout: ConstraintLayout): NetworkSubDependencyGraph
     }
 
-    fun inject(accountSignIn: AccountSignIn)
+    fun inject(accountInformation: AccountInformation)
     fun inject(mapsOfSociety: MapsOfSociety)
     fun inject(mapsOfSociety: PublicCommunity)
 
