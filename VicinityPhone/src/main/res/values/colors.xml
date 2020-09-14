@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/9/20 4:27 AM
-  ~ Last modified 9/9/20 4:07 AM
+  ~ Created by Elias Fazel on 9/14/20 8:52 AM
+  ~ Last modified 9/14/20 8:45 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -53,6 +53,8 @@
     <color name="dark_transparent">#b30a0f18</color>
     <color name="dark_transparent_high">#220A0F18</color>
     <color name="dark_transparent_50">#b30a0f18</color>
+
+    <color name="twitterColor">#00acee</color>
 
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">
         @color/default_color_game

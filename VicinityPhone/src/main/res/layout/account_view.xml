@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/14/20 8:30 AM
-  ~ Last modified 9/14/20 8:03 AM
+  ~ Created by Elias Fazel on 9/14/20 8:52 AM
+  ~ Last modified 9/14/20 8:49 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -53,11 +53,71 @@
         android:layout_marginHorizontal="19dp"
         android:text="@string/welcomeText"
         android:textSize="51sp"
-        android:textColor="@color/light"
+        android:textColor="@color/dark"
         android:fontFamily="@font/upcil"
 
         apps:layout_constraintTop_toBottomOf="@id/profileImageView"
         apps:layout_constraintStart_toStartOf="parent"
         apps:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/socialMediaScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+
+        apps:layout_constraintTop_toBottomOf="@id/welcomeTextView"
+        apps:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/socialMediaContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/instagramAddressLayout"
+                android:layout_width="match_parent"
+                android:layout_height="113dp"
+                android:hint="@string/connectWithPeople"
+                android:textColorHint="@color/default_color_light"
+
+                apps:boxBackgroundMode="outline"
+                apps:boxBackgroundColor="@color/white"
+                apps:boxCornerRadiusTopStart="51dp"
+                apps:boxCornerRadiusTopEnd="51dp"
+                apps:boxCornerRadiusBottomStart="51dp"
+                apps:boxCornerRadiusBottomEnd="51dp"
+                apps:boxStrokeColor="@color/default_color_game"
+                apps:boxStrokeWidth="1dp"
+                apps:startIconDrawable="@drawable/twitter_bird"
+                apps:startIconTint="@color/twitterColor"
+                apps:hintEnabled="true"
+                apps:hintAnimationEnabled="true"
+                apps:hintTextColor="@color/default_color_light"
+                apps:errorEnabled="false"
+                apps:errorTextColor="@color/red"
+
+                apps:layout_constraintBottom_toBottomOf="parent"
+                apps:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/instagramAddressView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingStart="23dp"
+                    android:paddingEnd="23dp"
+                    android:gravity="center_vertical"
+                    android:textSize="19sp"
+                    android:textColor="@color/dark"
+                    android:textColorHint="@color/dark"
+                    android:maxLines="5"
+                    android:ellipsize="start"
+                    android:cursorVisible="true"
+                    android:focusable="true"
+                    android:enabled="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
