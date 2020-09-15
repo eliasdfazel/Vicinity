@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/14/20 8:30 AM
- * Last modified 9/14/20 8:14 AM
+ * Created by Elias Fazel on 9/15/20 7:09 AM
+ * Last modified 9/15/20 7:09 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -127,6 +127,25 @@ fun AccountInformation.accountManagerSetupUI() {
 
             })
             .submit()
+
+        clickSetup()
+
+    }
+
+}
+
+fun AccountInformation.clickSetup() {
+
+    accountViewBinding.nextSubmitView.setOnClickListener {
+
+        //start upload data to server
+
+        accountViewBinding.loadingView.visibility = View.VISIBLE
+        accountViewBinding.loadingView.playAnimation()
+
+        accountViewBinding.socialMediaScrollView.scrollTo(0, 10000)
+
+        accountViewBinding.nextSubmitView.playAnimation()
 
     }
 

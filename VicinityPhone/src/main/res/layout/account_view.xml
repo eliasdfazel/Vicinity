@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/15/20 6:00 AM
-  ~ Last modified 9/15/20 5:58 AM
+  ~ Created by Elias Fazel on 9/15/20 7:09 AM
+  ~ Last modified 9/15/20 7:07 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -36,7 +36,8 @@
         android:id="@+id/profileImageView"
         android:layout_width="213dp"
         android:layout_height="213dp"
-        android:layout_margin="29dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="29dp"
         android:scaleType="centerCrop"
         android:src="@drawable/not_login_icon"
 
@@ -222,7 +223,7 @@
                     android:paddingEnd="77dp"
                     android:gravity="center_vertical"
                     android:inputType="phone"
-                    android:imeOptions="actionNext"
+                    android:imeOptions="actionDone"
                     android:textSize="19sp"
                     android:textColor="@color/dark"
                     android:textColorHint="@color/dark"
@@ -242,6 +243,32 @@
                 apps:layout_constraintTop_toTopOf="@id/phoneNumberAddressLayout"
                 apps:layout_constraintBottom_toBottomOf="@id/phoneNumberAddressLayout"
                 apps:layout_constraintEnd_toEndOf="@id/phoneNumberAddressLayout" />
+
+            <!-- Next & Submit -->
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/nextSubmitView"
+                android:layout_width="113dp"
+                android:layout_height="113dp"
+                android:layout_marginVertical="7dp"
+
+                apps:lottie_rawRes="@raw/next_submit_animation"
+
+                apps:layout_constraintTop_toBottomOf="@id/phoneNumberAddressLayout"
+                apps:layout_constraintEnd_toEndOf="parent" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/loadingView"
+                android:layout_width="113dp"
+                android:layout_height="113dp"
+                android:layout_marginVertical="7dp"
+                android:visibility="invisible"
+
+                apps:lottie_loop="true"
+                apps:lottie_repeatMode="restart"
+                apps:lottie_rawRes="@raw/fluid_loading_animation"
+
+                apps:layout_constraintTop_toBottomOf="@id/phoneNumberAddressLayout"
+                apps:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

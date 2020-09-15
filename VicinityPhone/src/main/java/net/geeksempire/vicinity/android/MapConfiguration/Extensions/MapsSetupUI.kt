@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/14/20 6:43 AM
- * Last modified 9/14/20 6:37 AM
+ * Created by Elias Fazel on 9/15/20 7:09 AM
+ * Last modified 9/15/20 6:08 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -24,11 +24,11 @@ fun MapsOfSociety.mapsOfSocietySetupUI() {
     preferenceViewLayoutParams.setMargins(0, preferenceViewLayoutParams.topMargin + statusBarHeight(applicationContext), 0, 0)
     mapsViewBinding.preferenceView.layoutParams = preferenceViewLayoutParams
 
-    setClicksSetup()
+    clicksSetup()
 
 }
 
-fun MapsOfSociety.setClicksSetup() {
+fun MapsOfSociety.clicksSetup() {
 
     mapsViewBinding.preferenceView.setOnClickListener {
 
