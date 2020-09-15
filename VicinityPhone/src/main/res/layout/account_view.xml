@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/14/20 8:52 AM
-  ~ Last modified 9/14/20 8:49 AM
+  ~ Created by Elias Fazel on 9/15/20 6:00 AM
+  ~ Last modified 9/15/20 5:58 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -15,6 +15,7 @@
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="13dp"
     android:background="@android:color/transparent"
     tools:context=".AccountManager.UI.AccountInformation">
 
@@ -64,6 +65,7 @@
         android:id="@+id/socialMediaScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginVertical="3dp"
 
         apps:layout_constraintTop_toBottomOf="@id/welcomeTextView"
         apps:layout_constraintBottom_toBottomOf="parent">
@@ -71,50 +73,175 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/socialMediaContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="13dp">
 
+            <!-- Instagram -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/instagramAddressLayout"
                 android:layout_width="match_parent"
-                android:layout_height="113dp"
-                android:hint="@string/connectWithPeople"
-                android:textColorHint="@color/default_color_light"
+                android:layout_height="79dp"
+                android:layout_marginTop="7dp"
+                android:hint="@string/typeInstagram"
+                android:textColorHint="@color/purple"
 
                 apps:boxBackgroundMode="outline"
                 apps:boxBackgroundColor="@color/white"
-                apps:boxCornerRadiusTopStart="51dp"
-                apps:boxCornerRadiusTopEnd="51dp"
-                apps:boxCornerRadiusBottomStart="51dp"
-                apps:boxCornerRadiusBottomEnd="51dp"
+                apps:boxCornerRadiusTopStart="13dp"
+                apps:boxCornerRadiusTopEnd="13dp"
+                apps:boxCornerRadiusBottomStart="13dp"
+                apps:boxCornerRadiusBottomEnd="13dp"
                 apps:boxStrokeColor="@color/default_color_game"
                 apps:boxStrokeWidth="1dp"
-                apps:startIconDrawable="@drawable/twitter_bird"
-                apps:startIconTint="@color/twitterColor"
                 apps:hintEnabled="true"
                 apps:hintAnimationEnabled="true"
-                apps:hintTextColor="@color/default_color_light"
+                apps:hintTextColor="@color/purple"
                 apps:errorEnabled="false"
                 apps:errorTextColor="@color/red"
 
-                apps:layout_constraintBottom_toBottomOf="parent"
+                apps:layout_constraintTop_toTopOf="parent"
                 apps:layout_constraintStart_toStartOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/instagramAddressView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingStart="23dp"
-                    android:paddingEnd="23dp"
+                    android:paddingTop="11dp"
+                    android:paddingStart="17dp"
+                    android:paddingEnd="77dp"
                     android:gravity="center_vertical"
+                    android:imeOptions="actionNext"
                     android:textSize="19sp"
                     android:textColor="@color/dark"
                     android:textColorHint="@color/dark"
-                    android:maxLines="5"
+                    android:singleLine="true"
                     android:ellipsize="start"
                     android:cursorVisible="true"
                     android:focusable="true"
                     android:enabled="true" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="77dp"
+                android:layout_height="0dp"
+                android:padding="19dp"
+                android:src="@drawable/instagram_logo"
+
+                apps:layout_constraintTop_toTopOf="@id/instagramAddressLayout"
+                apps:layout_constraintBottom_toBottomOf="@id/instagramAddressLayout"
+                apps:layout_constraintEnd_toEndOf="@id/instagramAddressLayout" />
+
+            <!-- Twitter -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/twitterAddressLayout"
+                android:layout_width="match_parent"
+                android:layout_height="79dp"
+                android:layout_marginTop="7dp"
+                android:hint="@string/typeTwitter"
+                android:textColorHint="@color/default_color_bright"
+
+                apps:boxBackgroundMode="outline"
+                apps:boxBackgroundColor="@color/white"
+                apps:boxCornerRadiusTopStart="13dp"
+                apps:boxCornerRadiusTopEnd="13dp"
+                apps:boxCornerRadiusBottomStart="13dp"
+                apps:boxCornerRadiusBottomEnd="13dp"
+                apps:boxStrokeColor="@color/default_color"
+                apps:boxStrokeWidth="1dp"
+                apps:hintEnabled="true"
+                apps:hintAnimationEnabled="true"
+                apps:hintTextColor="@color/default_color_bright"
+                apps:errorEnabled="false"
+                apps:errorTextColor="@color/red"
+
+                apps:layout_constraintTop_toBottomOf="@id/instagramAddressLayout"
+                apps:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/twitterAddressView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="11dp"
+                    android:paddingStart="17dp"
+                    android:paddingEnd="77dp"
+                    android:gravity="center_vertical"
+                    android:imeOptions="actionNext"
+                    android:textSize="19sp"
+                    android:textColor="@color/dark"
+                    android:textColorHint="@color/dark"
+                    android:singleLine="true"
+                    android:ellipsize="start"
+                    android:cursorVisible="true"
+                    android:focusable="true"
+                    android:enabled="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="77dp"
+                android:layout_height="0dp"
+                android:padding="15dp"
+                android:tint="@color/blue"
+                android:src="@drawable/twitter_bird"
+
+                apps:layout_constraintTop_toTopOf="@id/twitterAddressLayout"
+                apps:layout_constraintBottom_toBottomOf="@id/twitterAddressLayout"
+                apps:layout_constraintEnd_toEndOf="@id/twitterAddressLayout" />
+
+            <!-- Phone Number -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phoneNumberAddressLayout"
+                android:layout_width="match_parent"
+                android:layout_height="79dp"
+                android:layout_marginTop="7dp"
+                android:hint="@string/typePhoneNumber"
+                android:textColorHint="@color/green"
+
+                apps:boxBackgroundMode="outline"
+                apps:boxBackgroundColor="@color/white"
+                apps:boxCornerRadiusTopStart="13dp"
+                apps:boxCornerRadiusTopEnd="13dp"
+                apps:boxCornerRadiusBottomStart="13dp"
+                apps:boxCornerRadiusBottomEnd="13dp"
+                apps:boxStrokeColor="@color/cyberGreen"
+                apps:boxStrokeWidth="1dp"
+                apps:hintEnabled="true"
+                apps:hintAnimationEnabled="true"
+                apps:hintTextColor="@color/green"
+                apps:errorEnabled="false"
+                apps:errorTextColor="@color/red"
+
+                apps:layout_constraintTop_toBottomOf="@id/twitterAddressLayout"
+                apps:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneNumberAddressView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="11dp"
+                    android:paddingStart="17dp"
+                    android:paddingEnd="77dp"
+                    android:gravity="center_vertical"
+                    android:inputType="phone"
+                    android:imeOptions="actionNext"
+                    android:textSize="19sp"
+                    android:textColor="@color/dark"
+                    android:textColorHint="@color/dark"
+                    android:singleLine="true"
+                    android:ellipsize="start"
+                    android:cursorVisible="true"
+                    android:focusable="true"
+                    android:enabled="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="77dp"
+                android:layout_height="0dp"
+                android:padding="15dp"
+                android:src="@drawable/phone_icon"
+
+                apps:layout_constraintTop_toTopOf="@id/phoneNumberAddressLayout"
+                apps:layout_constraintBottom_toBottomOf="@id/phoneNumberAddressLayout"
+                apps:layout_constraintEnd_toEndOf="@id/phoneNumberAddressLayout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
