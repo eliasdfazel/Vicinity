@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/15/20 7:09 AM
- * Last modified 9/15/20 7:09 AM
+ * Created by Elias Fazel on 9/15/20 7:13 AM
+ * Last modified 9/15/20 7:13 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -139,6 +139,8 @@ fun AccountInformation.clickSetup() {
     accountViewBinding.nextSubmitView.setOnClickListener {
 
         //start upload data to server
+        //UserInformation/Profile -> { Save Data To Document }
+        //UserInformation/Archive/Vicinity/[vicinityID]/ -> { Save Data To Document }
 
         accountViewBinding.loadingView.visibility = View.VISIBLE
         accountViewBinding.loadingView.playAnimation()
