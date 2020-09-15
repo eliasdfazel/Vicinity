@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/14/20 8:30 AM
- * Last modified 9/14/20 8:03 AM
+ * Created by Elias Fazel on 9/15/20 10:09 AM
+ * Last modified 9/15/20 10:04 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -13,11 +13,15 @@ package net.geeksempire.vicinity.android.AccountManager.UI
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import net.geeksempire.vicinity.android.AccountManager.Extensions.accountManagerSetupUI
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
@@ -37,15 +41,19 @@ class AccountInformation : AppCompatActivity() {
         OverallTheme(applicationContext)
     }
 
-    private val userInformation: UserInformation by lazy {
+    val userInformation: UserInformation by lazy {
         UserInformation(this@AccountInformation)
     }
 
-    private val userInformationIO: UserInformationIO by lazy {
+    val userInformationIO: UserInformationIO by lazy {
         UserInformationIO(applicationContext)
     }
 
     val firebaseAuth = Firebase.auth
+
+    val firestoreDatabase: FirebaseFirestore = Firebase.firestore
+
+    var profileUpdate: Boolean = false
 
     @Inject lateinit var networkCheckpoint: NetworkCheckpoint
 
@@ -68,11 +76,36 @@ class AccountInformation : AppCompatActivity() {
 
         if (firebaseAuth.currentUser == null) {
 
+            accountViewBinding.signupLoadingView.visibility = View.VISIBLE
+            accountViewBinding.signupLoadingView.playAnimation()
+
             userInformation.startSignInProcess()
 
         } else {
 
+            firebaseAuth.currentUser?.let { firebaseUser ->
 
+                firestoreDatabase
+                    .document(userInformation.userProfileDatabasePath(firebaseUser.uid))
+                    .get()
+                    .addOnSuccessListener { documentSnapshot ->
+
+                        documentSnapshot?.let { documentData ->
+
+                            accountViewBinding.socialMediaScrollView.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in))
+                            accountViewBinding.socialMediaScrollView.visibility = View.VISIBLE
+
+                            accountViewBinding.instagramAddressView.setText(documentData.data?.get("instagramAccount").toString())
+
+                            accountViewBinding.twitterAddressView.setText(documentData.data?.get("twitterAccount").toString())
+
+                            accountViewBinding.phoneNumberAddressView.setText(documentData.data?.get("phoneNumber").toString())
+
+                        }
+
+                    }
+
+            }
 
         }
 

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/14/20 8:30 AM
- * Last modified 9/14/20 8:03 AM
+ * Created by Elias Fazel on 9/15/20 10:09 AM
+ * Last modified 9/15/20 9:24 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -49,5 +49,9 @@ class UserInformation(private val context: AccountInformation) {
         }
 
     }
+
+    fun userProfileDatabasePath(userUniqueIdentifier: String) : String = "Vicinity/UserInformation/${userUniqueIdentifier}/Profile"
+
+    fun userVicinityArchiveDatabasePath(userUniqueIdentifier: String, vicinityName: String) : String = "Vicinity/UserInformation/${userUniqueIdentifier}/History/PublicCommunity/${vicinityName}"
 
 }
