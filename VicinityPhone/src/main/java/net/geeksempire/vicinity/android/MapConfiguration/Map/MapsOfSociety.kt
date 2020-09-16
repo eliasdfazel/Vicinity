@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/13/20 8:01 AM
- * Last modified 9/13/20 7:51 AM
+ * Created by Elias Fazel on 9/16/20 6:18 AM
+ * Last modified 9/16/20 4:10 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -109,7 +109,9 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
     var userLatitudeLongitude: LatLng? = null
     var nameOfCountry: String? = null
 
-    val countryInformation: CountryInformation = CountryInformation()
+    val countryInformation: CountryInformation by lazy {
+        CountryInformation(applicationContext)
+    }
 
     val vicinityCalculations: VicinityCalculations = VicinityCalculations()
 

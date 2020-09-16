@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/16/20 4:03 AM
- * Last modified 9/16/20 3:29 AM
+ * Created by Elias Fazel on 9/16/20 6:18 AM
+ * Last modified 9/16/20 6:17 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -28,6 +28,7 @@ import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformationIO
 import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
 import net.geeksempire.vicinity.android.R
+import net.geeksempire.vicinity.android.Utils.Location.LocationCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
 import net.geeksempire.vicinity.android.Utils.UI.Theme.OverallTheme
@@ -48,6 +49,8 @@ class AccountInformation : AppCompatActivity() {
     val userInformationIO: UserInformationIO by lazy {
         UserInformationIO(applicationContext)
     }
+
+    val locationCheckpoint = LocationCheckpoint()
 
     val firebaseAuth = Firebase.auth
 
