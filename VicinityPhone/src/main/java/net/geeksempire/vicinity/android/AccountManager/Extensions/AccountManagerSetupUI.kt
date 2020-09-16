@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/16/20 4:03 AM
- * Last modified 9/16/20 3:29 AM
+ * Created by Elias Fazel on 9/16/20 6:43 AM
+ * Last modified 9/16/20 6:41 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -25,6 +25,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.google.firebase.FirebaseException
+import com.google.firebase.FirebaseTooManyRequestsException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthProvider
 import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationProfileData
 import net.geeksempire.vicinity.android.AccountManager.UI.AccountInformation
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
@@ -34,6 +39,7 @@ import net.geeksempire.vicinity.android.Utils.UI.Colors.extractVibrantColor
 import net.geeksempire.vicinity.android.Utils.UI.Colors.isColorDark
 import net.geeksempire.vicinity.android.Utils.UI.Display.statusBarHeight
 import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
+import java.util.concurrent.TimeUnit
 
 fun AccountInformation.accountManagerSetupUI() {
 
@@ -165,18 +171,59 @@ fun AccountInformation.clickSetup() {
                     .set(userInformationProfileData)
                     .addOnSuccessListener {
 
-                        accountViewBinding.loadingView.pauseAnimation()
+                        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                            accountViewBinding.phoneNumberAddressView.text.toString(),
+                            120,
+                            TimeUnit.SECONDS,
+                            this@clickSetup,
+                            object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
-                        accountViewBinding.loadingView.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out))
-                        accountViewBinding.loadingView.visibility = View.INVISIBLE
+                                override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
 
-                        Handler().postDelayed({
+                                    firebaseUser.linkWithCredential(phoneAuthCredential).addOnSuccessListener {
 
-                            accountViewBinding.nextSubmitView.playAnimation()
+                                        accountViewBinding.loadingView.pauseAnimation()
 
-                            profileUpdate = true
+                                        accountViewBinding.loadingView.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out))
+                                        accountViewBinding.loadingView.visibility = View.INVISIBLE
 
-                        }, 731)
+                                        Handler().postDelayed({
+
+                                            accountViewBinding.nextSubmitView.playAnimation()
+
+                                            profileUpdate = true
+
+                                        }, 531)
+
+                                    }.addOnFailureListener {
+
+
+
+                                    }
+
+                                }
+
+                                override fun onVerificationFailed(e: FirebaseException) {
+                                    e.printStackTrace()
+
+                                    if (e is FirebaseAuthInvalidCredentialsException) {
+
+
+
+                                    } else if (e is FirebaseTooManyRequestsException) {
+
+
+
+                                    }
+
+                                }
+
+                                override fun onCodeSent(verificationId: String, forceResendingToken: PhoneAuthProvider.ForceResendingToken) {
+                                    Log.d(this@clickSetup.javaClass.simpleName, "Verification Code Sent: ${verificationId}")
+
+                                }
+
+                            })
 
                     }
 
