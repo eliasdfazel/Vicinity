@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/12/20 9:57 AM
- * Last modified 9/12/20 8:47 AM
+ * Created by Elias Fazel on 9/16/20 2:49 AM
+ * Last modified 9/16/20 2:48 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -19,14 +19,14 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 30
+    buildToolsVersion '30.0.2'
 
     defaultConfig {
         applicationId "net.geeksempire.vicinity.android"
 
         minSdkVersion 24
-        targetSdkVersion 29
+        targetSdkVersion 30
 
         versionCode 1
         versionName "${majorVersion}." + getDateMonth() + "." + getDateDay() + "." + getDateYear() + ".${versionCode}"
@@ -132,7 +132,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx:21.6.0'
     implementation 'com.google.firebase:firebase-database-ktx:19.4.0'
 
-    implementation 'com.google.firebase:firebase-auth-ktx:19.3.2'
+    implementation 'com.google.firebase:firebase-auth-ktx:19.4.0'
 
     implementation 'com.google.firebase:firebase-functions:19.1.0'
 
