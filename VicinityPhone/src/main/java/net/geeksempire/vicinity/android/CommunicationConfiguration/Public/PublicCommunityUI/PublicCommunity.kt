@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/12/20 11:19 AM
- * Last modified 9/12/20 11:16 AM
+ * Created by Elias Fazel on 9/16/20 4:03 AM
+ * Last modified 9/16/20 3:36 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -100,10 +100,10 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
         firestoreDatabase.firestoreSettings = firebaseFirestoreSettings
 
-        val publicCommunityName: String = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityName)
+        val publicCommunityName: String? = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityName)
         val publicCommunityMessagesDatabasePath: String = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityDatabasePath).plus("/Messages")
 
-        val publicCommunityCountryName: String = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityCountryName)
+        val publicCommunityCountryName: String? = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityCountryName)
 
         val communityCenterVicinity = LatLng(
             intent.getDoubleExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude, 0.0),
@@ -111,14 +111,18 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
         )
 
 
-        FirebaseMessaging.getInstance().subscribeToTopic(publicCommunityPrepareNotificationTopic(publicCommunityName))
-            .addOnSuccessListener {
-                Log.d(this@PublicCommunity.javaClass.simpleName, "Subscribed To ${publicCommunityName}")
+        publicCommunityName?.let {
 
-            }.addOnFailureListener {
-                Log.d(this@PublicCommunity.javaClass.simpleName, "Failed To Subscribe")
+            FirebaseMessaging.getInstance().subscribeToTopic(publicCommunityPrepareNotificationTopic(publicCommunityName))
+                .addOnSuccessListener {
+                    Log.d(this@PublicCommunity.javaClass.simpleName, "Subscribed To ${publicCommunityName}")
 
-            }
+                }.addOnFailureListener {
+                    Log.d(this@PublicCommunity.javaClass.simpleName, "Failed To Subscribe")
+
+                }
+
+        }
 
         publicCommunitySetupUI()
 
@@ -191,12 +195,16 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                         val messageContent = publicCommunityViewBinding.textMessageContentView.text.toString()
 
-                        firebaseCloudFunctions
-                            .getHttpsCallable("publicCommunityNewMessageNotification")
-                            .call(publicCommunityPrepareNotificationData(messageContent, publicCommunityName, publicCommunityCountryName, communityCenterVicinity))
-                            .continueWith {
+                        if (publicCommunityName != null && publicCommunityCountryName != null) {
 
-                            }
+                            firebaseCloudFunctions
+                                .getHttpsCallable("publicCommunityNewMessageNotification")
+                                .call(publicCommunityPrepareNotificationData(messageContent, publicCommunityName, publicCommunityCountryName, communityCenterVicinity))
+                                .continueWith {
+
+                                }
+
+                        }
 
                         publicCommunityViewBinding.textMessageContentView.text = null
 

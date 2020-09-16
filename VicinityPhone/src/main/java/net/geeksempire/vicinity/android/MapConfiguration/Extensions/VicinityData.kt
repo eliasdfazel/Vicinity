@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/8/20 10:55 AM
- * Last modified 9/8/20 8:18 AM
+ * Created by Elias Fazel on 9/16/20 4:03 AM
+ * Last modified 9/16/20 3:23 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -36,7 +36,7 @@ fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitud
                         val communityLatitude = documentSnapshot["centerLatitude"].toString().toDouble()
                         val communityLongitude = documentSnapshot["centerLongitude"].toString().toDouble()
 
-                        if (vicinityCalculations.joinVicinity(userLatitudeLongitude, LatLng(communityLatitude, communityLongitude))) {
+                        if (vicinityCalculations.joinedVicinity(userLatitudeLongitude, LatLng(communityLatitude, communityLongitude))) {
 
                             firebaseUser?.let {
 

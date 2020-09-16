@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/15/20 10:09 AM
- * Last modified 9/15/20 10:04 AM
+ * Created by Elias Fazel on 9/16/20 4:03 AM
+ * Last modified 9/16/20 3:29 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -86,7 +86,7 @@ class AccountInformation : AppCompatActivity() {
             firebaseAuth.currentUser?.let { firebaseUser ->
 
                 firestoreDatabase
-                    .document(userInformation.userProfileDatabasePath(firebaseUser.uid))
+                    .document(UserInformation.userProfileDatabasePath(firebaseUser.uid))
                     .get()
                     .addOnSuccessListener { documentSnapshot ->
 

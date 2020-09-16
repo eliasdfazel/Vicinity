@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/3/20 10:56 AM
- * Last modified 9/3/20 10:53 AM
+ * Created by Elias Fazel on 9/16/20 4:03 AM
+ * Last modified 9/16/20 3:23 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -52,7 +52,7 @@ class VicinityCalculations {
         return (pointsDistance[0] < (VicinityRadius + (VicinityRadius/2)))
     }
 
-    fun joinVicinity(userLocation: LatLng, vicinityCenter: LatLng) : Boolean {
+    fun joinedVicinity(userLocation: LatLng, vicinityCenter: LatLng) : Boolean {
 
         return (insideVicinity(userLocation, vicinityCenter) || insideSafeDistanceVicinity(userLocation, vicinityCenter))
     }

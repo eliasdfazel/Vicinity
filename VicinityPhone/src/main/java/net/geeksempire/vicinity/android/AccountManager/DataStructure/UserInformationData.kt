@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/15/20 10:09 AM
- * Last modified 9/15/20 9:00 AM
+ * Created by Elias Fazel on 9/16/20 4:03 AM
+ * Last modified 9/16/20 4:02 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -23,4 +23,8 @@ data class UserInformationProfileData (var userIdentification: String, var userE
                                        var instagramAccount: String?,
                                        var twitterAccount: String?,
                                        var phoneNumber: String?,
+                                       var userJointDate:  FieldValue = FieldValue.serverTimestamp())
+
+data class UserInformationArchiveData (var vicinityCountry: String, var vicinityName: String,
+                                       var lastLatitude: String, var lastLongitude: String,
                                        var userJointDate:  FieldValue = FieldValue.serverTimestamp())

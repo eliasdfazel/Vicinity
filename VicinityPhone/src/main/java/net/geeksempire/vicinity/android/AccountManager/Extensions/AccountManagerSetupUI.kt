@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/15/20 10:30 AM
- * Last modified 9/15/20 10:29 AM
+ * Created by Elias Fazel on 9/16/20 4:03 AM
+ * Last modified 9/16/20 3:29 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -27,6 +27,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationProfileData
 import net.geeksempire.vicinity.android.AccountManager.UI.AccountInformation
+import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.UI.Colors.extractDominantColor
 import net.geeksempire.vicinity.android.Utils.UI.Colors.extractVibrantColor
@@ -160,7 +161,7 @@ fun AccountInformation.clickSetup() {
                 )
 
                 firestoreDatabase
-                    .document(userInformation.userProfileDatabasePath(firebaseUser.uid))
+                    .document(UserInformation.userProfileDatabasePath(firebaseUser.uid))
                     .set(userInformationProfileData)
                     .addOnSuccessListener {
 

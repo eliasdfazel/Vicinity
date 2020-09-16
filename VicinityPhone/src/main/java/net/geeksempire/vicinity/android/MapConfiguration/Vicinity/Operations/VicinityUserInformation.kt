@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/14/20 8:30 AM
- * Last modified 9/14/20 8:03 AM
+ * Created by Elias Fazel on 9/16/20 4:03 AM
+ * Last modified 9/16/20 4:03 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -25,22 +25,53 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationArchiveData
 import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationData
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.DataStructure.VicinityData
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.vicinityName
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.UI.Images.drawableToBitmap
 import net.geeksempire.vicinity.android.Utils.UI.Images.getCircularBitmapWithWhiteBorder
 
 class VicinityUserInformation (private val firestoreDatabase: FirebaseFirestore, private val vicinityDatabasePath: String) {
 
-    fun add(userInformationData: UserInformationData) {
+    fun add(userInformationData: UserInformationData, vicinityData: VicinityData) {
 
         firestoreDatabase
             .document(UserInformation.uniqueUserInformationDatabasePath(vicinityDatabasePath, userInformationData.userIdentification))
             .set(userInformationData)
             .addOnSuccessListener {
                 Log.d(this@VicinityUserInformation.javaClass.simpleName, "User Added To ${vicinityDatabasePath}")
+
+                val firebaseUser = Firebase.auth.currentUser
+
+                firebaseUser?.let {
+
+                    val userInformationArchiveData = UserInformationArchiveData(
+                        vicinityCountry = vicinityData.countryName,
+                        vicinityName = vicinityName(LatLng(vicinityData.centerLatitude.toDouble(), vicinityData.centerLongitude.toDouble())),
+                        lastLatitude = userInformationData.userLatitude,
+                        lastLongitude = userInformationData.userLongitude
+                    )
+
+                    firestoreDatabase
+                        .document(UserInformation.userVicinityArchiveDatabasePath(firebaseUser.uid, vicinityName(LatLng(vicinityData.centerLatitude.toDouble(), vicinityData.centerLongitude.toDouble()))))
+                        .set(userInformationArchiveData)
+                        .addOnSuccessListener {
+
+
+
+                        }.addOnFailureListener {
+
+
+
+                        }
+
+                }
 
             }
             .addOnFailureListener {
