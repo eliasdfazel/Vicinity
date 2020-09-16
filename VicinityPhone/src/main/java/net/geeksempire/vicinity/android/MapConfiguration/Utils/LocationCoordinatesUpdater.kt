@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/1/20 9:44 AM
- * Last modified 9/1/20 8:49 AM
+ * Created by Elias Fazel on 9/16/20 3:22 AM
+ * Last modified 9/16/20 3:22 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -18,10 +18,13 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import com.google.android.gms.maps.model.LatLng
+import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformationIO
 import net.geeksempire.vicinity.android.MapConfiguration.LocationDataHolder.MapsLiveData
 
 
 class LocationCoordinatesUpdater (private val context: Context, private val mapsLiveData: MapsLiveData) : LocationListener {
+
+    val userInformationIO = UserInformationIO(context)
 
     private var lastLocation: Location? = null
 
@@ -53,6 +56,8 @@ class LocationCoordinatesUpdater (private val context: Context, private val maps
 
         latitude = location.latitude
         longitude = location.longitude
+
+        userInformationIO.saveUserLocation(LatLng(latitude, longitude))
 
         mapsLiveData.currentLocationData.postValue(LatLng(latitude, longitude))
 
