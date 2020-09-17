@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/12/20 11:06 AM
- * Last modified 9/12/20 11:06 AM
+ * Created by Elias Fazel on 9/17/20 9:31 AM
+ * Last modified 9/17/20 9:31 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -11,13 +11,22 @@
 package net.geeksempire.vicinity.android.MapConfiguration.Extensions
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.ResultReceiver
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.model.LatLng
 import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.vicinityName
+import net.geeksempire.vicinity.android.Utils.Location.KnownAddress
+import net.geeksempire.vicinity.android.Utils.Location.LocationCheckpoint
+import net.geeksempire.vicinity.android.Utils.Preferences.SavePreferences
 
 fun MapsOfSociety.getLocationData() {
 
@@ -55,6 +64,54 @@ fun MapsOfSociety.getLocationData() {
             }
 
         }, null)
+
+    }
+
+}
+
+fun MapsOfSociety.getLocationDetails() {
+
+    userLatitudeLongitude?.let { location ->
+
+        val resultReceiver: ResultReceiver = object : ResultReceiver(Handler(Looper.getMainLooper())) {
+
+            override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
+                when (resultCode) {
+                    KnownAddress.Constants.SUCCESS_RESULT -> {
+                        val addressOutput = resultData?.getString(KnownAddress.Constants.RESULT_DATA_KEY).toString()
+
+                        if (LocationCheckpoint.LOCATION_COUNTRY_NAME != null || LocationCheckpoint.LOCATION_CITY_NAME != null) {
+
+                            val savePreferences = SavePreferences(applicationContext)
+
+                            savePreferences.savePreference("VicinityInformation", vicinityName(location), LocationCheckpoint.LOCATION_INFORMATION_DETAIL)
+
+                        } else {
+                            val intent = Intent(this@getLocationDetails, KnownAddress::class.java)
+                            intent.action = "LatLongData"
+                            intent.putExtra(KnownAddress.Constants.RESULT_RECEIVER, this)
+                            intent.putExtra(KnownAddress.Constants.LOCATION_DATA_EXTRA, location)
+                            startService(intent)
+                        }
+                    }
+                    KnownAddress.Constants.FAILURE_RESULT -> {
+
+                        val intent = Intent(this@getLocationDetails, KnownAddress::class.java)
+                        intent.action = "LatLongData"
+                        intent.putExtra(KnownAddress.Constants.RESULT_RECEIVER, this)
+                        intent.putExtra(KnownAddress.Constants.LOCATION_DATA_EXTRA, location)
+                        startService(intent)
+
+                    }
+                }
+            }
+        }
+
+        val intent = Intent(this@getLocationDetails, KnownAddress::class.java)
+        intent.action = "LatLongData"
+        intent.putExtra(KnownAddress.Constants.RESULT_RECEIVER, resultReceiver)
+        intent.putExtra(KnownAddress.Constants.LOCATION_DATA_EXTRA, location)
+        startService(intent)
 
     }
 
