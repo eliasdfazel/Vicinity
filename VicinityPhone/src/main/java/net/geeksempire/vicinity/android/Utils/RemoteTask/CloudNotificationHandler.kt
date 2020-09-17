@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/12/20 6:36 AM
- * Last modified 9/12/20 6:36 AM
+ * Created by Elias Fazel on 9/17/20 10:01 AM
+ * Last modified 9/17/20 10:01 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -28,7 +28,6 @@ import com.google.firebase.messaging.RemoteMessage
 import net.geeksempire.vicinity.android.BuildConfig
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoint.PublicCommunicationEndpoint
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity
-import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.vicinityName
 import net.geeksempire.vicinity.android.Utils.Location.LocationCheckpoint
 import net.geeksempire.vicinity.android.Utils.UI.Colors.extractDominantColor
 import net.geeksempire.vicinity.android.Utils.UI.NotifyUser.NotificationCreator
@@ -88,7 +87,7 @@ class CloudNotificationHandler : FirebaseMessagingService() {
                                     largeIcon = bitmap,
                                     notificationColor = extractDominantColor(applicationContext, bitmap),
                                     notificationId = System.currentTimeMillis(),
-                                    locationKnownName = locationCheckpoint.knownLocationName(applicationContext, vicinityName(vicinityLocation)).toString(),
+                                    locationKnownName = LocationCheckpoint.LOCATION_INFORMATION_DETAIL,
                                     pendingIntent = publicCommunityPendingIntent
                                 )
 
