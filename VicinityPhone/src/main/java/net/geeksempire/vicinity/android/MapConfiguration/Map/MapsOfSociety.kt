@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/17/20 9:31 AM
- * Last modified 9/17/20 9:26 AM
+ * Created by Elias Fazel on 9/17/20 10:14 AM
+ * Last modified 9/17/20 10:13 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -140,6 +140,13 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
         mapsViewBinding = MapsViewBinding.inflate(layoutInflater)
         setContentView(mapsViewBinding.root)
 
+        val firebaseFirestoreSettings = firestoreSettings {
+            isPersistenceEnabled = false
+            cacheSizeBytes = FirebaseFirestoreSettings.CACHE_SIZE_UNLIMITED
+        }
+
+        firestoreDatabase.firestoreSettings = firebaseFirestoreSettings
+
         (application as VicinityApplication)
             .dependencyGraph
             .subDependencyGraph()
@@ -149,13 +156,6 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
         mapsOfSocietySetupUI()
 
         networkConnectionListener.networkConnectionListenerInterface = this@MapsOfSociety
-
-        val firebaseFirestoreSettings = firestoreSettings {
-            isPersistenceEnabled = true
-            cacheSizeBytes = FirebaseFirestoreSettings.CACHE_SIZE_UNLIMITED
-        }
-
-        firestoreDatabase.firestoreSettings = firebaseFirestoreSettings
 
         val builderStrictMode = StrictMode.VmPolicy.Builder()
         StrictMode.setVmPolicy(builderStrictMode.build())

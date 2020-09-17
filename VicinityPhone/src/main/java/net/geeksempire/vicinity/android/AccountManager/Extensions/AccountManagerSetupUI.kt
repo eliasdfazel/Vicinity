@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/16/20 6:43 AM
- * Last modified 9/16/20 6:41 AM
+ * Created by Elias Fazel on 9/17/20 10:14 AM
+ * Last modified 9/17/20 10:10 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -153,83 +153,89 @@ fun AccountInformation.clickSetup() {
 
         } else {
 
-            firebaseAuth.currentUser?.let { firebaseUser ->
-
-                accountViewBinding.loadingView.visibility = View.VISIBLE
-                accountViewBinding.loadingView.playAnimation()
-
-                val userInformationProfileData: UserInformationProfileData = UserInformationProfileData(
-                    userIdentification = firebaseUser.uid, userEmailAddress = firebaseUser.email.toString(), userDisplayName = firebaseUser.displayName.toString(), userProfileImage = firebaseUser.photoUrl.toString(),
-                    userLatitude= userInformationIO.readUserLocation()?.latitude.toString(),  userLongitude = userInformationIO.readUserLocation()?.longitude.toString(),
-                    instagramAccount = accountViewBinding.instagramAddressView.text.toString(),
-                    twitterAccount = accountViewBinding.twitterAddressView.text.toString(),
-                    phoneNumber = accountViewBinding.phoneNumberAddressView.text.toString(),
-                )
-
-                firestoreDatabase
-                    .document(UserInformation.userProfileDatabasePath(firebaseUser.uid))
-                    .set(userInformationProfileData)
-                    .addOnSuccessListener {
-
-                        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                            accountViewBinding.phoneNumberAddressView.text.toString(),
-                            120,
-                            TimeUnit.SECONDS,
-                            this@clickSetup,
-                            object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-
-                                override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
-
-                                    firebaseUser.linkWithCredential(phoneAuthCredential).addOnSuccessListener {
-
-                                        accountViewBinding.loadingView.pauseAnimation()
-
-                                        accountViewBinding.loadingView.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out))
-                                        accountViewBinding.loadingView.visibility = View.INVISIBLE
-
-                                        Handler().postDelayed({
-
-                                            accountViewBinding.nextSubmitView.playAnimation()
-
-                                            profileUpdate = true
-
-                                        }, 531)
-
-                                    }.addOnFailureListener {
-
-
-
-                                    }
-
-                                }
-
-                                override fun onVerificationFailed(e: FirebaseException) {
-                                    e.printStackTrace()
-
-                                    if (e is FirebaseAuthInvalidCredentialsException) {
-
-
-
-                                    } else if (e is FirebaseTooManyRequestsException) {
-
-
-
-                                    }
-
-                                }
-
-                                override fun onCodeSent(verificationId: String, forceResendingToken: PhoneAuthProvider.ForceResendingToken) {
-                                    Log.d(this@clickSetup.javaClass.simpleName, "Verification Code Sent: ${verificationId}")
-
-                                }
-
-                            })
-
-                    }
-
-            }
+            createUserProfile()
 
         }
+
+    }
+
+}
+
+fun AccountInformation.createUserProfile() {
+
+    firebaseAuth.currentUser?.let { firebaseUser ->
+
+        accountViewBinding.loadingView.visibility = View.VISIBLE
+        accountViewBinding.loadingView.playAnimation()
+
+        val userInformationProfileData: UserInformationProfileData = UserInformationProfileData(
+            userIdentification = firebaseUser.uid, userEmailAddress = firebaseUser.email.toString(), userDisplayName = firebaseUser.displayName.toString(), userProfileImage = firebaseUser.photoUrl.toString(),
+            userLatitude= userInformationIO.readUserLocation()?.latitude.toString(),  userLongitude = userInformationIO.readUserLocation()?.longitude.toString(),
+            instagramAccount = accountViewBinding.instagramAddressView.text.toString(),
+            twitterAccount = accountViewBinding.twitterAddressView.text.toString(),
+            phoneNumber = accountViewBinding.phoneNumberAddressView.text.toString(),
+        )
+
+        firestoreDatabase
+            .document(UserInformation.userProfileDatabasePath(firebaseUser.uid))
+            .set(userInformationProfileData)
+            .addOnSuccessListener {
+
+                PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                    accountViewBinding.phoneNumberAddressView.text.toString(),
+                    120,
+                    TimeUnit.SECONDS,
+                    this@createUserProfile,
+                    object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+
+                        override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
+
+                            firebaseUser.linkWithCredential(phoneAuthCredential).addOnSuccessListener {
+
+                                accountViewBinding.loadingView.pauseAnimation()
+
+                                accountViewBinding.loadingView.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out))
+                                accountViewBinding.loadingView.visibility = View.INVISIBLE
+
+                                Handler().postDelayed({
+
+                                    accountViewBinding.nextSubmitView.playAnimation()
+
+                                    profileUpdate = true
+
+                                }, 531)
+
+                            }.addOnFailureListener {
+
+
+
+                            }
+
+                        }
+
+                        override fun onVerificationFailed(e: FirebaseException) {
+                            e.printStackTrace()
+
+                            if (e is FirebaseAuthInvalidCredentialsException) {
+
+
+
+                            } else if (e is FirebaseTooManyRequestsException) {
+
+
+
+                            }
+
+                        }
+
+                        override fun onCodeSent(verificationId: String, forceResendingToken: PhoneAuthProvider.ForceResendingToken) {
+                            Log.d(this@createUserProfile.javaClass.simpleName, "Verification Code Sent: ${verificationId}")
+
+                        }
+
+                    })
+
+            }
 
     }
 

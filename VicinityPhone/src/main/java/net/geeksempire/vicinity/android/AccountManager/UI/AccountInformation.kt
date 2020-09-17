@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/16/20 6:18 AM
- * Last modified 9/16/20 6:17 AM
+ * Created by Elias Fazel on 9/17/20 10:14 AM
+ * Last modified 9/17/20 10:09 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import net.geeksempire.vicinity.android.AccountManager.Extensions.accountManagerSetupUI
+import net.geeksempire.vicinity.android.AccountManager.Extensions.createUserProfile
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformationIO
 import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
@@ -135,6 +136,8 @@ class AccountInformation : AppCompatActivity() {
                             val accountName: String = firebaseUser.email.toString()
 
                             userInformationIO.saveUserInformation(accountName)
+
+                            createUserProfile()
 
                             startActivity(Intent(applicationContext, MapsOfSociety::class.java),
                                 ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_in_right, 0).toBundle())
