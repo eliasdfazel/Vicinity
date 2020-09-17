@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/17/20 9:31 AM
- * Last modified 9/17/20 9:31 AM
+ * Created by Elias Fazel on 9/17/20 9:59 AM
+ * Last modified 9/17/20 9:57 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -18,10 +18,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.ResultReceiver
+import android.util.Log
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.functions.FirebaseFunctions
 import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.vicinityName
 import net.geeksempire.vicinity.android.Utils.Location.KnownAddress
@@ -114,5 +116,23 @@ fun MapsOfSociety.getLocationDetails() {
         startService(intent)
 
     }
+
+    FirebaseFunctions.getInstance()
+        .getHttpsCallable("fetchUserPublicInternetAddress")
+        .call()
+        .continueWith { task ->
+
+            val resultToContinueWith = task.result?.data as Map<String, Any>
+
+            resultToContinueWith["ClientAddressIP"] as String
+
+        }.addOnSuccessListener {
+            Log.d(this@getLocationDetails.javaClass.simpleName, "IP Address ::: ${LocationCheckpoint.LOCATION_KNOWN_IP}")
+
+            LocationCheckpoint.LOCATION_KNOWN_IP = it
+
+        }.addOnFailureListener {
+
+        }
 
 }

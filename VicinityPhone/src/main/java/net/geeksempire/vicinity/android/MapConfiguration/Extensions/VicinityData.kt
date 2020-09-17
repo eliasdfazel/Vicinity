@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/16/20 4:03 AM
- * Last modified 9/16/20 3:23 AM
+ * Created by Elias Fazel on 9/17/20 9:59 AM
+ * Last modified 9/17/20 9:59 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -18,6 +18,7 @@ import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoi
 import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.DataStructure.VicinityData
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.Operations.VicinityUserInformation
+import net.geeksempire.vicinity.android.Utils.Location.LocationCheckpoint
 
 fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitude: LatLng) {
 
@@ -42,8 +43,10 @@ fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitud
 
                                 val vicinityData: VicinityData = VicinityData(
                                     centerLatitude = userLatitudeLongitude.latitude.toString(), centerLongitude = userLatitudeLongitude.longitude.toString(),
-                                    countryName = countryName,  cityName = "",
-                                    knownAddress = "", approximateIpAddress = ""
+                                    countryName = countryName,
+                                    cityName = LocationCheckpoint.LOCATION_CITY_NAME,
+                                    knownAddress = LocationCheckpoint.LOCATION_INFORMATION_DETAIL,
+                                    approximateIpAddress = LocationCheckpoint.LOCATION_KNOWN_IP
                                 )
 
                                 val userInformationData: UserInformationData = UserInformationData(
@@ -77,8 +80,10 @@ fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitud
 
                                 val vicinityData: VicinityData = VicinityData(
                                     centerLatitude = userLatitudeLongitude.latitude.toString(), centerLongitude = userLatitudeLongitude.longitude.toString(),
-                                    countryName = countryName,  cityName = "",
-                                    knownAddress = "", approximateIpAddress = ""
+                                    countryName = countryName,
+                                    cityName = LocationCheckpoint.LOCATION_CITY_NAME,
+                                    knownAddress = LocationCheckpoint.LOCATION_INFORMATION_DETAIL,
+                                    approximateIpAddress = LocationCheckpoint.LOCATION_KNOWN_IP
                                 )
 
                                 val userInformationData: UserInformationData = UserInformationData(
@@ -114,8 +119,10 @@ fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitud
 
                         val vicinityData: VicinityData = VicinityData(
                             centerLatitude = userLatitudeLongitude.latitude.toString(), centerLongitude = userLatitudeLongitude.longitude.toString(),
-                            countryName = countryName,  cityName = "",
-                            knownAddress = "", approximateIpAddress = ""
+                            countryName = countryName,
+                            cityName = LocationCheckpoint.LOCATION_CITY_NAME,
+                            knownAddress = LocationCheckpoint.LOCATION_INFORMATION_DETAIL,
+                            approximateIpAddress = LocationCheckpoint.LOCATION_KNOWN_IP
                         )
 
                         val userInformationData: UserInformationData = UserInformationData(

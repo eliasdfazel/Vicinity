@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/17/20 9:31 AM
- * Last modified 9/17/20 9:31 AM
+ * Created by Elias Fazel on 9/17/20 9:59 AM
+ * Last modified 9/17/20 9:49 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -38,6 +38,8 @@ class LocationCheckpoint {
         var LOCATION_STATE_PROVINCE: String? = null
         var LOCATION_CITY_NAME: String? = null
         var LOCATION_KNOWN_NAME: String? = null
+
+        var LOCATION_KNOWN_IP: String? = null
     }
 
     fun turnOnGps(appCompatActivity: AppCompatActivity) {
@@ -77,13 +79,6 @@ class LocationCheckpoint {
         return (isGpsEnabled && isNetworkEnabled)
     }
 
-    fun knownLocationName(context: Context, vicinityCommunityName: String) : String? {
-
-        val readPreferences = ReadPreferences(context)
-
-        return readPreferences.readPreference("VicinityInformation", vicinityCommunityName, "Earth")
-    }
-
     fun getCountryCode(context: Context) : String? {
 
         val readPreferences = ReadPreferences(context)
@@ -112,8 +107,7 @@ class LocationCheckpoint {
 
                     LocationCheckpoint.LOCATION_KNOWN_NAME = knownName
                     LocationCheckpoint.LOCATION_INFORMATION_DETAIL = "${LocationCheckpoint.LOCATION_COUNTRY_NAME}, ${LocationCheckpoint.LOCATION_STATE_PROVINCE}, ${LocationCheckpoint.LOCATION_CITY_NAME}, $knownName"
-                    LocationCheckpoint.LOCATION_INFORMATION_DETAIL_HTML = Html.fromHtml("<big><b>${LocationCheckpoint.LOCATION_COUNTRY_NAME}</b></big> | <big>${LocationCheckpoint.LOCATION_CITY_NAME}</big><br/>" +
-                            "${knownName}") as Spannable?
+                    LocationCheckpoint.LOCATION_INFORMATION_DETAIL_HTML = Html.fromHtml("<big><b>${LocationCheckpoint.LOCATION_COUNTRY_NAME}</b></big> | <big>${LocationCheckpoint.LOCATION_CITY_NAME}</big><br/>" + "${knownName}") as Spannable
 
                 } else {
 
