@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/8/20 10:55 AM
- * Last modified 9/8/20 10:18 AM
+ * Created by Elias Fazel on 9/17/20 10:19 AM
+ * Last modified 9/17/20 10:17 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,6 +12,7 @@ package net.geeksempire.vicinity.android.MapConfiguration.Utils
 
 import android.graphics.drawable.Drawable
 import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -62,7 +63,7 @@ class MapsMarker (private val context: AppCompatActivity, private val firebaseUs
                             mapMarker.setIcon(bitmapDescriptorIcon)
                             mapMarker.showInfoWindow()
 
-                            Handler().postDelayed({
+                            Handler(Looper.getMainLooper()).postDelayed({
                                 mapMarker.hideInfoWindow()
                             }, 5000)
 

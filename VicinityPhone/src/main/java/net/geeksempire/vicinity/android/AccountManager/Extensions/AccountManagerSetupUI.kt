@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/17/20 10:14 AM
- * Last modified 9/17/20 10:10 AM
+ * Created by Elias Fazel on 9/17/20 10:19 AM
+ * Last modified 9/17/20 10:17 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -14,6 +14,7 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -165,8 +166,8 @@ fun AccountInformation.createUserProfile() {
 
     firebaseAuth.currentUser?.let { firebaseUser ->
 
-        accountViewBinding.loadingView.visibility = View.VISIBLE
-        accountViewBinding.loadingView.playAnimation()
+        accountViewBinding.updatingLoadingView.visibility = View.VISIBLE
+        accountViewBinding.updatingLoadingView.playAnimation()
 
         val userInformationProfileData: UserInformationProfileData = UserInformationProfileData(
             userIdentification = firebaseUser.uid, userEmailAddress = firebaseUser.email.toString(), userDisplayName = firebaseUser.displayName.toString(), userProfileImage = firebaseUser.photoUrl.toString(),
@@ -192,12 +193,12 @@ fun AccountInformation.createUserProfile() {
 
                             firebaseUser.linkWithCredential(phoneAuthCredential).addOnSuccessListener {
 
-                                accountViewBinding.loadingView.pauseAnimation()
+                                accountViewBinding.updatingLoadingView.pauseAnimation()
 
-                                accountViewBinding.loadingView.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out))
-                                accountViewBinding.loadingView.visibility = View.INVISIBLE
+                                accountViewBinding.updatingLoadingView.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out))
+                                accountViewBinding.updatingLoadingView.visibility = View.INVISIBLE
 
-                                Handler().postDelayed({
+                                Handler(Looper.getMainLooper()).postDelayed({
 
                                     accountViewBinding.nextSubmitView.playAnimation()
 

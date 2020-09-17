@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/16/20 4:03 AM
- * Last modified 9/16/20 3:36 AM
+ * Created by Elias Fazel on 9/17/20 10:19 AM
+ * Last modified 9/17/20 10:17 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,6 +12,7 @@ package net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Publi
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -150,7 +151,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                 val lastVisiblePosition = linearLayoutManager.findLastCompletelyVisibleItemPosition()
 
                 if (lastVisiblePosition == -1 || positionStart >= friendlyMessageCount - 1 && lastVisiblePosition == positionStart - 1) {
-                    Handler().postDelayed({
+                    Handler(Looper.getMainLooper()).postDelayed({
 
                         publicCommunityViewBinding.nestedScrollView.smoothScrollTo(0, publicCommunityViewBinding.messageRecyclerView.height)
 
@@ -180,7 +181,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                             if (animationProgress == 96) {
 
-                                Handler().postDelayed({
+                                Handler(Looper.getMainLooper()).postDelayed({
 
                                     val animationSpeed = publicCommunityViewBinding.sendMessageView.speed
 
