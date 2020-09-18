@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/17/20 10:19 AM
- * Last modified 9/17/20 10:17 AM
+ * Created by Elias Fazel on 9/18/20 11:35 AM
+ * Last modified 9/18/20 10:46 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -182,59 +182,63 @@ fun AccountInformation.createUserProfile() {
             .set(userInformationProfileData)
             .addOnSuccessListener {
 
-                PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                    accountViewBinding.phoneNumberAddressView.text.toString(),
-                    120,
-                    TimeUnit.SECONDS,
-                    this@createUserProfile,
-                    object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                if (!accountViewBinding.phoneNumberAddressView.text.isNullOrEmpty()) {
 
-                        override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
+                    PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                        accountViewBinding.phoneNumberAddressView.text.toString(),
+                        120,
+                        TimeUnit.SECONDS,
+                        this@createUserProfile,
+                        object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
-                            firebaseUser.linkWithCredential(phoneAuthCredential).addOnSuccessListener {
+                            override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
 
-                                accountViewBinding.updatingLoadingView.pauseAnimation()
+                                firebaseUser.linkWithCredential(phoneAuthCredential).addOnSuccessListener {
 
-                                accountViewBinding.updatingLoadingView.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out))
-                                accountViewBinding.updatingLoadingView.visibility = View.INVISIBLE
+                                    accountViewBinding.updatingLoadingView.pauseAnimation()
 
-                                Handler(Looper.getMainLooper()).postDelayed({
+                                    accountViewBinding.updatingLoadingView.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out))
+                                    accountViewBinding.updatingLoadingView.visibility = View.INVISIBLE
 
-                                    accountViewBinding.nextSubmitView.playAnimation()
+                                    Handler(Looper.getMainLooper()).postDelayed({
 
-                                    profileUpdate = true
+                                        accountViewBinding.nextSubmitView.playAnimation()
 
-                                }, 531)
+                                        profileUpdate = true
 
-                            }.addOnFailureListener {
+                                    }, 531)
 
-
-
-                            }
-
-                        }
-
-                        override fun onVerificationFailed(e: FirebaseException) {
-                            e.printStackTrace()
-
-                            if (e is FirebaseAuthInvalidCredentialsException) {
+                                }.addOnFailureListener {
 
 
 
-                            } else if (e is FirebaseTooManyRequestsException) {
-
-
+                                }
 
                             }
 
-                        }
+                            override fun onVerificationFailed(e: FirebaseException) {
+                                e.printStackTrace()
 
-                        override fun onCodeSent(verificationId: String, forceResendingToken: PhoneAuthProvider.ForceResendingToken) {
-                            Log.d(this@createUserProfile.javaClass.simpleName, "Verification Code Sent: ${verificationId}")
+                                if (e is FirebaseAuthInvalidCredentialsException) {
 
-                        }
 
-                    })
+
+                                } else if (e is FirebaseTooManyRequestsException) {
+
+
+
+                                }
+
+                            }
+
+                            override fun onCodeSent(verificationId: String, forceResendingToken: PhoneAuthProvider.ForceResendingToken) {
+                                Log.d(this@createUserProfile.javaClass.simpleName, "Verification Code Sent: ${verificationId}")
+
+                            }
+
+                        })
+
+                }
 
             }
 

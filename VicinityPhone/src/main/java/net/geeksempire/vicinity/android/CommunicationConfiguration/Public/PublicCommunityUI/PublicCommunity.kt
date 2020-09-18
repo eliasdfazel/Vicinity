@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/18/20 9:32 AM
- * Last modified 9/18/20 9:30 AM
+ * Created by Elias Fazel on 9/18/20 11:35 AM
+ * Last modified 9/18/20 10:41 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -86,12 +86,16 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
         publicCommunityViewBinding = PublicCommunityViewBinding.inflate(layoutInflater)
         setContentView(publicCommunityViewBinding.root)
 
-        val firebaseFirestoreSettings = firestoreSettings {
-            isPersistenceEnabled = false
-            cacheSizeBytes = FirebaseFirestoreSettings.CACHE_SIZE_UNLIMITED
-        }
+        try {
+            val firebaseFirestoreSettings = firestoreSettings {
+                isPersistenceEnabled = false
+                cacheSizeBytes = FirebaseFirestoreSettings.CACHE_SIZE_UNLIMITED
+            }
 
-        firestoreDatabase.firestoreSettings = firebaseFirestoreSettings
+            firestoreDatabase.firestoreSettings = firebaseFirestoreSettings
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
         (application as VicinityApplication)
             .dependencyGraph

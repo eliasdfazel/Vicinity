@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/8/20 6:29 AM
- * Last modified 9/8/20 6:08 AM
+ * Created by Elias Fazel on 9/18/20 11:35 AM
+ * Last modified 9/18/20 11:31 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -19,15 +19,13 @@ class PublicCommunicationEndpoint {
 
         var CurrentCommunityCoordinates: LatLng? = null
 
-        /*
+        /**
          * Collection Path: Odd
          * Document Path : Even
-         * */
+         **/
         private const val commonPublicEndpoint: String = "Vicinity/OnlineSociety/Public/Community/"
 
         fun publicCommunityDocumentEndpoint(countryName: String, locationLatitudeLongitude: LatLng) : String {
-
-            PublicCommunicationEndpoint.CurrentCommunityCoordinates = (locationLatitudeLongitude)
 
             return PublicCommunicationEndpoint.commonPublicEndpoint + countryName + "/" + vicinityName(locationLatitudeLongitude)
         }

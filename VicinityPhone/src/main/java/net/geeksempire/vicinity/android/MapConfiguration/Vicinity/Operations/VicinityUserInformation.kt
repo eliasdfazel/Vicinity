@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/18/20 9:32 AM
- * Last modified 9/18/20 9:06 AM
+ * Created by Elias Fazel on 9/18/20 11:35 AM
+ * Last modified 9/18/20 11:32 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -54,8 +54,10 @@ class VicinityUserInformation (private val firestoreDatabase: FirebaseFirestore,
                     val userInformationArchiveData = UserInformationArchiveData(
                         vicinityCountry = vicinityData.countryName,
                         vicinityName = vicinityName(LatLng(vicinityData.centerLatitude.toDouble(), vicinityData.centerLongitude.toDouble())),
+                        vicinityLatitude = vicinityData.centerLatitude,
+                        vicinityLongitude = vicinityData.centerLongitude,
                         lastLatitude = userInformationData.userLatitude,
-                        lastLongitude = userInformationData.userLongitude
+                        lastLongitude = userInformationData.userLongitude,
                     )
 
                     firestoreDatabase
@@ -152,7 +154,7 @@ class VicinityUserInformation (private val firestoreDatabase: FirebaseFirestore,
 
     }
 
-    fun updateLocation(userIdentification: String, userLatitude: String, userLongitude: String, currentVicinityName: String) {
+    fun updateLocation(userIdentification: String, userLatitude: String, userLongitude: String, currentVicinityName: String, currentVicinityLocation: LatLng) {
 
         firestoreDatabase
             .document(UserInformation.uniqueUserInformationDatabasePath(vicinityDatabasePath, userIdentification))
@@ -160,14 +162,24 @@ class VicinityUserInformation (private val firestoreDatabase: FirebaseFirestore,
                 "userLatitude", userLatitude,
                 "userLongitude", userLongitude,
             ).addOnSuccessListener {
-                Log.d(this@VicinityUserInformation.javaClass.simpleName, "Update User Location ${vicinityDatabasePath}")
+                Log.d(this@VicinityUserInformation.javaClass.simpleName, "User Location In Community Updated ${vicinityDatabasePath}")
 
                 firestoreDatabase
                     .document(UserInformation.userVicinityArchiveDatabasePath(userIdentification, currentVicinityName))
                     .update(
                         "lastLatitude", userLatitude,
                         "lastLongitude", userLongitude,
-                    )
+                        "vicinityLatitude", currentVicinityLocation.latitude,
+                        "vicinityLongitude", currentVicinityLocation.longitude
+                    ).addOnSuccessListener {
+                        Log.d(this@VicinityUserInformation.javaClass.simpleName, "User Location In Profile Updated ${vicinityDatabasePath}")
+
+
+                    }.addOnFailureListener {
+
+
+
+                    }
 
             }.addOnFailureListener {
 

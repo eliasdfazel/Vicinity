@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/18/20 9:32 AM
- * Last modified 9/18/20 9:16 AM
+ * Created by Elias Fazel on 9/18/20 11:35 AM
+ * Last modified 9/18/20 11:31 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -146,12 +146,16 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
         mapsViewBinding = MapsViewBinding.inflate(layoutInflater)
         setContentView(mapsViewBinding.root)
 
-        val firebaseFirestoreSettings = firestoreSettings {
-            isPersistenceEnabled = false
-            cacheSizeBytes = FirebaseFirestoreSettings.CACHE_SIZE_UNLIMITED
-        }
+        try {
+            val firebaseFirestoreSettings = firestoreSettings {
+                isPersistenceEnabled = false
+                cacheSizeBytes = FirebaseFirestoreSettings.CACHE_SIZE_UNLIMITED
+            }
 
-        firestoreDatabase.firestoreSettings = firebaseFirestoreSettings
+            firestoreDatabase.firestoreSettings = firebaseFirestoreSettings
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
         (application as VicinityApplication)
             .dependencyGraph
@@ -181,9 +185,12 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
                 if (nameOfCountry != null && PublicCommunicationEndpoint.CurrentCommunityCoordinates != null) {
 
-                    val vicinityUserInformation: VicinityUserInformation = VicinityUserInformation(firestoreDatabase, PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(nameOfCountry!!, location))
+                    val vicinityUserInformation = VicinityUserInformation(firestoreDatabase,
+                        PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(nameOfCountry!!, PublicCommunicationEndpoint.CurrentCommunityCoordinates!!))
 
-                    vicinityUserInformation.updateLocation(firebaseUser!!.uid, location.latitude.toString(), location.longitude.toString(), vicinityName(PublicCommunicationEndpoint.CurrentCommunityCoordinates!!))
+                    vicinityUserInformation.updateLocation(firebaseUser!!.uid,
+                        location.latitude.toString(), location.longitude.toString(),
+                        vicinityName(PublicCommunicationEndpoint.CurrentCommunityCoordinates!!), PublicCommunicationEndpoint.CurrentCommunityCoordinates!!)
 
                 }
 
@@ -342,7 +349,7 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
                         startActivity(Intent(applicationContext, PublicCommunity::class.java).apply {
                             putExtra(PublicCommunity.Configurations.PublicCommunityName, vicinityName(currentCommunityCoordinates))
-                            putExtra(PublicCommunity.Configurations.PublicCommunityDatabasePath, PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName = nameOfCountry,currentCommunityCoordinates))
+                            putExtra(PublicCommunity.Configurations.PublicCommunityDatabasePath, PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(nameOfCountry, currentCommunityCoordinates))
                             putExtra(PublicCommunity.Configurations.PublicCommunityCountryName, nameOfCountry)
                             putExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude, currentCommunityCoordinates.latitude)
                             putExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLongitude, currentCommunityCoordinates.longitude)
