@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/17/20 10:14 AM
- * Last modified 9/17/20 10:13 AM
+ * Created by Elias Fazel on 9/18/20 8:57 AM
+ * Last modified 9/18/20 8:56 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -39,6 +39,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.firestoreSettings
 import com.google.firebase.ktx.Firebase
 import net.geeksempire.chat.vicinity.Util.MapsUtil.LocationCoordinatesUpdater
+import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformationIO
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoint.PublicCommunicationEndpoint
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity
 import net.geeksempire.vicinity.android.EntryConfiguration
@@ -49,6 +50,7 @@ import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.CountryInforma
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.CountryInformationInterface
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.Operations.CreateVicinity
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.Operations.JoinVicinity
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.Operations.VicinityUserInformation
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.VicinityCalculations
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.vicinityName
 import net.geeksempire.vicinity.android.R
@@ -123,6 +125,10 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
         JoinVicinity(applicationContext, readyGoogleMap, firestoreDatabase)
     }
 
+    val userInformationIO: UserInformationIO by lazy {
+        UserInformationIO(applicationContext)
+    }
+
     val deviceSystemInformation: DeviceSystemInformation by lazy {
         DeviceSystemInformation(applicationContext)
     }
@@ -166,9 +172,19 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
                 userLatitudeLongitude = location
 
+                userInformationIO.saveUserLocation(location)
+
                 mapsMarker.updateUserMarkerLocation(it)
 
                 getLocationDetails()
+
+                nameOfCountry?.let { nameOfCountry ->
+
+                    val vicinityUserInformation: VicinityUserInformation = VicinityUserInformation(firestoreDatabase, PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(nameOfCountry, location))
+
+                    vicinityUserInformation.updateLocation(firebaseUser!!.uid, location.latitude.toString(), location.longitude.toString())
+
+                }
 
             }
 
