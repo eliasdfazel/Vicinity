@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/18/20 8:57 AM
- * Last modified 9/18/20 8:56 AM
+ * Created by Elias Fazel on 9/18/20 9:32 AM
+ * Last modified 9/18/20 9:06 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -152,7 +152,7 @@ class VicinityUserInformation (private val firestoreDatabase: FirebaseFirestore,
 
     }
 
-    fun updateLocation(userIdentification: String, userLatitude: String, userLongitude: String) {
+    fun updateLocation(userIdentification: String, userLatitude: String, userLongitude: String, currentVicinityName: String) {
 
         firestoreDatabase
             .document(UserInformation.uniqueUserInformationDatabasePath(vicinityDatabasePath, userIdentification))
@@ -162,6 +162,12 @@ class VicinityUserInformation (private val firestoreDatabase: FirebaseFirestore,
             ).addOnSuccessListener {
                 Log.d(this@VicinityUserInformation.javaClass.simpleName, "Update User Location ${vicinityDatabasePath}")
 
+                firestoreDatabase
+                    .document(UserInformation.userVicinityArchiveDatabasePath(userIdentification, currentVicinityName))
+                    .update(
+                        "lastLatitude", userLatitude,
+                        "lastLongitude", userLongitude,
+                    )
 
             }.addOnFailureListener {
 

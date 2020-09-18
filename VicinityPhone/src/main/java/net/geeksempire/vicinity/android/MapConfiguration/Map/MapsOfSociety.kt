@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/18/20 8:57 AM
- * Last modified 9/18/20 8:56 AM
+ * Created by Elias Fazel on 9/18/20 9:32 AM
+ * Last modified 9/18/20 9:16 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -169,6 +169,7 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
         mapsLiveData.currentLocationData.observe(this@MapsOfSociety, Observer { location ->
 
             location?.let {
+                Log.d(this@MapsOfSociety.javaClass.simpleName, "Location Updated ${location}")
 
                 userLatitudeLongitude = location
 
@@ -178,11 +179,11 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
                 getLocationDetails()
 
-                nameOfCountry?.let { nameOfCountry ->
+                if (nameOfCountry != null && PublicCommunicationEndpoint.CurrentCommunityCoordinates != null) {
 
-                    val vicinityUserInformation: VicinityUserInformation = VicinityUserInformation(firestoreDatabase, PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(nameOfCountry, location))
+                    val vicinityUserInformation: VicinityUserInformation = VicinityUserInformation(firestoreDatabase, PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(nameOfCountry!!, location))
 
-                    vicinityUserInformation.updateLocation(firebaseUser!!.uid, location.latitude.toString(), location.longitude.toString())
+                    vicinityUserInformation.updateLocation(firebaseUser!!.uid, location.latitude.toString(), location.longitude.toString(), vicinityName(PublicCommunicationEndpoint.CurrentCommunityCoordinates!!))
 
                 }
 
@@ -341,7 +342,7 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
                         startActivity(Intent(applicationContext, PublicCommunity::class.java).apply {
                             putExtra(PublicCommunity.Configurations.PublicCommunityName, vicinityName(currentCommunityCoordinates))
-                            putExtra(PublicCommunity.Configurations.PublicCommunityDatabasePath, PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName = nameOfCountry, currentCommunityCoordinates))
+                            putExtra(PublicCommunity.Configurations.PublicCommunityDatabasePath, PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName = nameOfCountry,currentCommunityCoordinates))
                             putExtra(PublicCommunity.Configurations.PublicCommunityCountryName, nameOfCountry)
                             putExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude, currentCommunityCoordinates.latitude)
                             putExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLongitude, currentCommunityCoordinates.longitude)

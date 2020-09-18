@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/17/20 10:19 AM
- * Last modified 9/17/20 10:17 AM
+ * Created by Elias Fazel on 9/18/20 9:32 AM
+ * Last modified 9/18/20 9:30 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -86,6 +86,13 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
         publicCommunityViewBinding = PublicCommunityViewBinding.inflate(layoutInflater)
         setContentView(publicCommunityViewBinding.root)
 
+        val firebaseFirestoreSettings = firestoreSettings {
+            isPersistenceEnabled = false
+            cacheSizeBytes = FirebaseFirestoreSettings.CACHE_SIZE_UNLIMITED
+        }
+
+        firestoreDatabase.firestoreSettings = firebaseFirestoreSettings
+
         (application as VicinityApplication)
             .dependencyGraph
             .subDependencyGraph()
@@ -93,13 +100,6 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
             .inject(this@PublicCommunity)
 
         networkConnectionListener.networkConnectionListenerInterface = this@PublicCommunity
-
-        val firebaseFirestoreSettings = firestoreSettings {
-            isPersistenceEnabled = true
-            cacheSizeBytes = FirebaseFirestoreSettings.CACHE_SIZE_UNLIMITED
-        }
-
-        firestoreDatabase.firestoreSettings = firebaseFirestoreSettings
 
         val publicCommunityName: String? = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityName)
         val publicCommunityMessagesDatabasePath: String = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityDatabasePath).plus("/Messages")
