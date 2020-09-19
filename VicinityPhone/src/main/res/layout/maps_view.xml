@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/17/20 9:31 AM
-  ~ Last modified 9/17/20 8:24 AM
+  ~ Created by Elias Fazel on 9/19/20 10:20 AM
+  ~ Last modified 9/19/20 9:05 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -46,5 +46,12 @@
 
         apps:layout_constraintTop_toTopOf="parent"
         apps:layout_constraintEnd_toEndOf="parent"/>
+
+    <FrameLayout
+        android:id="@+id/informationWindowContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

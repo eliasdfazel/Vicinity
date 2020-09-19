@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/18/20 11:35 AM
- * Last modified 9/18/20 11:32 AM
+ * Created by Elias Fazel on 9/19/20 10:20 AM
+ * Last modified 9/19/20 8:39 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -30,6 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationArchiveData
 import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationData
+import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationDataStructure
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.DataStructure.VicinityData
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.vicinityName
@@ -92,24 +93,24 @@ class VicinityUserInformation (private val firestoreDatabase: FirebaseFirestore,
 
                 vicinityDocument@ for (documentSnapshot in it.documents) {
 
-                    val userIdentifier = documentSnapshot["userIdentification"].toString()
+                    val userIdentifier = documentSnapshot[UserInformationDataStructure.userIdentification].toString()
 
                     if (userIdentifier != firebaseUser.uid) {
 
-                        val userLatitude = documentSnapshot["userLatitude"].toString().toDouble()
-                        val userLongitude = documentSnapshot["userLongitude"].toString().toDouble()
+                        val userLatitude = documentSnapshot[UserInformationDataStructure.userLatitude].toString().toDouble()
+                        val userLongitude = documentSnapshot[UserInformationDataStructure.userLongitude].toString().toDouble()
 
                         val userMapMarker = googleMap.addMarker(
                             MarkerOptions()
                                 .position(LatLng(userLatitude, userLongitude))
-                                .title(documentSnapshot["userDisplayName"].toString())
-                                .snippet(documentSnapshot["userEmailAddress"].toString())
+                                .title(documentSnapshot[UserInformationDataStructure.userDisplayName].toString())
+                                .snippet(documentSnapshot[UserInformationDataStructure.userEmailAddress].toString())
                         )
                         userMapMarker.isDraggable = false
 
                         Glide.with(context)
                             .asDrawable()
-                            .load(documentSnapshot["userProfileImage"].toString())
+                            .load(documentSnapshot[UserInformationDataStructure.userProfileImage].toString())
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .listener(object : RequestListener<Drawable> {
 
@@ -128,9 +129,9 @@ class VicinityUserInformation (private val firestoreDatabase: FirebaseFirestore,
                                             val bitmapDescriptorIcon: BitmapDescriptor = BitmapDescriptorFactory.fromBitmap(resourcesBitmap)
 
                                             userMapMarker.position = (LatLng(userLatitude, userLongitude))
-                                            userMapMarker.title = documentSnapshot["userDisplayName"].toString()
-                                            userMapMarker.snippet = documentSnapshot["userEmailAddress"].toString()
-                                            userMapMarker.tag = documentSnapshot["userIdentification"].toString()
+                                            userMapMarker.title = documentSnapshot[UserInformationDataStructure.userDisplayName].toString()
+                                            userMapMarker.snippet = documentSnapshot[UserInformationDataStructure.userEmailAddress].toString()
+                                            userMapMarker.tag = documentSnapshot
                                             userMapMarker.isDraggable = false
                                             userMapMarker.setIcon(bitmapDescriptorIcon)
 

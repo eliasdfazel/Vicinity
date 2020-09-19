@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/5/20 11:48 AM
- * Last modified 9/5/20 11:20 AM
+ * Created by Elias Fazel on 9/19/20 10:20 AM
+ * Last modified 9/19/20 8:22 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -78,6 +78,7 @@ fun MapsOfSociety.addInitialMarker() {
                                 .title(firebaseUser?.displayName)
                                 .snippet(firebaseUser?.email)
                         )
+                        userMapMarker.tag = firebaseUser?.uid
                         userMapMarker.isDraggable = false
 
                         mapsLiveData.currentLocationData.postValue(userLatitudeLongitude)

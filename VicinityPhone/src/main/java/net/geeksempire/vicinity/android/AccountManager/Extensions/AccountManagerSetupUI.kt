@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/18/20 11:35 AM
- * Last modified 9/18/20 10:46 AM
+ * Created by Elias Fazel on 9/19/20 10:20 AM
+ * Last modified 9/19/20 7:45 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -171,7 +171,6 @@ fun AccountInformation.createUserProfile() {
 
         val userInformationProfileData: UserInformationProfileData = UserInformationProfileData(
             userIdentification = firebaseUser.uid, userEmailAddress = firebaseUser.email.toString(), userDisplayName = firebaseUser.displayName.toString(), userProfileImage = firebaseUser.photoUrl.toString(),
-            userLatitude= userInformationIO.readUserLocation()?.latitude.toString(),  userLongitude = userInformationIO.readUserLocation()?.longitude.toString(),
             instagramAccount = accountViewBinding.instagramAddressView.text.toString(),
             twitterAccount = accountViewBinding.twitterAddressView.text.toString(),
             phoneNumber = accountViewBinding.phoneNumberAddressView.text.toString(),

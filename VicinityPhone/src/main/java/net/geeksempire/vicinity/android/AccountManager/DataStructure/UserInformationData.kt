@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/18/20 11:35 AM
- * Last modified 9/18/20 11:34 AM
+ * Created by Elias Fazel on 9/19/20 10:20 AM
+ * Last modified 9/19/20 8:38 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -11,6 +11,18 @@
 package net.geeksempire.vicinity.android.AccountManager.DataStructure
 
 import com.google.firebase.firestore.FieldValue
+
+object UserInformationDataStructure {
+    const val userIdentification = "userIdentification"
+    const val userEmailAddress = "userEmailAddress"
+    const val userDisplayName = "userDisplayName"
+    const val userProfileImage = "userProfileImage"
+    const val userLatitude = "userLatitude"
+    const val userLongitude = "userLongitude"
+    const val userState = "userState"
+    const val userLastSignIn = "userLastSignIn"
+    const val userJointDate = "userJointDate"
+}
 
 data class UserInformationData (var userIdentification: String, var userEmailAddress: String, var userDisplayName: String, var userProfileImage: String,
                                 var userLatitude: String, var userLongitude: String,

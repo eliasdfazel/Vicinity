@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/18/20 11:35 AM
- * Last modified 9/18/20 11:31 AM
+ * Created by Elias Fazel on 9/19/20 10:20 AM
+ * Last modified 9/19/20 10:20 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -18,21 +18,20 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.StrictMode
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.ktx.firestore
@@ -45,6 +44,8 @@ import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Public
 import net.geeksempire.vicinity.android.EntryConfiguration
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.*
 import net.geeksempire.vicinity.android.MapConfiguration.LocationDataHolder.MapsLiveData
+import net.geeksempire.vicinity.android.MapConfiguration.Map.InformationWindow.InformationWindowData
+import net.geeksempire.vicinity.android.MapConfiguration.Map.InformationWindow.InformationWindowUI
 import net.geeksempire.vicinity.android.MapConfiguration.Utils.MapsMarker
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.CountryInformation
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.CountryInformationInterface
@@ -61,6 +62,7 @@ import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListen
 import net.geeksempire.vicinity.android.Utils.System.DeviceSystemInformation
 import net.geeksempire.vicinity.android.Utils.UI.NotifyUser.SnackbarActionHandlerInterface
 import net.geeksempire.vicinity.android.Utils.UI.NotifyUser.SnackbarBuilder
+import net.geeksempire.vicinity.android.Utils.UI.Theme.OverallTheme
 import net.geeksempire.vicinity.android.VicinityApplication
 import net.geeksempire.vicinity.android.databinding.MapsViewBinding
 import javax.inject.Inject
@@ -131,6 +133,14 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
     val deviceSystemInformation: DeviceSystemInformation by lazy {
         DeviceSystemInformation(applicationContext)
+    }
+
+    val overallTheme: OverallTheme by lazy {
+        OverallTheme(applicationContext)
+    }
+
+    val informationWindowUI: InformationWindowUI by lazy {
+        InformationWindowUI(this@MapsOfSociety)
     }
 
     var googleMapIsReady: Boolean = false
@@ -341,7 +351,7 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
             }
 
-            googleMap.setOnCircleClickListener {
+            readyGoogleMap.setOnCircleClickListener {
 
                 PublicCommunicationEndpoint.CurrentCommunityCoordinates?.let { currentCommunityCoordinates ->
 
@@ -365,9 +375,39 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
     }
 
-    override fun onMarkerClick(marker: Marker?): Boolean {
+    override fun onMarkerClick(markerClick: Marker?): Boolean {
 
-        return false
+        markerClick?.let {
+
+            if (markerClick.tag is DocumentSnapshot) {
+
+                val markerLocation = markerClick.position
+
+                val projection: Projection = readyGoogleMap.projection
+                val screenPosition = projection.toScreenLocation(markerLocation)
+
+                val cameraUpdateFactory = CameraUpdateFactory.newLatLng(LatLng(markerClick.position.latitude + 0.00300, markerClick.position.longitude))
+                readyGoogleMap.animateCamera(cameraUpdateFactory)
+
+                val informationWindowData = InformationWindowData(
+                    userDocument = markerClick.tag as DocumentSnapshot
+                )
+
+                informationWindowUI.informationWindowData = informationWindowData
+
+                informationWindowUI.setUpContentContents(markerClick)
+
+                mapsViewBinding.informationWindowContainer.addView(informationWindowUI.commit())
+
+                mapsViewBinding.informationWindowContainer.visibility = View.VISIBLE
+
+                Log.d(this@MapsOfSociety.javaClass.simpleName, "Location: ${markerLocation} - Screen Position: ${screenPosition}")
+
+            }
+
+        }
+
+        return true
     }
 
     override fun onMapLongClick(latLng: LatLng?) {
