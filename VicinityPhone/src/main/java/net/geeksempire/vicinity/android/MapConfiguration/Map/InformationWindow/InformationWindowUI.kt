@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/19/20 10:20 AM
- * Last modified 9/19/20 9:22 AM
+ * Created by Elias Fazel on 9/19/20 10:21 AM
+ * Last modified 9/19/20 10:21 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,9 +10,7 @@
 
 package net.geeksempire.vicinity.android.MapConfiguration.Map.InformationWindow
 
-import android.graphics.Color
 import android.view.View
-import android.widget.Toast
 import com.google.android.gms.maps.model.Marker
 import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationDataStructure
 import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
@@ -47,8 +45,6 @@ class InformationWindowUI (private val context: MapsOfSociety) {
 
         informationWindowData?.let { informationWindowData ->
 
-            Toast.makeText(context, informationWindowData.userDocument[UserInformationDataStructure.userDisplayName].toString(), Toast.LENGTH_LONG).show()
-
             googleMapInformationWindowBinding.userDisplayName.text = informationWindowData.userDocument[UserInformationDataStructure.userDisplayName].toString()
 
             googleMapInformationWindowBinding.rootView.setOnClickListener {
@@ -61,7 +57,7 @@ class InformationWindowUI (private val context: MapsOfSociety) {
 
             googleMapInformationWindowBinding.userDisplayName.setOnClickListener {
 
-                googleMapInformationWindowBinding.userDisplayName.setTextColor(Color.RED)
+
 
             }
 
