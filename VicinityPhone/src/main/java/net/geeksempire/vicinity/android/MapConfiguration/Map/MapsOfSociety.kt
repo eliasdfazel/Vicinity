@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/19/20 10:40 AM
- * Last modified 9/19/20 10:40 AM
+ * Created by Elias Fazel on 9/19/20 10:43 AM
+ * Last modified 9/19/20 10:43 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -18,6 +18,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.StrictMode
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -37,6 +38,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.firestoreSettings
 import com.google.firebase.ktx.Firebase
 import net.geeksempire.chat.vicinity.Util.MapsUtil.LocationCoordinatesUpdater
+import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformationIO
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoint.PublicCommunicationEndpoint
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity
@@ -44,6 +46,7 @@ import net.geeksempire.vicinity.android.EntryConfiguration
 import net.geeksempire.vicinity.android.MapConfiguration.Extensions.*
 import net.geeksempire.vicinity.android.MapConfiguration.LocationDataHolder.MapsLiveData
 import net.geeksempire.vicinity.android.MapConfiguration.Map.InformationWindow.InformationWindow
+import net.geeksempire.vicinity.android.MapConfiguration.Map.InformationWindow.InformationWindowData
 import net.geeksempire.vicinity.android.MapConfiguration.Utils.MapsMarker
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.CountryInformation
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.CountryInformationInterface
@@ -387,20 +390,28 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
                 val cameraUpdateFactory = CameraUpdateFactory.newLatLng(LatLng(markerClick.position.latitude + 0.00300, markerClick.position.longitude))
                 readyGoogleMap.animateCamera(cameraUpdateFactory)
 
-                /*
-                * Load Profile From UID
-                * */
-//                val informationWindowData = InformationWindowData(
-//                    userDocument = markerClick.tag as String
-//                )
-//
-//                informationWindow.informationWindowData = informationWindowData
-//
-//                informationWindow.setUpContentContents(markerClick)
-//
-//                mapsViewBinding.informationWindowContainer.addView(informationWindow.commit())
-//
-//                mapsViewBinding.informationWindowContainer.visibility = View.VISIBLE
+                firestoreDatabase
+                    .document(UserInformation.userProfileDatabasePath(markerClick.tag as String))
+                    .get()
+                    .addOnSuccessListener {
+
+                        val informationWindowData = InformationWindowData(
+                            userDocument = it
+                        )
+
+                        informationWindow.informationWindowData = informationWindowData
+
+                        informationWindow.setUpContentContents(markerClick)
+
+                        mapsViewBinding.informationWindowContainer.addView(informationWindow.commit())
+
+                        mapsViewBinding.informationWindowContainer.visibility = View.VISIBLE
+
+                    }.addOnFailureListener {
+
+
+
+                    }
 
                 Log.d(this@MapsOfSociety.javaClass.simpleName, "Location: ${markerLocation} - Screen Position: ${screenPosition}")
 
