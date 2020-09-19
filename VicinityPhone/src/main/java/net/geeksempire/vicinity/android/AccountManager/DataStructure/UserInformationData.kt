@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/19/20 10:20 AM
- * Last modified 9/19/20 8:38 AM
+ * Created by Elias Fazel on 9/19/20 10:40 AM
+ * Last modified 9/19/20 10:35 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -17,6 +17,9 @@ object UserInformationDataStructure {
     const val userEmailAddress = "userEmailAddress"
     const val userDisplayName = "userDisplayName"
     const val userProfileImage = "userProfileImage"
+    const val instagramAccount = "instagramAccount"
+    const val twitterAccount = "twitterAccount"
+    const val phoneNumber = "phoneNumber"
     const val userLatitude = "userLatitude"
     const val userLongitude = "userLongitude"
     const val userState = "userState"

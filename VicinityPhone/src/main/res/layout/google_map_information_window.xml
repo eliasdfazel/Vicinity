@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/19/20 10:20 AM
-  ~ Last modified 9/19/20 10:07 AM
+  ~ Created by Elias Fazel on 9/19/20 10:40 AM
+  ~ Last modified 9/19/20 10:30 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -23,6 +23,7 @@
         android:layout_width="301dp"
         android:layout_height="397dp"
         android:layout_marginTop="77dp"
+        android:padding="11dp"
         android:background="@drawable/information_window_content_background"
 
         apps:layout_constraintTop_toTopOf="parent"
@@ -32,10 +33,67 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/userDisplayName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="57dp"
+            android:gravity="center_vertical"
             android:textSize="33sp"
+            android:textColor="@color/dark"
+            android:fontFamily="@font/upcil"
 
             apps:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/instagramAddressLayout"
+            android:layout_width="match_parent"
+            android:layout_height="79dp"
+            android:layout_marginTop="7dp"
+            android:textColorHint="@color/purple"
+
+
+            apps:boxBackgroundMode="outline"
+            apps:boxBackgroundColor="@color/white"
+            apps:boxCornerRadiusTopStart="13dp"
+            apps:boxCornerRadiusTopEnd="13dp"
+            apps:boxCornerRadiusBottomStart="13dp"
+            apps:boxCornerRadiusBottomEnd="13dp"
+            apps:boxStrokeColor="@color/default_color_game"
+            apps:boxStrokeWidth="1dp"
+            apps:hintEnabled="true"
+            apps:hintAnimationEnabled="true"
+            apps:hintTextColor="@color/purple"
+            apps:errorEnabled="false"
+            apps:errorTextColor="@color/red"
+
+            apps:layout_constraintTop_toBottomOf="@id/userDisplayName"
+            apps:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/instagramAddressView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="11dp"
+                android:paddingStart="17dp"
+                android:paddingEnd="77dp"
+                android:gravity="center_vertical"
+                android:imeOptions="actionNext"
+                android:textSize="19sp"
+                android:textColor="@color/dark"
+                android:textColorHint="@color/dark"
+                android:singleLine="true"
+                android:ellipsize="start"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:enabled="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="77dp"
+            android:layout_height="0dp"
+            android:padding="19dp"
+            android:src="@drawable/instagram_logo"
+
+            apps:layout_constraintTop_toTopOf="@id/instagramAddressLayout"
+            apps:layout_constraintBottom_toBottomOf="@id/instagramAddressLayout"
+            apps:layout_constraintEnd_toEndOf="@id/instagramAddressLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/19/20 10:21 AM
- * Last modified 9/19/20 10:21 AM
+ * Created by Elias Fazel on 9/19/20 10:40 AM
+ * Last modified 9/19/20 10:37 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -18,7 +18,7 @@ import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
 import net.geeksempire.vicinity.android.databinding.GoogleMapInformationWindowBinding
 
-class InformationWindowUI (private val context: MapsOfSociety) {
+class InformationWindow (private val context: MapsOfSociety) {
 
     private val googleMapInformationWindowBinding =  GoogleMapInformationWindowBinding.inflate(context.layoutInflater)
 
@@ -47,6 +47,9 @@ class InformationWindowUI (private val context: MapsOfSociety) {
 
             googleMapInformationWindowBinding.userDisplayName.text = informationWindowData.userDocument[UserInformationDataStructure.userDisplayName].toString()
 
+            googleMapInformationWindowBinding.instagramAddressLayout.hint = "${informationWindowData.userDocument[UserInformationDataStructure.userDisplayName]}'s Instagram"
+            googleMapInformationWindowBinding.instagramAddressView.setText(informationWindowData.userDocument[UserInformationDataStructure.instagramAccount].toString())
+
             googleMapInformationWindowBinding.rootView.setOnClickListener {
 
                 context.mapsViewBinding.informationWindowContainer.visibility = View.GONE
@@ -55,11 +58,7 @@ class InformationWindowUI (private val context: MapsOfSociety) {
 
             }
 
-            googleMapInformationWindowBinding.userDisplayName.setOnClickListener {
 
-
-
-            }
 
         }
 

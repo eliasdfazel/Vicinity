@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/19/20 10:20 AM
- * Last modified 9/19/20 8:39 AM
+ * Created by Elias Fazel on 9/19/20 10:40 AM
+ * Last modified 9/19/20 10:40 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -131,7 +131,7 @@ class VicinityUserInformation (private val firestoreDatabase: FirebaseFirestore,
                                             userMapMarker.position = (LatLng(userLatitude, userLongitude))
                                             userMapMarker.title = documentSnapshot[UserInformationDataStructure.userDisplayName].toString()
                                             userMapMarker.snippet = documentSnapshot[UserInformationDataStructure.userEmailAddress].toString()
-                                            userMapMarker.tag = documentSnapshot
+                                            userMapMarker.tag = documentSnapshot[UserInformationDataStructure.userIdentification].toString()
                                             userMapMarker.isDraggable = false
                                             userMapMarker.setIcon(bitmapDescriptorIcon)
 
