@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/19/20 10:20 AM
- * Last modified 9/19/20 7:45 AM
+ * Created by Elias Fazel on 9/20/20 4:45 AM
+ * Last modified 9/20/20 4:40 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -110,19 +110,8 @@ fun AccountInformation.accountManagerSetupUI() {
                             if (isColorDark(dominantColor) && isColorDark(vibrantColor)) {
                                 Log.d(this@accountManagerSetupUI.javaClass.simpleName, "Dark Extracted Colors")
 
-                                window.decorView.systemUiVisibility = 0
-
-                                accountViewBinding.welcomeTextView.setTextColor(getColor(R.color.light))
-
                             } else {
                                 Log.d(this@accountManagerSetupUI.javaClass.simpleName, "Light Extracted Colors")
-
-                                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                                    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-                                }
-
-                                accountViewBinding.welcomeTextView.setTextColor(getColor(R.color.dark))
 
                             }
 
@@ -191,8 +180,16 @@ fun AccountInformation.createUserProfile() {
                         object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
                             override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
+                                Log.d(this@createUserProfile.javaClass.simpleName, "Phone Number Verified")
+
+                                firestoreDatabase
+                                    .document(UserInformation.userProfileDatabasePath(firebaseUser.uid))
+                                    .update(
+                                        "phoneNumberVerified", true,
+                                    )
 
                                 firebaseUser.linkWithCredential(phoneAuthCredential).addOnSuccessListener {
+                                    Log.d(this@createUserProfile.javaClass.simpleName, "User Profile Linked To Phone Number Authentication")
 
                                     accountViewBinding.updatingLoadingView.pauseAnimation()
 
@@ -208,8 +205,20 @@ fun AccountInformation.createUserProfile() {
                                     }, 531)
 
                                 }.addOnFailureListener {
+                                    it.printStackTrace()
 
+                                    accountViewBinding.updatingLoadingView.pauseAnimation()
 
+                                    accountViewBinding.updatingLoadingView.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out))
+                                    accountViewBinding.updatingLoadingView.visibility = View.INVISIBLE
+
+                                    Handler(Looper.getMainLooper()).postDelayed({
+
+                                        accountViewBinding.nextSubmitView.playAnimation()
+
+                                        profileUpdate = true
+
+                                    }, 531)
 
                                 }
 
@@ -236,6 +245,21 @@ fun AccountInformation.createUserProfile() {
                             }
 
                         })
+
+                } else {
+
+                    accountViewBinding.updatingLoadingView.pauseAnimation()
+
+                    accountViewBinding.updatingLoadingView.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out))
+                    accountViewBinding.updatingLoadingView.visibility = View.INVISIBLE
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+
+                        accountViewBinding.nextSubmitView.playAnimation()
+
+                        profileUpdate = true
+
+                    }, 531)
 
                 }
 

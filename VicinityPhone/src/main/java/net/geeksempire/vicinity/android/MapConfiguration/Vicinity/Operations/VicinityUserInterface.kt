@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/19/20 10:20 AM
- * Last modified 9/19/20 9:58 AM
+ * Created by Elias Fazel on 9/20/20 4:45 AM
+ * Last modified 9/20/20 4:38 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -44,7 +44,7 @@ class VicinityUserInterface (private val context: Context) {
 
         googleMap.addCircle(circleOptions)
 
-        val valueAnimatorCameraMovement = ValueAnimator.ofFloat(13.77f, 15.70f)
+        val valueAnimatorCameraMovement = ValueAnimator.ofFloat(13.77f, 15.77f)
         valueAnimatorCameraMovement.duration = 777
         valueAnimatorCameraMovement.addUpdateListener { animator ->
             val animatorValue = animator.animatedValue as Float

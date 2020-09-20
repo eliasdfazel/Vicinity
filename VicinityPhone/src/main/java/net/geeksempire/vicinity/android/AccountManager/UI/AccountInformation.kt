@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/17/20 10:14 AM
- * Last modified 9/17/20 10:09 AM
+ * Created by Elias Fazel on 9/20/20 4:45 AM
+ * Last modified 9/20/20 4:45 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -154,6 +154,18 @@ class AccountInformation : AppCompatActivity() {
 
                 }
             }
+
+        }
+
+    }
+
+    override fun onBackPressed() {
+
+        if (profileUpdate) {
+
+            profileUpdate = false
+
+            this@AccountInformation.finish()
 
         }
 

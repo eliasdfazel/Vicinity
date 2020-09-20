@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/19/20 10:40 AM
- * Last modified 9/19/20 10:40 AM
+ * Created by Elias Fazel on 9/20/20 4:45 AM
+ * Last modified 9/20/20 4:43 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -92,6 +92,7 @@ class VicinityUserInformation (private val firestoreDatabase: FirebaseFirestore,
             .addOnSuccessListener {
 
                 vicinityDocument@ for (documentSnapshot in it.documents) {
+                    Log.d(this@VicinityUserInformation.javaClass.simpleName, "${documentSnapshot[UserInformationDataStructure.userEmailAddress]}")
 
                     val userIdentifier = documentSnapshot[UserInformationDataStructure.userIdentification].toString()
 

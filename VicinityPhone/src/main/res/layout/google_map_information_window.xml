@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/19/20 10:40 AM
-  ~ Last modified 9/19/20 10:30 AM
+  ~ Created by Elias Fazel on 9/20/20 4:45 AM
+  ~ Last modified 9/20/20 3:51 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -94,6 +94,19 @@
             apps:layout_constraintTop_toTopOf="@id/instagramAddressLayout"
             apps:layout_constraintBottom_toBottomOf="@id/instagramAddressLayout"
             apps:layout_constraintEnd_toEndOf="@id/instagramAddressLayout" />
+
+        <net.geeksempire.loadingspin.SpinKitView
+            android:id="@+id/profileLoadingView"
+            android:layout_width="71dp"
+            android:layout_height="71dp"
+
+            apps:SpinKit_Style="PulseRing"
+            apps:SpinKit_Color="@color/default_color"
+
+            apps:layout_constraintTop_toTopOf="parent"
+            apps:layout_constraintBottom_toBottomOf="parent"
+            apps:layout_constraintStart_toStartOf="parent"
+            apps:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

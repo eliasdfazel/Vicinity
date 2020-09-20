@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/19/20 10:43 AM
- * Last modified 9/19/20 10:43 AM
+ * Created by Elias Fazel on 9/20/20 4:45 AM
+ * Last modified 9/20/20 4:45 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -31,7 +31,6 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.ktx.firestore
@@ -138,10 +137,6 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
     val overallTheme: OverallTheme by lazy {
         OverallTheme(applicationContext)
-    }
-
-    val informationWindow: InformationWindow by lazy {
-        InformationWindow(this@MapsOfSociety)
     }
 
     var googleMapIsReady: Boolean = false
@@ -380,42 +375,47 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
         markerClick?.let {
 
-            if (markerClick.tag is DocumentSnapshot) {
+            val markerLocation = markerClick.position
 
-                val markerLocation = markerClick.position
+            val projection: Projection = readyGoogleMap.projection
+            val screenPosition = projection.toScreenLocation(markerLocation)
 
-                val projection: Projection = readyGoogleMap.projection
-                val screenPosition = projection.toScreenLocation(markerLocation)
+            val cameraUpdateFactory = CameraUpdateFactory.newLatLngZoom(LatLng(markerClick.position.latitude + 0.0029753, markerClick.position.longitude), 15.77f)
+            readyGoogleMap.animateCamera(cameraUpdateFactory)
 
-                val cameraUpdateFactory = CameraUpdateFactory.newLatLng(LatLng(markerClick.position.latitude + 0.00300, markerClick.position.longitude))
-                readyGoogleMap.animateCamera(cameraUpdateFactory)
+            val informationWindow: InformationWindow = InformationWindow(this@MapsOfSociety)
 
-                firestoreDatabase
-                    .document(UserInformation.userProfileDatabasePath(markerClick.tag as String))
-                    .get()
-                    .addOnSuccessListener {
+            val informationWindowRootView = informationWindow.getRootView()
 
-                        val informationWindowData = InformationWindowData(
-                            userDocument = it
-                        )
+            mapsViewBinding.informationWindowContainer.addView(informationWindowRootView.root)
 
-                        informationWindow.informationWindowData = informationWindowData
+            mapsViewBinding.informationWindowContainer.visibility = View.VISIBLE
 
-                        informationWindow.setUpContentContents(markerClick)
+            firestoreDatabase
+                .document(UserInformation.userProfileDatabasePath(markerClick.tag as String))
+                .get()
+                .addOnSuccessListener {
+                    Log.d(this@MapsOfSociety.javaClass.simpleName, "$it")
 
-                        mapsViewBinding.informationWindowContainer.addView(informationWindow.commit())
+                    val informationWindowData = InformationWindowData(
+                        userDocument = it
+                    )
 
-                        mapsViewBinding.informationWindowContainer.visibility = View.VISIBLE
+                    informationWindow.informationWindowData = informationWindowData
 
-                    }.addOnFailureListener {
+                    informationWindow.setUpContentContents(markerClick)
 
+                    informationWindowRootView.profileLoadingView.visibility = View.INVISIBLE
 
+                }.addOnFailureListener {
 
-                    }
+                    mapsViewBinding.informationWindowContainer.visibility = View.VISIBLE
 
-                Log.d(this@MapsOfSociety.javaClass.simpleName, "Location: ${markerLocation} - Screen Position: ${screenPosition}")
+                    mapsViewBinding.informationWindowContainer.removeAllViews()
 
-            }
+                }
+
+            Log.d(this@MapsOfSociety.javaClass.simpleName, "Location: ${markerLocation} - Screen Position: ${screenPosition}")
 
         }
 

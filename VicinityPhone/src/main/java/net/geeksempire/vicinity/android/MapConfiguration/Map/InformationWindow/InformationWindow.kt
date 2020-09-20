@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/19/20 10:40 AM
- * Last modified 9/19/20 10:37 AM
+ * Created by Elias Fazel on 9/20/20 4:45 AM
+ * Last modified 9/20/20 4:07 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -64,9 +64,9 @@ class InformationWindow (private val context: MapsOfSociety) {
 
     }
 
-    fun commit() : View {
+    fun getRootView() : GoogleMapInformationWindowBinding {
 
-        return googleMapInformationWindowBinding.root
+        return googleMapInformationWindowBinding
     }
 
 }
