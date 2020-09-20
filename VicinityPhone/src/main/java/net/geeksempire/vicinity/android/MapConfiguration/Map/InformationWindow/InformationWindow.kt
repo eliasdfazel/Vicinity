@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/20/20 4:45 AM
- * Last modified 9/20/20 4:07 AM
+ * Created by Elias Fazel on 9/20/20 5:04 AM
+ * Last modified 9/20/20 5:01 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -47,8 +47,35 @@ class InformationWindow (private val context: MapsOfSociety) {
 
             googleMapInformationWindowBinding.userDisplayName.text = informationWindowData.userDocument[UserInformationDataStructure.userDisplayName].toString()
 
-            googleMapInformationWindowBinding.instagramAddressLayout.hint = "${informationWindowData.userDocument[UserInformationDataStructure.userDisplayName]}'s Instagram"
-            googleMapInformationWindowBinding.instagramAddressView.setText(informationWindowData.userDocument[UserInformationDataStructure.instagramAccount].toString())
+            informationWindowData.userDocument[UserInformationDataStructure.instagramAccount]?.let {
+
+                googleMapInformationWindowBinding.instagramAddressLayout.visibility = View.VISIBLE
+                googleMapInformationWindowBinding.instagramLogo.visibility = View.VISIBLE
+
+                googleMapInformationWindowBinding.instagramAddressLayout.hint = "${informationWindowData.userDocument[UserInformationDataStructure.userDisplayName]}'s Instagram"
+                googleMapInformationWindowBinding.instagramAddressView.setText(informationWindowData.userDocument[UserInformationDataStructure.instagramAccount].toString())
+
+            }
+
+            informationWindowData.userDocument[UserInformationDataStructure.twitterAccount]?.let {
+
+                googleMapInformationWindowBinding.twitterAddressLayout.visibility = View.VISIBLE
+                googleMapInformationWindowBinding.twitterLogo.visibility = View.VISIBLE
+
+                googleMapInformationWindowBinding.twitterAddressLayout.hint = "${informationWindowData.userDocument[UserInformationDataStructure.userDisplayName]}'s Twitter"
+                googleMapInformationWindowBinding.twitterAddressView.setText(informationWindowData.userDocument[UserInformationDataStructure.twitterAccount].toString())
+
+            }
+
+            informationWindowData.userDocument[UserInformationDataStructure.phoneNumber]?.let {
+
+                googleMapInformationWindowBinding.phoneNumberAddressLayout.visibility = View.VISIBLE
+                googleMapInformationWindowBinding.phoneNumberLogo.visibility = View.VISIBLE
+
+                googleMapInformationWindowBinding.phoneNumberAddressLayout.hint = "${informationWindowData.userDocument[UserInformationDataStructure.userDisplayName]}'s Phone"
+                googleMapInformationWindowBinding.phoneNumberAddressView.setText(informationWindowData.userDocument[UserInformationDataStructure.phoneNumber].toString().plus(if (informationWindowData.userDocument[UserInformationDataStructure.phoneNumberVerified].toString().toBoolean()) { " ✔" } else { "" }))
+
+            }
 
             googleMapInformationWindowBinding.rootView.setOnClickListener {
 

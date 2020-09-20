@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/20/20 4:45 AM
-  ~ Last modified 9/20/20 3:51 AM
+  ~ Created by Elias Fazel on 9/20/20 5:04 AM
+  ~ Last modified 9/20/20 5:03 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -41,13 +41,14 @@
 
             apps:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Instagram -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/instagramAddressLayout"
             android:layout_width="match_parent"
             android:layout_height="79dp"
             android:layout_marginTop="7dp"
             android:textColorHint="@color/purple"
-
+            android:visibility="invisible"
 
             apps:boxBackgroundMode="outline"
             apps:boxBackgroundColor="@color/white"
@@ -71,8 +72,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="11dp"
-                android:paddingStart="17dp"
-                android:paddingEnd="77dp"
+                android:paddingStart="77dp"
+                android:paddingEnd="17dp"
                 android:gravity="center_vertical"
                 android:imeOptions="actionNext"
                 android:textSize="19sp"
@@ -86,14 +87,134 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/instagramLogo"
             android:layout_width="77dp"
             android:layout_height="0dp"
             android:padding="19dp"
             android:src="@drawable/instagram_logo"
+            android:visibility="invisible"
 
             apps:layout_constraintTop_toTopOf="@id/instagramAddressLayout"
             apps:layout_constraintBottom_toBottomOf="@id/instagramAddressLayout"
-            apps:layout_constraintEnd_toEndOf="@id/instagramAddressLayout" />
+            apps:layout_constraintStart_toStartOf="@id/instagramAddressLayout" />
+
+        <!-- Twitter -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/twitterAddressLayout"
+            android:layout_width="match_parent"
+            android:layout_height="79dp"
+            android:layout_marginTop="7dp"
+            android:hint="@string/typeTwitter"
+            android:textColorHint="@color/default_color_bright"
+            android:visibility="invisible"
+
+            apps:boxBackgroundMode="outline"
+            apps:boxBackgroundColor="@color/white"
+            apps:boxCornerRadiusTopStart="13dp"
+            apps:boxCornerRadiusTopEnd="13dp"
+            apps:boxCornerRadiusBottomStart="13dp"
+            apps:boxCornerRadiusBottomEnd="13dp"
+            apps:boxStrokeColor="@color/default_color"
+            apps:boxStrokeWidth="1dp"
+            apps:hintEnabled="true"
+            apps:hintAnimationEnabled="true"
+            apps:hintTextColor="@color/default_color_bright"
+            apps:errorEnabled="false"
+            apps:errorTextColor="@color/red"
+
+            apps:layout_constraintTop_toBottomOf="@id/instagramAddressLayout"
+            apps:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/twitterAddressView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="11dp"
+                android:paddingStart="77dp"
+                android:paddingEnd="17dp"
+                android:gravity="center_vertical"
+                android:imeOptions="actionNext"
+                android:textSize="19sp"
+                android:textColor="@color/dark"
+                android:textColorHint="@color/dark"
+                android:singleLine="true"
+                android:ellipsize="start"
+                android:cursorVisible="true"
+                android:focusable="true"
+                android:enabled="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/twitterLogo"
+            android:layout_width="77dp"
+            android:layout_height="0dp"
+            android:padding="15dp"
+            android:tint="@color/blue"
+            android:src="@drawable/twitter_bird"
+            android:visibility="invisible"
+
+            apps:layout_constraintTop_toTopOf="@id/twitterAddressLayout"
+            apps:layout_constraintBottom_toBottomOf="@id/twitterAddressLayout"
+            apps:layout_constraintStart_toStartOf="@id/twitterAddressLayout" />
+
+        <!-- Phone Number -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneNumberAddressLayout"
+            android:layout_width="match_parent"
+            android:layout_height="79dp"
+            android:layout_marginTop="7dp"
+            android:hint="@string/typePhoneNumber"
+            android:textColorHint="@color/green"
+            android:visibility="invisible"
+
+            apps:boxBackgroundMode="outline"
+            apps:boxBackgroundColor="@color/white"
+            apps:boxCornerRadiusTopStart="13dp"
+            apps:boxCornerRadiusTopEnd="13dp"
+            apps:boxCornerRadiusBottomStart="13dp"
+            apps:boxCornerRadiusBottomEnd="13dp"
+            apps:boxStrokeColor="@color/cyberGreen"
+            apps:boxStrokeWidth="1dp"
+            apps:hintEnabled="true"
+            apps:hintAnimationEnabled="true"
+            apps:hintTextColor="@color/green"
+            apps:errorEnabled="false"
+            apps:errorTextColor="@color/red"
+
+            apps:layout_constraintTop_toBottomOf="@id/twitterAddressLayout"
+            apps:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneNumberAddressView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="11dp"
+                android:paddingStart="77dp"
+                android:paddingEnd="17dp"
+                android:gravity="center_vertical"
+                android:inputType="phone"
+                android:imeOptions="actionDone"
+                android:textSize="19sp"
+                android:textColor="@color/dark"
+                android:textColorHint="@color/dark"
+                android:singleLine="true"
+                android:ellipsize="start"
+                android:cursorVisible="true"
+                android:focusable="true"
+                android:enabled="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/phoneNumberLogo"
+            android:layout_width="77dp"
+            android:layout_height="0dp"
+            android:padding="15dp"
+            android:src="@drawable/phone_icon"
+            android:visibility="invisible"
+
+            apps:layout_constraintTop_toTopOf="@id/phoneNumberAddressLayout"
+            apps:layout_constraintBottom_toBottomOf="@id/phoneNumberAddressLayout"
+            apps:layout_constraintStart_toStartOf="@id/phoneNumberAddressLayout" />
 
         <net.geeksempire.loadingspin.SpinKitView
             android:id="@+id/profileLoadingView"
