@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/20/20 4:45 AM
- * Last modified 9/20/20 4:45 AM
+ * Created by Elias Fazel on 9/20/20 7:36 AM
+ * Last modified 9/20/20 7:32 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -57,7 +57,7 @@ class AccountInformation : AppCompatActivity() {
 
     val firestoreDatabase: FirebaseFirestore = Firebase.firestore
 
-    var profileUpdate: Boolean = false
+    var profileUpdating: Boolean = false
 
     @Inject lateinit var networkCheckpoint: NetworkCheckpoint
 
@@ -161,9 +161,13 @@ class AccountInformation : AppCompatActivity() {
 
     override fun onBackPressed() {
 
-        if (profileUpdate) {
+        if (profileUpdating) {
 
-            profileUpdate = false
+            profileUpdating = false
+
+            this@AccountInformation.finish()
+
+        } else {
 
             this@AccountInformation.finish()
 

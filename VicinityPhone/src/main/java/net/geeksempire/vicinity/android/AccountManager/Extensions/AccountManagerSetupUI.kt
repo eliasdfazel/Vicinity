@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/20/20 4:45 AM
- * Last modified 9/20/20 4:40 AM
+ * Created by Elias Fazel on 9/20/20 7:36 AM
+ * Last modified 9/20/20 7:34 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -135,13 +135,15 @@ fun AccountInformation.clickSetup() {
 
     accountViewBinding.nextSubmitView.setOnClickListener {
 
-        if (profileUpdate) {
+        if (profileUpdating) {
 
-            profileUpdate = false
+            profileUpdating = false
 
             this@clickSetup.finish()
 
         } else {
+
+            profileUpdating = true
 
             createUserProfile()
 
@@ -200,7 +202,7 @@ fun AccountInformation.createUserProfile() {
 
                                         accountViewBinding.nextSubmitView.playAnimation()
 
-                                        profileUpdate = true
+                                        profileUpdating = true
 
                                     }, 531)
 
@@ -216,7 +218,7 @@ fun AccountInformation.createUserProfile() {
 
                                         accountViewBinding.nextSubmitView.playAnimation()
 
-                                        profileUpdate = true
+                                        profileUpdating = true
 
                                     }, 531)
 
@@ -257,7 +259,7 @@ fun AccountInformation.createUserProfile() {
 
                         accountViewBinding.nextSubmitView.playAnimation()
 
-                        profileUpdate = true
+                        profileUpdating = true
 
                     }, 531)
 
