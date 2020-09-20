@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/20/20 5:04 AM
-  ~ Last modified 9/20/20 5:03 AM
+  ~ Created by Elias Fazel on 9/20/20 7:08 AM
+  ~ Last modified 9/20/20 7:08 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -139,9 +139,9 @@
                 android:textColorHint="@color/dark"
                 android:singleLine="true"
                 android:ellipsize="start"
-                android:cursorVisible="true"
-                android:focusable="true"
-                android:enabled="true" />
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:enabled="false" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -199,9 +199,9 @@
                 android:textColorHint="@color/dark"
                 android:singleLine="true"
                 android:ellipsize="start"
-                android:cursorVisible="true"
-                android:focusable="true"
-                android:enabled="true" />
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:enabled="false" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -216,12 +216,26 @@
             apps:layout_constraintBottom_toBottomOf="@id/phoneNumberAddressLayout"
             apps:layout_constraintStart_toStartOf="@id/phoneNumberAddressLayout" />
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/enterPrivateChat"
+            android:layout_width="159dp"
+            android:layout_height="47dp"
+            android:layout_marginVertical="7dp"
+
+            apps:lottie_rawRes="@raw/chat_animation"
+            apps:lottie_loop="true"
+            apps:lottie_repeatMode="reverse"
+
+            apps:layout_constraintTop_toBottomOf="@id/phoneNumberAddressLayout"
+            apps:layout_constraintBottom_toBottomOf="parent"
+            apps:layout_constraintEnd_toEndOf="parent"/>
+
         <net.geeksempire.loadingspin.SpinKitView
             android:id="@+id/profileLoadingView"
             android:layout_width="71dp"
             android:layout_height="71dp"
 
-            apps:SpinKit_Style="PulseRing"
+            apps:SpinKit_Style="Pulse"
             apps:SpinKit_Color="@color/default_color"
 
             apps:layout_constraintTop_toTopOf="parent"

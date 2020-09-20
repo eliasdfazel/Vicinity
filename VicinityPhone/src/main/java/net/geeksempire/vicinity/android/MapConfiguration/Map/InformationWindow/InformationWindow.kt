@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/20/20 5:04 AM
- * Last modified 9/20/20 5:01 AM
+ * Created by Elias Fazel on 9/20/20 7:08 AM
+ * Last modified 9/20/20 7:03 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -47,7 +47,7 @@ class InformationWindow (private val context: MapsOfSociety) {
 
             googleMapInformationWindowBinding.userDisplayName.text = informationWindowData.userDocument[UserInformationDataStructure.userDisplayName].toString()
 
-            informationWindowData.userDocument[UserInformationDataStructure.instagramAccount]?.let {
+            if (informationWindowData.userDocument[UserInformationDataStructure.instagramAccount].toString().isNotEmpty()) {
 
                 googleMapInformationWindowBinding.instagramAddressLayout.visibility = View.VISIBLE
                 googleMapInformationWindowBinding.instagramLogo.visibility = View.VISIBLE
@@ -57,7 +57,7 @@ class InformationWindow (private val context: MapsOfSociety) {
 
             }
 
-            informationWindowData.userDocument[UserInformationDataStructure.twitterAccount]?.let {
+            if (informationWindowData.userDocument[UserInformationDataStructure.twitterAccount].toString().isNotEmpty()) {
 
                 googleMapInformationWindowBinding.twitterAddressLayout.visibility = View.VISIBLE
                 googleMapInformationWindowBinding.twitterLogo.visibility = View.VISIBLE
@@ -67,7 +67,7 @@ class InformationWindow (private val context: MapsOfSociety) {
 
             }
 
-            informationWindowData.userDocument[UserInformationDataStructure.phoneNumber]?.let {
+            if (informationWindowData.userDocument[UserInformationDataStructure.phoneNumber].toString().isNotEmpty()) {
 
                 googleMapInformationWindowBinding.phoneNumberAddressLayout.visibility = View.VISIBLE
                 googleMapInformationWindowBinding.phoneNumberLogo.visibility = View.VISIBLE
@@ -85,7 +85,9 @@ class InformationWindow (private val context: MapsOfSociety) {
 
             }
 
-
+            if (context.firebaseUser!!.uid != informationWindowData.userDocument[UserInformationDataStructure.userIdentification].toString()) {
+                googleMapInformationWindowBinding.enterPrivateChat.playAnimation()
+            }
 
         }
 
