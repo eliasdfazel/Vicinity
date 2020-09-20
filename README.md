@@ -1,1 +1,1 @@
-# Vicinity
+# Vicinity | Online Society
