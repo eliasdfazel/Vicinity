@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/3/20 8:48 AM
- * Last modified 9/3/20 7:02 AM
+ * Created by Elias Fazel on 9/20/20 8:09 AM
+ * Last modified 9/20/20 8:09 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -17,5 +17,10 @@ class PrivateCommunicationEndpoint {
      * Document Path : Even
      * */
 
+//    val privateChatName: String = firebaseUser.uid + "|" + markerClick.title
+//    val privateChatNameReverse: String = markerClick.title + "|" + firebaseUser.uid
 
+    // if (documentSnapshot.id == privateChatName) {}
+    // else if (documentSnapshot.id == reversePrivateChatName) {}
+    // else {}
 }
