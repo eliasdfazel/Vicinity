@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/18/20 11:35 AM
- * Last modified 9/18/20 11:31 AM
+ * Created by Elias Fazel on 9/20/20 9:10 AM
+ * Last modified 9/20/20 8:17 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -34,6 +34,7 @@ class PublicCommunicationEndpoint {
 
             return PublicCommunicationEndpoint.commonPublicEndpoint + countryName
         }
+
     }
 
 }

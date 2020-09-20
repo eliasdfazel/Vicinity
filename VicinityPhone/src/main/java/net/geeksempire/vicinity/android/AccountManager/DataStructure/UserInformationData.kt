@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/20/20 5:04 AM
- * Last modified 9/20/20 4:54 AM
+ * Created by Elias Fazel on 9/20/20 9:10 AM
+ * Last modified 9/20/20 8:52 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -41,7 +41,10 @@ data class UserInformationProfileData (var userIdentification: String, var userE
                                        var phoneNumberVerified: Boolean? = false,
                                        var userJointDate:  FieldValue = FieldValue.serverTimestamp())
 
-data class UserInformationArchiveData (var vicinityCountry: String, var vicinityName: String,
-                                       var vicinityLatitude: String, var vicinityLongitude: String,
-                                       var lastLatitude: String, var lastLongitude: String,
-                                       var userJointDate:  FieldValue = FieldValue.serverTimestamp())
+data class UserInformationVicinityArchiveData (var vicinityCountry: String, var vicinityName: String,
+                                               var vicinityLatitude: String, var vicinityLongitude: String,
+                                               var lastLatitude: String, var lastLongitude: String,
+                                               var userJointDate:  FieldValue = FieldValue.serverTimestamp())
+
+data class UserInformationPrivateMessengerArchiveData (var privateMessengerName: String,
+                                                       var selfUid: String, var otherUid: String)

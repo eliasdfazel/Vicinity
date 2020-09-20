@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/20/20 7:39 AM
- * Last modified 9/20/20 7:38 AM
+ * Created by Elias Fazel on 9/20/20 9:10 AM
+ * Last modified 9/20/20 8:57 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -13,6 +13,7 @@ package net.geeksempire.vicinity.android.MapConfiguration.Map.InformationWindow
 import android.view.View
 import com.google.android.gms.maps.model.Marker
 import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationDataStructure
+import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
 import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
@@ -96,6 +97,31 @@ class InformationWindow (private val context: MapsOfSociety) {
 //                googleMapInformationWindowBinding.enterPrivateChat.visibility = View.INVISIBLE
 //
 //            }
+
+            googleMapInformationWindowBinding.enterPrivateChat.setOnClickListener {
+
+                val selfUid = context.firebaseUser!!.uid
+                val otherUid = "${informationWindowData.userDocument[UserInformationDataStructure.userIdentification]}"
+
+                context.firestoreDatabase
+                    .collection(UserInformation.userPrivateMessengerArchiveDatabasePath(selfUid))
+                    .get()
+                    .addOnSuccessListener {
+
+                    }.addOnFailureListener {
+
+                    }
+
+                context.firestoreDatabase
+                    .collection(UserInformation.userPrivateMessengerArchiveDatabasePath(otherUid))
+                    .get()
+                    .addOnSuccessListener {
+
+                    }.addOnFailureListener {
+
+                    }
+
+            }
 
         }
 

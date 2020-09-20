@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/20/20 4:45 AM
- * Last modified 9/20/20 4:43 AM
+ * Created by Elias Fazel on 9/20/20 9:10 AM
+ * Last modified 9/20/20 9:10 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -28,9 +28,9 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationArchiveData
 import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationData
 import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationDataStructure
+import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationVicinityArchiveData
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.DataStructure.VicinityData
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.vicinityName
@@ -52,7 +52,7 @@ class VicinityUserInformation (private val firestoreDatabase: FirebaseFirestore,
 
                 firebaseUser?.let {
 
-                    val userInformationArchiveData = UserInformationArchiveData(
+                    val userInformationArchiveData = UserInformationVicinityArchiveData(
                         vicinityCountry = vicinityData.countryName,
                         vicinityName = vicinityName(LatLng(vicinityData.centerLatitude.toDouble(), vicinityData.centerLongitude.toDouble())),
                         vicinityLatitude = vicinityData.centerLatitude,
