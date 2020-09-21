@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/21/20 11:03 AM
- * Last modified 9/21/20 11:03 AM
+ * Created by Elias Fazel on 9/21/20 11:10 AM
+ * Last modified 9/21/20 11:09 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -33,6 +33,7 @@ import com.google.firebase.firestore.ktx.firestoreSettings
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.DataStructure.PrivateMessageData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.DataStructure.PrivateMessengerData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Endpoint.PrivateCommunicationEndpoint
@@ -139,20 +140,28 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
 
                 }
 
-        }
+            intent.getStringExtra(PrivateMessenger.Configurations.PrivateMessengerDatabasePath)?.let {
 
-        intent.getStringExtra(PrivateMessenger.Configurations.PrivateMessengerDatabasePath)?.let {
+                if (otherUid != null) {
 
-            if (otherUid != null) {
+                    val privateMessengerData = PrivateMessengerData(
+                        PersonOne = firebaseUser.uid,
+                        PersonTwo = otherUid
+                    )
 
-                val privateMessengerData = PrivateMessengerData(
-                    PersonOne = firebaseUser.uid,
-                    PersonTwo = otherUid
-                )
+                    firestoreDatabase
+                        .document(it)
+                        .set(privateMessengerData)
 
-                firestoreDatabase
-                    .document(it)
-                    .set(privateMessengerData)
+                    firestoreDatabase
+                        .document(UserInformation.userPrivateMessengerArchiveDatabasePath(firebaseUser.uid, privateMessengerName))
+                        .set(privateMessengerData)
+
+                    firestoreDatabase
+                        .document(UserInformation.userPrivateMessengerArchiveDatabasePath(otherUid, privateMessengerName))
+                        .set(privateMessengerData)
+
+                }
 
             }
 
