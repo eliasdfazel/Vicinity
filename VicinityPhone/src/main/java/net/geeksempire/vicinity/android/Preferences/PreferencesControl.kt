@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/14/20 8:30 AM
- * Last modified 9/14/20 8:03 AM
+ * Created by Elias Fazel on 9/21/20 12:13 PM
+ * Last modified 9/21/20 12:13 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -13,12 +13,34 @@ package net.geeksempire.vicinity.android.Preferences
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import net.geeksempire.vicinity.android.AccountManager.UI.AccountInformation
+import net.geeksempire.vicinity.android.Preferences.DataHolder.PreferencesLiveData
+import net.geeksempire.vicinity.android.Preferences.Extensions.preferencesControlSetupUI
+import net.geeksempire.vicinity.android.Preferences.Extensions.toggleLightDark
 import net.geeksempire.vicinity.android.R
+import net.geeksempire.vicinity.android.Utils.UI.Theme.OverallTheme
+import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
 import net.geeksempire.vicinity.android.databinding.PreferencesControlViewBinding
 
 class PreferencesControl : AppCompatActivity() {
+
+    val overallTheme: OverallTheme by lazy {
+        OverallTheme(applicationContext)
+    }
+
+    val firebaseUser: FirebaseUser = Firebase.auth.currentUser!!
+
+    val preferencesLiveData: PreferencesLiveData by lazy {
+        ViewModelProvider(this@PreferencesControl).get(PreferencesLiveData::class.java)
+    }
 
     lateinit var preferencesControlViewBinding: PreferencesControlViewBinding
 
@@ -27,6 +49,36 @@ class PreferencesControl : AppCompatActivity() {
         preferencesControlViewBinding = PreferencesControlViewBinding.inflate(layoutInflater)
         setContentView(preferencesControlViewBinding.root)
 
+        preferencesControlSetupUI()
+
+        preferencesLiveData.toggleTheme.observe(this@PreferencesControl, Observer {
+
+            var delayTheme: Long = 3333
+
+            when(overallTheme.checkThemeLightDark()) {
+                ThemeType.ThemeLight -> {
+                    delayTheme = 3000
+                }
+                ThemeType.ThemeDark -> {
+                    delayTheme = 1133
+                }
+            }
+
+            if (it) {
+
+                Handler(Looper.getMainLooper()).postDelayed({
+
+                    toggleLightDark()
+
+                }, delayTheme)
+
+            } else {
+
+                toggleLightDark()
+
+            }
+
+        })
 
         preferencesControlViewBinding.accountManagerView.setOnClickListener {
 

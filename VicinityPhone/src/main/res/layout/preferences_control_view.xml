@@ -2,14 +2,14 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/14/20 8:30 AM
-  ~ Last modified 9/14/20 8:15 AM
+  ~ Created by Elias Fazel on 9/21/20 12:13 PM
+  ~ Last modified 9/21/20 12:05 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
   -->
 
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:apps="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rootView"
@@ -17,20 +17,45 @@
     android:layout_height="match_parent"
     tools:context=".Preferences.PreferencesControl">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/rootContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".Preferences.PreferencesControl">
+        android:layout_height="match_parent"
+
+        apps:layout_constraintTop_toTopOf="parent"
+        apps:layout_constraintBottom_toBottomOf="parent"
+        apps:layout_constraintStart_toStartOf="parent"
+        apps:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/accountManagerView"
             android:layout_width="match_parent"
-            android:layout_height="155dp"
-            android:background="@color/light_pink"
+            android:layout_height="wrap_content">
 
-            apps:layout_constraintTop_toTopOf="parent"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/accountManagerView"
+                android:layout_width="match_parent"
+                android:layout_height="155dp"
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                apps:layout_constraintTop_toTopOf="parent">
 
-</androidx.core.widget.NestedScrollView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/toggleThemeView"
+                android:layout_width="179dp"
+                android:layout_height="179dp"
+                android:padding="11dp"
+
+                apps:lottie_rawRes="@raw/toggle_theme"
+
+                apps:layout_constraintTop_toBottomOf="@id/accountManagerView"
+                apps:layout_constraintBottom_toBottomOf="parent"
+                apps:layout_constraintStart_toStartOf="parent"
+                apps:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
