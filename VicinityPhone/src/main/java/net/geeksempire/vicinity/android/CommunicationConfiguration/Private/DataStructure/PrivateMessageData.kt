@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/20/20 9:10 AM
- * Last modified 9/20/20 8:44 AM
+ * Created by Elias Fazel on 9/21/20 11:03 AM
+ * Last modified 9/21/20 10:54 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -19,7 +19,7 @@ object Unknown {
 
 }
 
-class PublicMessageData {
+class PrivateMessageData {
 
     var userIdentifier: String? = null
     var userProfileImage: String? = null
@@ -36,18 +36,16 @@ class PublicMessageData {
     constructor(userIdentifier: String, userProfileImage: String, userDisplayName: String, userMessageTextContent: String, userMessageImageContent: String,
                 userMessageDate: Timestamp, userMessageEditDate: Timestamp) {
 
-        this@PublicMessageData.userIdentifier = userIdentifier
-        this@PublicMessageData.userProfileImage = userProfileImage
-        this@PublicMessageData.userDisplayName = userDisplayName
+        this@PrivateMessageData.userIdentifier = userIdentifier
+        this@PrivateMessageData.userProfileImage = userProfileImage
+        this@PrivateMessageData.userDisplayName = userDisplayName
 
-        this@PublicMessageData.userMessageTextContent = userMessageTextContent
-        this@PublicMessageData.userMessageImageContent = userMessageImageContent
+        this@PrivateMessageData.userMessageTextContent = userMessageTextContent
+        this@PrivateMessageData.userMessageImageContent = userMessageImageContent
 
-        this@PublicMessageData.userMessageDate = userMessageDate
-        this@PublicMessageData.userMessageEditDate = userMessageEditDate
+        this@PrivateMessageData.userMessageDate = userMessageDate
+        this@PrivateMessageData.userMessageEditDate = userMessageEditDate
 
     }
-
-
 
 }

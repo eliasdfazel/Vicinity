@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/21/20 10:47 AM
- * Last modified 9/21/20 10:46 AM
+ * Created by Elias Fazel on 9/21/20 11:03 AM
+ * Last modified 9/21/20 11:03 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -33,13 +33,14 @@ import com.google.firebase.firestore.ktx.firestoreSettings
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.DataStructure.PrivateMessageData
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.DataStructure.PrivateMessengerData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Endpoint.PrivateCommunicationEndpoint
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Extensions.privateMessengerPrepareMessage
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Extensions.privateMessengerPrepareNotificationData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Extensions.privateMessengerPrepareNotificationTopic
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Extensions.privateMessengerSetupUI
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.PrivateMessengerUI.Adapter.PrivateMessengerAdapter
-import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.DataStructure.PublicMessageData
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
@@ -83,7 +84,7 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
 
     val firebaseUser: FirebaseUser = Firebase.auth.currentUser!!
 
-    private lateinit var firebaseRecyclerAdapter: FirestoreRecyclerAdapter<PublicMessageData, RecyclerView.ViewHolder>
+    private lateinit var firebaseRecyclerAdapter: FirestoreRecyclerAdapter<PrivateMessageData, RecyclerView.ViewHolder>
 
     val linearLayoutManager: LinearLayoutManager by lazy {
         LinearLayoutManager(this@PrivateMessenger, RecyclerView.VERTICAL, false)
@@ -140,6 +141,23 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
 
         }
 
+        intent.getStringExtra(PrivateMessenger.Configurations.PrivateMessengerDatabasePath)?.let {
+
+            if (otherUid != null) {
+
+                val privateMessengerData = PrivateMessengerData(
+                    PersonOne = firebaseUser.uid,
+                    PersonTwo = otherUid
+                )
+
+                firestoreDatabase
+                    .document(it)
+                    .set(privateMessengerData)
+
+            }
+
+        }
+
         privateMessengerSetupUI()
 
         linearLayoutManager.stackFromEnd = false
@@ -148,8 +166,8 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
             .collection(privateMessagesDatabasePath)
             .orderBy("userMessageDate", Query.Direction.ASCENDING)
 
-        val firebaseRecyclerOptions = FirestoreRecyclerOptions.Builder<PublicMessageData>()
-            .setQuery(publicMessageCollectionReference, PublicMessageData::class.java)
+        val firebaseRecyclerOptions = FirestoreRecyclerOptions.Builder<PrivateMessageData>()
+            .setQuery(publicMessageCollectionReference, PrivateMessageData::class.java)
             .build()
 
         firebaseRecyclerAdapter = PrivateMessengerAdapter(this@PrivateMessenger, firebaseRecyclerOptions)

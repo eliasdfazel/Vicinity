@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/21/20 10:29 AM
- * Last modified 9/21/20 10:29 AM
+ * Created by Elias Fazel on 9/21/20 11:03 AM
+ * Last modified 9/21/20 10:55 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -25,8 +25,8 @@ import com.bumptech.glide.request.target.Target
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestoreException
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.DataStructure.PrivateMessageData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.PrivateMessengerUI.PrivateMessenger
-import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.DataStructure.PublicMessageData
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Calendar.formatToCurrentTimeZone
 import net.geeksempire.vicinity.android.Utils.UI.Colors.extractDominantColor
@@ -34,7 +34,7 @@ import net.geeksempire.vicinity.android.Utils.UI.Colors.isColorDark
 import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
 
 class PrivateMessengerAdapter(private val context: PrivateMessenger,
-                              firebaseRecyclerOptions: FirestoreRecyclerOptions<PublicMessageData>) : FirestoreRecyclerAdapter<PublicMessageData, RecyclerView.ViewHolder>(firebaseRecyclerOptions) {
+                              firebaseRecyclerOptions: FirestoreRecyclerOptions<PrivateMessageData>) : FirestoreRecyclerAdapter<PrivateMessageData, RecyclerView.ViewHolder>(firebaseRecyclerOptions) {
 
     override fun getItemViewType(position: Int): Int {
 
@@ -50,7 +50,7 @@ class PrivateMessengerAdapter(private val context: PrivateMessenger,
         }
     }
 
-    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int, publicMessageData: PublicMessageData) {
+    override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int, privateMessageData: PrivateMessageData) {
 
         when (context.overallTheme.checkThemeLightDark()) {
             ThemeType.ThemeLight -> {
@@ -67,10 +67,10 @@ class PrivateMessengerAdapter(private val context: PrivateMessenger,
 
             viewHolder as PrivateMessengerSelfViewHolder
 
-            viewHolder.userDisplayName.text = publicMessageData.userDisplayName
-            viewHolder.userMessageTextContent.text = publicMessageData.userMessageTextContent
+            viewHolder.userDisplayName.text = privateMessageData.userDisplayName
+            viewHolder.userMessageTextContent.text = privateMessageData.userMessageTextContent
 
-            publicMessageData.userMessageDate?.let {
+            privateMessageData.userMessageDate?.let {
 
                 viewHolder.userMessageDate.text = it.formatToCurrentTimeZone()
 
@@ -79,7 +79,7 @@ class PrivateMessengerAdapter(private val context: PrivateMessenger,
             Glide.with(context)
                 .asDrawable()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .load(publicMessageData.userProfileImage)
+                .load(privateMessageData.userProfileImage)
                 .listener(object : RequestListener<Drawable> {
 
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
@@ -93,7 +93,7 @@ class PrivateMessengerAdapter(private val context: PrivateMessenger,
 
                             resource?.let {
 
-                                val messageContentBackground: LayerDrawable = if (publicMessageData.userIdentifier == context.firebaseUser.uid) {
+                                val messageContentBackground: LayerDrawable = if (privateMessageData.userIdentifier == context.firebaseUser.uid) {
                                     context.getDrawable(R.drawable.message_self_content_background) as LayerDrawable
                                 } else {
                                     context.getDrawable(R.drawable.message_others_content_background) as LayerDrawable
@@ -156,10 +156,10 @@ class PrivateMessengerAdapter(private val context: PrivateMessenger,
 
             viewHolder as PrivateMessengerOthersViewHolder
 
-            viewHolder.userDisplayName.text = publicMessageData.userDisplayName
-            viewHolder.userMessageTextContent.text = publicMessageData.userMessageTextContent
+            viewHolder.userDisplayName.text = privateMessageData.userDisplayName
+            viewHolder.userMessageTextContent.text = privateMessageData.userMessageTextContent
 
-            publicMessageData.userMessageDate?.let {
+            privateMessageData.userMessageDate?.let {
 
                 viewHolder.userMessageDate.text = it.formatToCurrentTimeZone()
 
@@ -168,7 +168,7 @@ class PrivateMessengerAdapter(private val context: PrivateMessenger,
             Glide.with(context)
                 .asDrawable()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .load(publicMessageData.userProfileImage)
+                .load(privateMessageData.userProfileImage)
                 .listener(object : RequestListener<Drawable> {
 
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
@@ -182,7 +182,7 @@ class PrivateMessengerAdapter(private val context: PrivateMessenger,
 
                             resource?.let {
 
-                                val messageContentBackground: LayerDrawable = if (publicMessageData.userIdentifier == context.firebaseUser.uid) {
+                                val messageContentBackground: LayerDrawable = if (privateMessageData.userIdentifier == context.firebaseUser.uid) {
                                     context.getDrawable(R.drawable.message_self_content_background) as LayerDrawable
                                 } else {
                                     context.getDrawable(R.drawable.message_others_content_background) as LayerDrawable
