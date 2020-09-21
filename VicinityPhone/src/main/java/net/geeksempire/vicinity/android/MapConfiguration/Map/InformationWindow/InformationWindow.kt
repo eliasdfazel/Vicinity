@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/21/20 9:01 AM
- * Last modified 9/21/20 9:01 AM
+ * Created by Elias Fazel on 9/21/20 10:29 AM
+ * Last modified 9/21/20 9:16 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -107,8 +107,9 @@ class InformationWindow (private val context: MapsOfSociety) {
                 val privateMessengerName = privateMessengerName(selfUid, otherUid)
 
                 PrivateMessenger.open(
-                    context,
-                    privateMessengerName
+                    context = context,
+                    privateMessengerName = privateMessengerName,
+                    otherUid = otherUid
                 )
 
             }

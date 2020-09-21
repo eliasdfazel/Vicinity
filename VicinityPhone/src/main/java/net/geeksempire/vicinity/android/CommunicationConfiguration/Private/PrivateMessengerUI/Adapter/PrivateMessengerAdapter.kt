@@ -2,13 +2,13 @@
  * Copyright © 2020 By Geeks Empire.
  *
  * Created by Elias Fazel on 9/21/20 10:29 AM
- * Last modified 9/21/20 10:15 AM
+ * Last modified 9/21/20 10:29 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.Adapter
+package net.geeksempire.vicinity.android.CommunicationConfiguration.Private.PrivateMessengerUI.Adapter
 
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
@@ -25,16 +25,16 @@ import com.bumptech.glide.request.target.Target
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestoreException
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.PrivateMessengerUI.PrivateMessenger
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.DataStructure.PublicMessageData
-import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Calendar.formatToCurrentTimeZone
 import net.geeksempire.vicinity.android.Utils.UI.Colors.extractDominantColor
 import net.geeksempire.vicinity.android.Utils.UI.Colors.isColorDark
 import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
 
-class PublicCommunityAdapter(private val context: PublicCommunity,
-                             firebaseRecyclerOptions: FirestoreRecyclerOptions<PublicMessageData>) : FirestoreRecyclerAdapter<PublicMessageData, RecyclerView.ViewHolder>(firebaseRecyclerOptions) {
+class PrivateMessengerAdapter(private val context: PrivateMessenger,
+                              firebaseRecyclerOptions: FirestoreRecyclerOptions<PublicMessageData>) : FirestoreRecyclerAdapter<PublicMessageData, RecyclerView.ViewHolder>(firebaseRecyclerOptions) {
 
     override fun getItemViewType(position: Int): Int {
 
@@ -44,9 +44,9 @@ class PublicCommunityAdapter(private val context: PublicCommunity,
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         return if (snapshots[viewType].userIdentifier == context.firebaseUser.uid) {
-            PublicCommunitySelfViewHolder(LayoutInflater.from(context).inflate(R.layout.public_community_self_message_items, viewGroup, false))
+            PrivateMessengerSelfViewHolder(LayoutInflater.from(context).inflate(R.layout.public_community_self_message_items, viewGroup, false))
         } else {
-            PublicCommunityOthersViewHolder(LayoutInflater.from(context).inflate(R.layout.public_community_others_message_items, viewGroup, false))
+            PrivateMessengerOthersViewHolder(LayoutInflater.from(context).inflate(R.layout.public_community_others_message_items, viewGroup, false))
         }
     }
 
@@ -65,7 +65,7 @@ class PublicCommunityAdapter(private val context: PublicCommunity,
 
         if (snapshots[position].userIdentifier == context.firebaseUser.uid) {
 
-            viewHolder as PublicCommunitySelfViewHolder
+            viewHolder as PrivateMessengerSelfViewHolder
 
             viewHolder.userDisplayName.text = publicMessageData.userDisplayName
             viewHolder.userMessageTextContent.text = publicMessageData.userMessageTextContent
@@ -154,7 +154,7 @@ class PublicCommunityAdapter(private val context: PublicCommunity,
 
         } else {
 
-            viewHolder as PublicCommunityOthersViewHolder
+            viewHolder as PrivateMessengerOthersViewHolder
 
             viewHolder.userDisplayName.text = publicMessageData.userDisplayName
             viewHolder.userMessageTextContent.text = publicMessageData.userMessageTextContent

@@ -58,6 +58,50 @@ exports.publicCommunityNewMessageNotification = functions.runWith(runtimeOptions
 
 });
 
+exports.privateNewMessageNotification = functions.runWith(runtimeOptions).https.onCall((data, context) => {
+
+    const notificationTopic = data.notificationTopic;
+    const selfDisplayName = data.selfDisplayName;
+    const selfUid = data.selfUid;
+    const privateMessengerAction = data.privateMessengerAction;
+    const nameOfCountry = data.nameOfCountry
+    const vicinityLatitude = data.vicinityLatitude;
+    const vicinityLongitude = data.vicinityLongitude;
+    const privateMessengerName = data.privateMessengerName;
+    const notificationLargeIcon = data.notificationLargeIcon;
+    const messageContent = data.messageContent;
+
+    var message = {
+
+        android: {
+            ttl: (3600 * 1000) * (1), // 1 Hour in Milliseconds
+
+            priority: 'high',
+        },
+
+        data: {
+            "selfDisplayName": selfDisplayName,
+            "selfUid": selfUid,
+            "privateMessengerAction": privateMessengerAction,
+            "nameOfCountry": nameOfCountry,
+            "vicinityLatitude": vicinityLatitude,
+            "vicinityLongitude": vicinityLongitude,
+            "privateMessengerName": privateMessengerName,
+            "notificationLargeIcon": notificationLargeIcon,
+            "messageContent": messageContent
+        },
+
+        topic: notificationTopic
+    };
+
+    return admin.messaging().send(message).then((response) => {
+        console.log('Successfully Sent ::: ', response);
+    }).catch((error) => {
+        console.log('Error Sending Message ::: ', error);
+    });
+
+});
+
 /*[Retrieve Public Internet Address]*/
 exports.fetchUserPublicInternetAddress = functions.https.onRequest((req, res) => {
     var ipAddress;

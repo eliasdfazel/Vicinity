@@ -1,16 +1,14 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/20/20 9:10 AM
- * Last modified 9/20/20 8:29 AM
+ * Created by Elias Fazel on 9/21/20 10:29 AM
+ * Last modified 9/21/20 10:29 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
 package net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Endpoint
-
-import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.vicinityName
 
 class PrivateCommunicationEndpoint {
 
@@ -27,11 +25,11 @@ class PrivateCommunicationEndpoint {
          * Collection Path: Odd
          * Document Path : Even
          **/
-        private const val commonPrivateEndpoint: String = "Vicinity/OnlineSociety/Private/Messenger/"
+        private const val commonPrivateEndpoint: String = "Vicinity/OnlineSociety/PrivateMessenger/"
 
         fun privateMessengerDocumentEndpoint(privateMessengerName: String) : String {
 
-            return PrivateCommunicationEndpoint.commonPrivateEndpoint + privateMessengerName + "/" + vicinityName(locationLatitudeLongitude)
+            return PrivateCommunicationEndpoint.commonPrivateEndpoint + privateMessengerName
         }
 
         fun privateMessengerCollectionEndpoint(privateMessengerName: String) : String {

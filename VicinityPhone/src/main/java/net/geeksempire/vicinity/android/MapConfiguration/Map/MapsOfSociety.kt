@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/20/20 4:45 AM
- * Last modified 9/20/20 4:45 AM
+ * Created by Elias Fazel on 9/21/20 10:29 AM
+ * Last modified 9/21/20 9:18 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -353,13 +353,11 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
                     nameOfCountry?.let { nameOfCountry ->
 
-                        startActivity(Intent(applicationContext, PublicCommunity::class.java).apply {
-                            putExtra(PublicCommunity.Configurations.PublicCommunityName, vicinityName(currentCommunityCoordinates))
-                            putExtra(PublicCommunity.Configurations.PublicCommunityDatabasePath, PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(nameOfCountry, currentCommunityCoordinates))
-                            putExtra(PublicCommunity.Configurations.PublicCommunityCountryName, nameOfCountry)
-                            putExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude, currentCommunityCoordinates.latitude)
-                            putExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLongitude, currentCommunityCoordinates.longitude)
-                        }, ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_in_right, R.anim.fade_out).toBundle())
+                        PublicCommunity.open(
+                            context = applicationContext,
+                            currentCommunityCoordinates = currentCommunityCoordinates,
+                            nameOfCountry = nameOfCountry,
+                        )
 
                     }
 

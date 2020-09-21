@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/18/20 11:35 AM
- * Last modified 9/18/20 10:41 AM
+ * Created by Elias Fazel on 9/21/20 10:29 AM
+ * Last modified 9/21/20 10:29 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,6 +10,9 @@
 
 package net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI
 
+import android.app.ActivityOptions
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -32,12 +35,13 @@ import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.DataStructure.PublicMessageData
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoint.PublicCommunicationEndpoint
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunityPrepareMessage
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunityPrepareNotificationData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunityPrepareNotificationTopic
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunitySetupUI
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.Adapter.PublicCommunityAdapter
-import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.Adapter.PublicCommunityViewHolder
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.vicinityName
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
@@ -59,6 +63,20 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
         const val PublicCommunityCenterLocationLongitude: String = "VicinityLongitude"
     }
 
+    companion object {
+
+        fun open(context: Context, currentCommunityCoordinates: LatLng, nameOfCountry: String) {
+            context.startActivity(Intent(context, PublicCommunity::class.java).apply {
+                putExtra(PublicCommunity.Configurations.PublicCommunityName, vicinityName(currentCommunityCoordinates))
+                putExtra(PublicCommunity.Configurations.PublicCommunityDatabasePath, PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(nameOfCountry, currentCommunityCoordinates))
+                putExtra(PublicCommunity.Configurations.PublicCommunityCountryName, nameOfCountry)
+                putExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude, currentCommunityCoordinates.latitude)
+                putExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLongitude, currentCommunityCoordinates.longitude)
+            }, ActivityOptions.makeCustomAnimation(context, R.anim.slide_in_right, R.anim.fade_out).toBundle())
+        }
+
+    }
+
     val overallTheme: OverallTheme by lazy {
         OverallTheme(applicationContext)
     }
@@ -67,7 +85,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
     val firebaseUser: FirebaseUser = Firebase.auth.currentUser!!
 
-    private lateinit var firebaseRecyclerAdapter: FirestoreRecyclerAdapter<PublicMessageData, PublicCommunityViewHolder>
+    private lateinit var firebaseRecyclerAdapter: FirestoreRecyclerAdapter<PublicMessageData, RecyclerView.ViewHolder>
 
     val linearLayoutManager: LinearLayoutManager by lazy {
         LinearLayoutManager(this@PublicCommunity, RecyclerView.VERTICAL, false)
