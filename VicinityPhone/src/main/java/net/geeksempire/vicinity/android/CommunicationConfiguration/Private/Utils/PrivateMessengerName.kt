@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/20/20 9:10 AM
- * Last modified 9/20/20 8:43 AM
+ * Created by Elias Fazel on 9/21/20 9:01 AM
+ * Last modified 9/21/20 8:30 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,10 +12,9 @@ package net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Util
 
 fun privateMessengerName(selfUid: String, otherUid: String) : String {
 
-    return "${selfUid}|${otherUid}"
-}
+    val uidArray = arrayListOf<String>(selfUid, otherUid)
 
-fun reversePrivateMessengerName(selfUid: String, otherUid: String) : String {
+    uidArray.sort()
 
-    return "${otherUid}|${selfUid}"
+    return "${uidArray[0]}|${uidArray[1]}"
 }

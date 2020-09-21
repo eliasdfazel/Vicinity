@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/20/20 9:10 AM
- * Last modified 9/20/20 8:57 AM
+ * Created by Elias Fazel on 9/21/20 9:01 AM
+ * Last modified 9/21/20 9:01 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -13,7 +13,8 @@ package net.geeksempire.vicinity.android.MapConfiguration.Map.InformationWindow
 import android.view.View
 import com.google.android.gms.maps.model.Marker
 import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationDataStructure
-import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.PrivateMessengerUI.PrivateMessenger
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Utils.privateMessengerName
 import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
@@ -86,40 +87,29 @@ class InformationWindow (private val context: MapsOfSociety) {
 
             }
 
-//            if (context.firebaseUser!!.uid != informationWindowData.userDocument[UserInformationDataStructure.userIdentification].toString()) {
-//
-//                googleMapInformationWindowBinding.enterPrivateChat.visibility = View.VISIBLE
-//
-//                googleMapInformationWindowBinding.enterPrivateChat.playAnimation()
-//
-//            } else {
-//
-//                googleMapInformationWindowBinding.enterPrivateChat.visibility = View.INVISIBLE
-//
-//            }
+            if (context.firebaseUser!!.uid != informationWindowData.userDocument[UserInformationDataStructure.userIdentification].toString()) {
+
+                googleMapInformationWindowBinding.enterPrivateChat.visibility = View.VISIBLE
+
+                googleMapInformationWindowBinding.enterPrivateChat.playAnimation()
+
+            } else {
+
+                googleMapInformationWindowBinding.enterPrivateChat.visibility = View.INVISIBLE
+
+            }
 
             googleMapInformationWindowBinding.enterPrivateChat.setOnClickListener {
 
                 val selfUid = context.firebaseUser!!.uid
                 val otherUid = "${informationWindowData.userDocument[UserInformationDataStructure.userIdentification]}"
 
-                context.firestoreDatabase
-                    .collection(UserInformation.userPrivateMessengerArchiveDatabasePath(selfUid))
-                    .get()
-                    .addOnSuccessListener {
+                val privateMessengerName = privateMessengerName(selfUid, otherUid)
 
-                    }.addOnFailureListener {
-
-                    }
-
-                context.firestoreDatabase
-                    .collection(UserInformation.userPrivateMessengerArchiveDatabasePath(otherUid))
-                    .get()
-                    .addOnSuccessListener {
-
-                    }.addOnFailureListener {
-
-                    }
+                PrivateMessenger.open(
+                    context,
+                    privateMessengerName
+                )
 
             }
 
