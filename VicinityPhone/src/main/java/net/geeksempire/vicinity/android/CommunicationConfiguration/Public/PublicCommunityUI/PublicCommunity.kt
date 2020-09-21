@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/21/20 10:29 AM
- * Last modified 9/21/20 10:29 AM
+ * Created by Elias Fazel on 9/21/20 10:47 AM
+ * Last modified 9/21/20 10:47 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -61,6 +61,8 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
         const val PublicCommunityCountryName: String = "CountryName"
         const val PublicCommunityCenterLocationLatitude: String = "VicinityLatitude"
         const val PublicCommunityCenterLocationLongitude: String = "VicinityLongitude"
+
+        const val NotificationCloudFunction: String = "publicCommunityNewMessageNotification"
     }
 
     companion object {
@@ -221,7 +223,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                         if (publicCommunityName != null && publicCommunityCountryName != null) {
 
                             firebaseCloudFunctions
-                                .getHttpsCallable("publicCommunityNewMessageNotification")
+                                .getHttpsCallable(PublicCommunity.Configurations.NotificationCloudFunction)
                                 .call(publicCommunityPrepareNotificationData(messageContent, publicCommunityName, publicCommunityCountryName, communityCenterVicinity))
                                 .continueWith {
 

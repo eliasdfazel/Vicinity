@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/21/20 10:29 AM
- * Last modified 9/21/20 10:29 AM
+ * Created by Elias Fazel on 9/21/20 10:47 AM
+ * Last modified 9/21/20 10:46 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -37,6 +37,7 @@ import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Endpo
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Extensions.privateMessengerPrepareMessage
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Extensions.privateMessengerPrepareNotificationData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Extensions.privateMessengerPrepareNotificationTopic
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Extensions.privateMessengerSetupUI
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.PrivateMessengerUI.Adapter.PrivateMessengerAdapter
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.DataStructure.PublicMessageData
 import net.geeksempire.vicinity.android.R
@@ -55,6 +56,8 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
         const val PrivateMessengerName: String = "PrivateMessengerName"
         const val OtherUid: String = "OtherUid"
         const val PrivateMessengerDatabasePath: String = "PrivateMessengerDatabasePath"
+
+        const val NotificationCloudFunction: String = "privateNewMessageNotification"
     }
 
     companion object {
@@ -137,6 +140,8 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
 
         }
 
+        privateMessengerSetupUI()
+
         linearLayoutManager.stackFromEnd = false
 
         val publicMessageCollectionReference: Query = firestoreDatabase
@@ -209,7 +214,7 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
                         if (privateMessengerName != null) {
 
                             firebaseCloudFunctions
-                                .getHttpsCallable("privateNewMessageNotification")
+                                .getHttpsCallable(PrivateMessenger.Configurations.NotificationCloudFunction)
                                 .call(privateMessengerPrepareNotificationData(messageContent, privateMessengerName))
                                 .continueWith {
 
