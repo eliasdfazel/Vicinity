@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/21/20 10:29 AM
- * Last modified 9/21/20 10:29 AM
+ * Created by Elias Fazel on 9/29/20 6:54 AM
+ * Last modified 9/29/20 6:54 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -29,6 +29,7 @@ fun PrivateMessenger.privateMessengerSetupUI() {
 
             privateMessengerViewBinding.textMessageContentLayout.boxBackgroundColor = getColor(R.color.white)
 
+            privateMessengerViewBinding.textMessageContentView.setTextColor(getColor(R.color.dark))
 
         }
         ThemeType.ThemeDark -> {
@@ -38,6 +39,8 @@ fun PrivateMessenger.privateMessengerSetupUI() {
             privateMessengerViewBinding.messageContentWrapper.setBackgroundColor(getColor(R.color.dark))
 
             privateMessengerViewBinding.textMessageContentLayout.boxBackgroundColor = getColor(R.color.black)
+
+            privateMessengerViewBinding.textMessageContentView.setTextColor(getColor(R.color.light))
 
         }
     }
