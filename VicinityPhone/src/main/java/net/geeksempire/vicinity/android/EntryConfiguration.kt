@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/14/20 8:30 AM
- * Last modified 9/14/20 8:03 AM
+ * Created by Elias Fazel on 9/29/20 6:00 AM
+ * Last modified 9/29/20 5:59 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -26,19 +26,20 @@ import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkSettingCallback
 import net.geeksempire.vicinity.android.Utils.UI.NotifyUser.SnackbarActionHandlerInterface
 import net.geeksempire.vicinity.android.Utils.UI.NotifyUser.SnackbarBuilder
+import net.geeksempire.vicinity.android.WebView.BuiltInWebView
 import net.geeksempire.vicinity.android.databinding.EntryConfigurationViewBinding
 import javax.inject.Inject
 
 class EntryConfiguration : AppCompatActivity() {
 
+    companion object {
+        const val PermissionRequestCode: Int = 123
+    }
+
     @Inject
     lateinit var networkCheckpoint: NetworkCheckpoint
 
     private lateinit var entryConfigurationViewBinding: EntryConfigurationViewBinding
-
-    companion object {
-        const val PermissionRequestCode: Int = 123
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +50,22 @@ class EntryConfiguration : AppCompatActivity() {
             .dependencyGraph
             .inject(this@EntryConfiguration)
 
-        runtimePermission()
+        entryConfigurationViewBinding.proceedButton.setOnClickListener {
+
+            runtimePermission()
+
+        }
+
+        entryConfigurationViewBinding.agreementDataView.setOnClickListener {
+
+            BuiltInWebView.show(
+                context = applicationContext,
+                linkToLoad = getString(R.string.privacyAgreementLink),
+                gradientColorOne = getColor(R.color.default_color_dark),
+                gradientColorTwo = getColor(R.color.default_color_game_dark)
+            )
+
+        }
 
     }
 

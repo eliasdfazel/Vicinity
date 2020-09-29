@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2020 By Geeks Empire.
+  ~
+  ~ Created by Elias Fazel on 9/29/20 6:00 AM
+  ~ Last modified 9/10/20 8:32 AM
+  ~
+  ~ Licensed Under MIT License.
+  ~ https://opensource.org/licenses/MIT
+  -->
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/temporaryBackground">
+
+        <shape
+            android:shape="rectangle">
+
+            <corners
+                android:topLeftRadius="7dp"
+                android:topRightRadius="0dp"
+                android:bottomLeftRadius="7dp"
+                android:bottomRightRadius="7dp"/>
+
+            <solid
+                android:color="@color/default_color"/>
+
+        </shape>
+
+    </item>
+
+</layer-list>

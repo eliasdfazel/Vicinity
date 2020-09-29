@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 8/30/20 6:05 AM
-  ~ Last modified 8/30/20 5:57 AM
+  ~ Created by Elias Fazel on 9/29/20 6:00 AM
+  ~ Last modified 9/29/20 5:50 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -11,11 +11,52 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:apps="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EntryConfiguration">
 
+    <net.geeksempire.blurry.effect.view.RealtimeBlurView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
+        apps:realtimeBlurRadius="23dp"
+        apps:realtimeOverlayColor="@color/default_color_transparent_high"/>
+    
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/proceedButton"
+        android:layout_width="219dp"
+        android:layout_height="57dp"
+        android:layout_marginBottom="37dp"
+        android:textAllCaps="false"
+        android:text="@string/proceedAgreement"
+        android:textSize="29sp"
+        android:textColor="@color/dark"
+        android:fontFamily="@font/upcil"
 
+        apps:backgroundTint="@color/light"
+        apps:rippleColor="@color/default_color_game"
+        apps:cornerRadius="51dp"
+
+        apps:layout_constraintBottom_toBottomOf="parent"
+        apps:layout_constraintStart_toStartOf="parent"
+        apps:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/agreementDataView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/privacyAgreement"
+        android:textSize="13sp"
+        android:textColor="@color/light"
+        android:fontFamily="monospace"
+        android:linksClickable="true"
+        android:autoLink="web"
+
+        apps:layout_constraintTop_toBottomOf="@id/proceedButton"
+        apps:layout_constraintStart_toStartOf="parent"
+        apps:layout_constraintEnd_toEndOf="parent"/>
+    
 </androidx.constraintlayout.widget.ConstraintLayout>

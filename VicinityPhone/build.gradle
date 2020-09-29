@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/16/20 2:49 AM
- * Last modified 9/16/20 2:48 AM
+ * Created by Elias Fazel on 9/29/20 6:00 AM
+ * Last modified 9/29/20 4:35 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -120,7 +120,7 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
 
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
     implementation 'com.google.maps.android:android-maps-utils:0.6.2'

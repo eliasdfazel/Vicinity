@@ -1,8 +1,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/21/20 10:29 AM
-  ~ Last modified 9/21/20 10:26 AM
+  ~ Created by Elias Fazel on 9/29/20 6:00 AM
+  ~ Last modified 9/29/20 5:52 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -12,5 +12,7 @@
 
     <string name="publicCommunityAction" translatable="false">Public_Community_Action</string>
     <string name="privateMessengerAction" translatable="false">Private_Messenger_Action</string>
+
+    <string name="privacyAgreementLink">https://GeeksEmpire.net/Projects/Android/Vicinity/PrivacyAgreement.html</string>
 
 </resources>
