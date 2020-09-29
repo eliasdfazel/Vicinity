@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/29/20 6:43 AM
- * Last modified 9/29/20 6:40 AM
+ * Created by Elias Fazel on 9/29/20 7:40 AM
+ * Last modified 9/29/20 7:26 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -64,6 +64,9 @@ class EntryConfiguration : AppCompatActivity() {
             runtimePermission()
 
         } else {
+
+            entryConfigurationViewBinding.proceedButton.visibility = View.VISIBLE
+            entryConfigurationViewBinding.agreementDataView.visibility = View.VISIBLE
 
             Handler(Looper.getMainLooper()).postDelayed({
 

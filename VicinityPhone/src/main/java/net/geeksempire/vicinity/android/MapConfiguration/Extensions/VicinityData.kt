@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/17/20 9:59 AM
- * Last modified 9/17/20 9:59 AM
+ * Created by Elias Fazel on 9/29/20 7:40 AM
+ * Last modified 9/29/20 7:37 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -42,7 +42,7 @@ fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitud
                             firebaseUser?.let {
 
                                 val vicinityData: VicinityData = VicinityData(
-                                    centerLatitude = userLatitudeLongitude.latitude.toString(), centerLongitude = userLatitudeLongitude.longitude.toString(),
+                                    centerLatitude = communityLatitude.toString(), centerLongitude = communityLongitude.toString(),
                                     countryName = countryName,
                                     cityName = LocationCheckpoint.LOCATION_CITY_NAME,
                                     knownAddress = LocationCheckpoint.LOCATION_INFORMATION_DETAIL,
