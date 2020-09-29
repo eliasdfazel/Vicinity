@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/21/20 12:13 PM
- * Last modified 9/21/20 12:13 PM
+ * Created by Elias Fazel on 9/29/20 12:59 PM
+ * Last modified 9/29/20 12:59 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -18,6 +18,8 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -80,6 +82,14 @@ class PreferencesControl : AppCompatActivity() {
 
         })
 
+        preferencesControlViewBinding.userDisplayName.text = firebaseUser.displayName
+
+        Glide.with(this@PreferencesControl)
+            .asDrawable()
+            .load(firebaseUser.photoUrl)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(preferencesControlViewBinding.userProfileImage)
+
         preferencesControlViewBinding.accountManagerView.setOnClickListener {
 
             startActivity(Intent(applicationContext, AccountInformation::class.java).apply {
@@ -87,6 +97,13 @@ class PreferencesControl : AppCompatActivity() {
             }, ActivityOptions.makeCustomAnimation(applicationContext, R.anim.fade_in, R.anim.fade_out).toBundle())
 
         }
+
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
 
     }
 

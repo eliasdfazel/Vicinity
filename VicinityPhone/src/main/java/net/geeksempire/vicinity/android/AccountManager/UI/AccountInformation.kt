@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/20/20 7:36 AM
- * Last modified 9/20/20 7:32 AM
+ * Created by Elias Fazel on 9/29/20 12:59 PM
+ * Last modified 9/29/20 12:56 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -172,6 +172,8 @@ class AccountInformation : AppCompatActivity() {
             this@AccountInformation.finish()
 
         }
+
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
 
     }
 

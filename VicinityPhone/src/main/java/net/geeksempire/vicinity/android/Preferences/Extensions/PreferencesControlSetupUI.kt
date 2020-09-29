@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/21/20 12:13 PM
- * Last modified 9/21/20 12:10 PM
+ * Created by Elias Fazel on 9/29/20 12:59 PM
+ * Last modified 9/29/20 12:54 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,6 +10,8 @@
 
 package net.geeksempire.vicinity.android.Preferences.Extensions
 
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
 import androidx.constraintlayout.widget.ConstraintLayout
 import net.geeksempire.vicinity.android.Preferences.PreferencesControl
 import net.geeksempire.vicinity.android.R
@@ -40,10 +42,30 @@ fun PreferencesControl.toggleLightDark() {
 
             preferencesControlViewBinding.rootView.setBackgroundColor(getColor(R.color.light))
 
+            preferencesControlViewBinding.userDisplayName.setTextColor(getColor(R.color.dark))
+
+            val accountViewBackground = getDrawable(R.drawable.preferences_account_view_background) as LayerDrawable
+            val gradientDrawable = (accountViewBackground.findDrawableByLayerId(R.id.temporaryBackground) as GradientDrawable)
+            gradientDrawable.colors = intArrayOf(getColor(R.color.dark), getColor(R.color.dark_transparent), getColor(R.color.dark_blurry_color))
+            gradientDrawable.gradientType = GradientDrawable.LINEAR_GRADIENT
+            accountViewBackground.findDrawableByLayerId(R.id.temporaryForeground).setTint(getColor(R.color.light))
+
+            preferencesControlViewBinding.accountManagerView.background = accountViewBackground
+
         }
         ThemeType.ThemeDark -> {
 
             preferencesControlViewBinding.rootView.setBackgroundColor(getColor(R.color.dark))
+
+            preferencesControlViewBinding.userDisplayName.setTextColor(getColor(R.color.light))
+
+            val accountViewBackground = getDrawable(R.drawable.preferences_account_view_background) as LayerDrawable
+            val gradientDrawable = (accountViewBackground.findDrawableByLayerId(R.id.temporaryBackground) as GradientDrawable)
+            gradientDrawable.colors = intArrayOf(getColor(R.color.light), getColor(R.color.light_transparent), getColor(R.color.light_blurry_color))
+            gradientDrawable.gradientType = GradientDrawable.LINEAR_GRADIENT
+            accountViewBackground.findDrawableByLayerId(R.id.temporaryForeground).setTint(getColor(R.color.dark))
+
+            preferencesControlViewBinding.accountManagerView.background = accountViewBackground
 
         }
     }

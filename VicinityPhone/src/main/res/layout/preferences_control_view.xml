@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/21/20 12:13 PM
-  ~ Last modified 9/21/20 12:05 PM
+  ~ Created by Elias Fazel on 9/29/20 12:59 PM
+  ~ Last modified 9/29/20 12:54 PM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -34,10 +34,52 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/accountManagerView"
                 android:layout_width="match_parent"
-                android:layout_height="155dp"
+                android:layout_height="129dp"
+                android:paddingHorizontal="23dp"
+                android:background="@drawable/preferences_account_view_background"
 
                 apps:layout_constraintTop_toTopOf="parent">
 
+                <net.geekstools.imageview.customshapes.ShapesImage
+                    android:id="@+id/userProfileImage"
+                    android:layout_width="79dp"
+                    android:layout_height="79dp"
+                    android:scaleType="centerCrop"
+
+                    apps:shape="circle"
+
+                    apps:layout_constraintTop_toTopOf="parent"
+                    apps:layout_constraintBottom_toBottomOf="parent"
+                    apps:layout_constraintStart_toStartOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/userDisplayName"
+                    android:layout_width="0dp"
+                    android:layout_height="79dp"
+                    android:paddingHorizontal="19dp"
+                    android:gravity="center_vertical"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    android:textSize="59sp"
+                    android:textColor="@color/dark"
+                    android:fontFamily="@font/upcil"
+
+                    apps:layout_constraintTop_toTopOf="parent"
+                    apps:layout_constraintBottom_toBottomOf="parent"
+                    apps:layout_constraintStart_toEndOf="@id/userProfileImage"
+                    apps:layout_constraintEnd_toEndOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/editProfileView"
+                    android:layout_width="57dp"
+                    android:layout_height="79dp"
+                    android:padding="3dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/edit_profile_icon"
+
+                    apps:layout_constraintTop_toTopOf="parent"
+                    apps:layout_constraintBottom_toBottomOf="parent"
+                    apps:layout_constraintEnd_toEndOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
