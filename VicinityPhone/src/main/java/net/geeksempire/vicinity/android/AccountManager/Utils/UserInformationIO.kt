@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/15/20 10:09 AM
- * Last modified 9/15/20 9:14 AM
+ * Created by Elias Fazel on 9/29/20 6:43 AM
+ * Last modified 9/29/20 6:40 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -58,6 +58,21 @@ class UserInformationIO(private val context: Context) {
         }
 
         return userLocation
+    }
+
+    fun savePrivacyAgreement() {
+
+        val savePreferences = SavePreferences(context)
+
+        savePreferences.savePreference("UserInformation", "PrivacyAgreement", true)
+
+    }
+
+    fun readPrivacyAgreement() : Boolean {
+
+        val readPreferences = ReadPreferences(context)
+
+        return readPreferences.readPreference("UserInformation", "PrivacyAgreement", false)
     }
 
 }

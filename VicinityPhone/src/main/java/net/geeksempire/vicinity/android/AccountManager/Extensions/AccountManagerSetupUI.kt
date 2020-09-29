@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/20/20 7:36 AM
- * Last modified 9/20/20 7:34 AM
+ * Created by Elias Fazel on 9/29/20 6:43 AM
+ * Last modified 9/29/20 6:43 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -161,6 +161,7 @@ fun AccountInformation.createUserProfile() {
         accountViewBinding.updatingLoadingView.playAnimation()
 
         val userInformationProfileData: UserInformationProfileData = UserInformationProfileData(
+            privacyAgreement = userInformationIO.readPrivacyAgreement(),
             userIdentification = firebaseUser.uid, userEmailAddress = firebaseUser.email.toString(), userDisplayName = firebaseUser.displayName.toString(), userProfileImage = firebaseUser.photoUrl.toString(),
             instagramAccount = accountViewBinding.instagramAddressView.text.toString(),
             twitterAccount = accountViewBinding.twitterAddressView.text.toString(),

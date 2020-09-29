@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/29/20 6:00 AM
-  ~ Last modified 9/29/20 5:50 AM
+  ~ Created by Elias Fazel on 9/29/20 6:43 AM
+  ~ Last modified 9/29/20 6:30 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -18,17 +18,19 @@
     tools:context=".EntryConfiguration">
 
     <net.geeksempire.blurry.effect.view.RealtimeBlurView
+        android:id="@+id/blurBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="invisible"
 
-        apps:realtimeBlurRadius="23dp"
+        apps:realtimeBlurRadius="3dp"
         apps:realtimeOverlayColor="@color/default_color_transparent_high"/>
     
     <com.google.android.material.button.MaterialButton
         android:id="@+id/proceedButton"
-        android:layout_width="219dp"
+        android:layout_width="241dp"
         android:layout_height="57dp"
-        android:layout_marginBottom="37dp"
+        android:layout_marginBottom="51dp"
         android:textAllCaps="false"
         android:text="@string/proceedAgreement"
         android:textSize="29sp"
@@ -36,8 +38,10 @@
         android:fontFamily="@font/upcil"
 
         apps:backgroundTint="@color/light"
+        apps:strokeWidth="0dp"
         apps:rippleColor="@color/default_color_game"
         apps:cornerRadius="51dp"
+        apps:elevation="23dp"
 
         apps:layout_constraintBottom_toBottomOf="parent"
         apps:layout_constraintStart_toStartOf="parent"
@@ -45,9 +49,10 @@
 
     <TextView
         android:id="@+id/agreementDataView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingTop="3dp"
+        android:gravity="center_horizontal|top"
         android:text="@string/privacyAgreement"
         android:textSize="13sp"
         android:textColor="@color/light"
@@ -56,6 +61,7 @@
         android:autoLink="web"
 
         apps:layout_constraintTop_toBottomOf="@id/proceedButton"
+        apps:layout_constraintBottom_toBottomOf="parent"
         apps:layout_constraintStart_toStartOf="parent"
         apps:layout_constraintEnd_toEndOf="parent"/>
     

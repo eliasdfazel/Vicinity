@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/29/20 6:00 AM
- * Last modified 9/29/20 5:59 AM
+ * Created by Elias Fazel on 9/29/20 6:43 AM
+ * Last modified 9/29/20 6:40 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -15,12 +15,17 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
+import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import net.geeksempire.vicinity.android.AccountManager.UI.AccountInformation
+import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformationIO
 import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkSettingCallback
@@ -34,6 +39,10 @@ class EntryConfiguration : AppCompatActivity() {
 
     companion object {
         const val PermissionRequestCode: Int = 123
+    }
+
+    private val userInformationIO: UserInformationIO by lazy {
+        UserInformationIO(applicationContext)
     }
 
     @Inject
@@ -50,20 +59,35 @@ class EntryConfiguration : AppCompatActivity() {
             .dependencyGraph
             .inject(this@EntryConfiguration)
 
-        entryConfigurationViewBinding.proceedButton.setOnClickListener {
+        if (userInformationIO.readPrivacyAgreement()) {
 
             runtimePermission()
 
-        }
+        } else {
 
-        entryConfigurationViewBinding.agreementDataView.setOnClickListener {
+            Handler(Looper.getMainLooper()).postDelayed({
 
-            BuiltInWebView.show(
-                context = applicationContext,
-                linkToLoad = getString(R.string.privacyAgreementLink),
-                gradientColorOne = getColor(R.color.default_color_dark),
-                gradientColorTwo = getColor(R.color.default_color_game_dark)
-            )
+                entryConfigurationViewBinding.blurBackground.startAnimation(AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_in))
+                entryConfigurationViewBinding.blurBackground.visibility = View.VISIBLE
+
+            }, 333)
+
+            entryConfigurationViewBinding.proceedButton.setOnClickListener {
+
+                runtimePermission()
+
+            }
+
+            entryConfigurationViewBinding.agreementDataView.setOnClickListener {
+
+                BuiltInWebView.show(
+                    context = applicationContext,
+                    linkToLoad = getString(R.string.privacyAgreementLink),
+                    gradientColorOne = getColor(R.color.default_color_dark),
+                    gradientColorTwo = getColor(R.color.default_color_game_dark)
+                )
+
+            }
 
         }
 
@@ -160,6 +184,8 @@ class EntryConfiguration : AppCompatActivity() {
     }
 
     private fun navigateToMap() {
+
+        userInformationIO.savePrivacyAgreement()
 
         val firebaseUser = Firebase.auth.currentUser
 
