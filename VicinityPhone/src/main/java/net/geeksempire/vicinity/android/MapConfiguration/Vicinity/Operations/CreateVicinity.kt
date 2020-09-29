@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/18/20 11:35 AM
- * Last modified 9/18/20 11:02 AM
+ * Created by Elias Fazel on 9/29/20 7:23 AM
+ * Last modified 9/29/20 7:23 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -22,6 +22,7 @@ import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.DataStructure.
 class CreateVicinity (private val context: Context, private val googleMap: GoogleMap, private val firestoreDatabase: FirebaseFirestore) {
 
     fun create(vicinityDatabasePath: String, vicinityData: VicinityData, userInformationData: UserInformationData, userLocation: LatLng) {
+        Log.d(this@CreateVicinity.javaClass.simpleName, "Create New Vicinity")
 
         PublicCommunicationEndpoint.CurrentCommunityCoordinates = LatLng(vicinityData.centerLatitude.toDouble(), vicinityData.centerLongitude.toDouble())
 
