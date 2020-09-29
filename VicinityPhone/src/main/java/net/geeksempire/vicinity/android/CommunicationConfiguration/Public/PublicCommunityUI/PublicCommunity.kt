@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/21/20 10:47 AM
- * Last modified 9/21/20 10:47 AM
+ * Created by Elias Fazel on 9/29/20 6:52 AM
+ * Last modified 9/29/20 6:50 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -74,6 +74,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                 putExtra(PublicCommunity.Configurations.PublicCommunityCountryName, nameOfCountry)
                 putExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude, currentCommunityCoordinates.latitude)
                 putExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLongitude, currentCommunityCoordinates.longitude)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }, ActivityOptions.makeCustomAnimation(context, R.anim.slide_in_right, R.anim.fade_out).toBundle())
         }
 
