@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/29/20 6:43 AM
- * Last modified 9/29/20 6:43 AM
+ * Created by Elias Fazel on 9/29/20 11:11 AM
+ * Last modified 9/29/20 10:57 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -51,12 +51,15 @@ fun AccountInformation.accountManagerSetupUI() {
 
             accountViewBinding.welcomeTextView.setTextColor(getColor(R.color.dark))
 
+            accountViewBinding.profileBlurView.setOverlayColor(getColor(R.color.light_blurry_color))
         }
         ThemeType.ThemeDark -> {
 
             accountViewBinding.rootView.setBackgroundColor(getColor(R.color.black))
 
             accountViewBinding.welcomeTextView.setTextColor(getColor(R.color.light))
+
+            accountViewBinding.profileBlurView.setOverlayColor(getColor(R.color.dark_blurry_color))
 
         }
     }

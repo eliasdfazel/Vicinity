@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/21/20 10:33 AM
- * Last modified 9/21/20 10:32 AM
+ * Created by Elias Fazel on 9/29/20 11:11 AM
+ * Last modified 9/29/20 11:08 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,6 +10,7 @@
 
 package net.geeksempire.vicinity.android.MapConfiguration.Map.InformationWindow
 
+import android.text.Html
 import android.view.View
 import com.google.android.gms.maps.model.Marker
 import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationDataStructure
@@ -33,10 +34,42 @@ class InformationWindow (private val context: MapsOfSociety) {
 
                 googleMapInformationWindowBinding.rootView.setBackgroundColor(context.getColor(R.color.light_blurry_color))
 
+                val contentWindowDrawable = context.getDrawable(R.drawable.information_window_content_background)
+                contentWindowDrawable?.setTint(context.getColor(R.color.light))
+
+                googleMapInformationWindowBinding.contentContainer.background = (contentWindowDrawable)
+
+                googleMapInformationWindowBinding.userDisplayName.setTextColor(context.getColor(R.color.dark))
+
+                googleMapInformationWindowBinding.instagramAddressView.setTextColor(context.getColor(R.color.dark))
+                googleMapInformationWindowBinding.instagramAddressLayout.boxBackgroundColor = context.getColor(R.color.white)
+
+                googleMapInformationWindowBinding.twitterAddressView.setTextColor(context.getColor(R.color.dark))
+                googleMapInformationWindowBinding.twitterAddressLayout.boxBackgroundColor = context.getColor(R.color.white)
+
+                googleMapInformationWindowBinding.phoneNumberAddressView.setTextColor(context.getColor(R.color.dark))
+                googleMapInformationWindowBinding.phoneNumberAddressLayout.boxBackgroundColor = context.getColor(R.color.white)
+
             }
             ThemeType.ThemeDark -> {
 
                 googleMapInformationWindowBinding.rootView.setBackgroundColor(context.getColor(R.color.dark_blurry_color))
+
+                val contentWindowDrawable = context.getDrawable(R.drawable.information_window_content_background)
+                contentWindowDrawable?.setTint(context.getColor(R.color.dark))
+
+                googleMapInformationWindowBinding.contentContainer.background = (contentWindowDrawable)
+
+                googleMapInformationWindowBinding.userDisplayName.setTextColor(context.getColor(R.color.light))
+
+                googleMapInformationWindowBinding.instagramAddressView.setTextColor(context.getColor(R.color.light))
+                googleMapInformationWindowBinding.instagramAddressLayout.boxBackgroundColor = context.getColor(R.color.black)
+
+                googleMapInformationWindowBinding.twitterAddressView.setTextColor(context.getColor(R.color.light))
+                googleMapInformationWindowBinding.twitterAddressLayout.boxBackgroundColor = context.getColor(R.color.black)
+
+                googleMapInformationWindowBinding.phoneNumberAddressView.setTextColor(context.getColor(R.color.light))
+                googleMapInformationWindowBinding.phoneNumberAddressLayout.boxBackgroundColor = context.getColor(R.color.black)
 
             }
         }
@@ -47,7 +80,7 @@ class InformationWindow (private val context: MapsOfSociety) {
 
         informationWindowData?.let { informationWindowData ->
 
-            googleMapInformationWindowBinding.userDisplayName.text = informationWindowData.userDocument[UserInformationDataStructure.userDisplayName].toString()
+            googleMapInformationWindowBinding.userDisplayName.text = Html.fromHtml("${informationWindowData.userDocument[UserInformationDataStructure.userDisplayName].toString()} <small> | You Are Here!</small>", Html.FROM_HTML_MODE_LEGACY)
 
             if (informationWindowData.userDocument[UserInformationDataStructure.instagramAccount].toString().isNotEmpty()) {
 
