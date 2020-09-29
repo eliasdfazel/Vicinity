@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/21/20 10:29 AM
- * Last modified 9/21/20 9:18 AM
+ * Created by Elias Fazel on 9/29/20 11:40 AM
+ * Last modified 9/29/20 11:28 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -78,7 +78,7 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
     val firestoreDatabase: FirebaseFirestore = Firebase.firestore
 
-    val firebaseUser: FirebaseUser? = Firebase.auth.currentUser
+    val firebaseUser: FirebaseUser = Firebase.auth.currentUser!!
 
     val mapsLiveData: MapsLiveData by lazy {
         ViewModelProvider(this@MapsOfSociety).get(MapsLiveData::class.java)

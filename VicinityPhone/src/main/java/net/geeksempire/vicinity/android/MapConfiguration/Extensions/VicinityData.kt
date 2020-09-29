@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/29/20 7:40 AM
- * Last modified 9/29/20 7:37 AM
+ * Created by Elias Fazel on 9/29/20 11:40 AM
+ * Last modified 9/29/20 11:30 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -76,34 +76,31 @@ fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitud
 
                         } else { /*Create New Vicinity*/
 
-                            firebaseUser?.let {
+                            val vicinityData: VicinityData = VicinityData(
+                                centerLatitude = userLatitudeLongitude.latitude.toString(), centerLongitude = userLatitudeLongitude.longitude.toString(),
+                                countryName = countryName,
+                                cityName = LocationCheckpoint.LOCATION_CITY_NAME,
+                                knownAddress = LocationCheckpoint.LOCATION_INFORMATION_DETAIL,
+                                approximateIpAddress = LocationCheckpoint.LOCATION_KNOWN_IP
+                            )
 
-                                val vicinityData: VicinityData = VicinityData(
-                                    centerLatitude = userLatitudeLongitude.latitude.toString(), centerLongitude = userLatitudeLongitude.longitude.toString(),
-                                    countryName = countryName,
-                                    cityName = LocationCheckpoint.LOCATION_CITY_NAME,
-                                    knownAddress = LocationCheckpoint.LOCATION_INFORMATION_DETAIL,
-                                    approximateIpAddress = LocationCheckpoint.LOCATION_KNOWN_IP
-                                )
+                            val userInformationData: UserInformationData = UserInformationData(
+                                userIdentification = firebaseUser.uid,
+                                userEmailAddress = firebaseUser.email.toString(),
+                                userDisplayName = firebaseUser.displayName.toString(),
+                                userProfileImage = firebaseUser.photoUrl.toString(),
+                                userLatitude = userLatitudeLongitude.latitude.toString(), userLongitude = userLatitudeLongitude.longitude.toString(),
+                                userState = "true",
+                                userLastSignIn = FieldValue.serverTimestamp(),
+                                userJointDate = FieldValue.serverTimestamp()
+                            )
 
-                                val userInformationData: UserInformationData = UserInformationData(
-                                    userIdentification = firebaseUser.uid,
-                                    userEmailAddress = firebaseUser.email.toString(),
-                                    userDisplayName = firebaseUser.displayName.toString(),
-                                    userProfileImage = firebaseUser.photoUrl.toString(),
-                                    userLatitude = userLatitudeLongitude.latitude.toString(), userLongitude = userLatitudeLongitude.longitude.toString(),
-                                    userState = "true",
-                                    userLastSignIn = FieldValue.serverTimestamp(),
-                                    userJointDate = FieldValue.serverTimestamp()
-                                )
-
-                                createVicinity.create(
-                                    PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName, locationLatitudeLongitude),
-                                    vicinityData,
-                                    userInformationData,
-                                    userLatitudeLongitude
-                                )
-                            }
+                            createVicinity.create(
+                                PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName, locationLatitudeLongitude),
+                                vicinityData,
+                                userInformationData,
+                                userLatitudeLongitude
+                            )
 
                         }
 

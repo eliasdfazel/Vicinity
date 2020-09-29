@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/29/20 11:11 AM
- * Last modified 9/29/20 11:08 AM
+ * Created by Elias Fazel on 9/29/20 11:40 AM
+ * Last modified 9/29/20 11:28 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -80,7 +80,15 @@ class InformationWindow (private val context: MapsOfSociety) {
 
         informationWindowData?.let { informationWindowData ->
 
-            googleMapInformationWindowBinding.userDisplayName.text = Html.fromHtml("${informationWindowData.userDocument[UserInformationDataStructure.userDisplayName].toString()} <small> | You Are Here!</small>", Html.FROM_HTML_MODE_LEGACY)
+            if (informationWindowData.userDocument[UserInformationDataStructure.userIdentification] == context.firebaseUser.uid) {
+
+                googleMapInformationWindowBinding.userDisplayName.text = Html.fromHtml("${informationWindowData.userDocument[UserInformationDataStructure.userDisplayName].toString()} <small> | You Are Here!</small>", Html.FROM_HTML_MODE_LEGACY)
+
+            } else {
+
+                googleMapInformationWindowBinding.userDisplayName.text = Html.fromHtml(informationWindowData.userDocument[UserInformationDataStructure.userDisplayName].toString(), Html.FROM_HTML_MODE_LEGACY)
+
+            }
 
             if (informationWindowData.userDocument[UserInformationDataStructure.instagramAccount].toString().isNotEmpty()) {
 

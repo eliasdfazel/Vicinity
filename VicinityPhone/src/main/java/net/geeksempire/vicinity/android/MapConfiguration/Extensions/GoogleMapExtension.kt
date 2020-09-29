@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/19/20 10:20 AM
- * Last modified 9/19/20 8:22 AM
+ * Created by Elias Fazel on 9/29/20 11:40 AM
+ * Last modified 9/29/20 11:29 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -51,13 +51,13 @@ fun MapsOfSociety.addInitialMarker() {
         userMapMarker = readyGoogleMap.addMarker(
             MarkerOptions()
                 .position(userLatitudeLongitude)
-                .title(firebaseUser?.displayName)
-                .snippet(firebaseUser?.email)
+                .title(firebaseUser.displayName)
+                .snippet(firebaseUser.email)
         )
 
         Glide.with(this@addInitialMarker)
             .asDrawable()
-            .load(firebaseUser?.photoUrl)
+            .load(firebaseUser.photoUrl)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .listener(object : RequestListener<Drawable> {
 
@@ -75,10 +75,10 @@ fun MapsOfSociety.addInitialMarker() {
                         userMapMarker = readyGoogleMap.addMarker(
                             MarkerOptions()
                                 .position(userLatitudeLongitude)
-                                .title(firebaseUser?.displayName)
-                                .snippet(firebaseUser?.email)
+                                .title(firebaseUser.displayName)
+                                .snippet(firebaseUser.email)
                         )
-                        userMapMarker.tag = firebaseUser?.uid
+                        userMapMarker.tag = firebaseUser.uid
                         userMapMarker.isDraggable = false
 
                         mapsLiveData.currentLocationData.postValue(userLatitudeLongitude)

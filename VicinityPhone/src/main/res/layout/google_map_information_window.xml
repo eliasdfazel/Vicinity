@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/20/20 7:23 AM
-  ~ Last modified 9/20/20 7:22 AM
+  ~ Created by Elias Fazel on 9/29/20 11:40 AM
+  ~ Last modified 9/29/20 11:40 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -220,7 +220,7 @@
             android:id="@+id/enterPrivateChat"
             android:layout_width="57dp"
             android:layout_height="57dp"
-            android:layout_marginTop="11dp"
+            android:layout_marginTop="13dp"
             android:visibility="invisible"
 
             apps:lottie_rawRes="@raw/chat_animation"
