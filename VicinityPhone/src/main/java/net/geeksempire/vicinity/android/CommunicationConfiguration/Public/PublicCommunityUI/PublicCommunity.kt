@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/29/20 6:52 AM
- * Last modified 9/29/20 6:50 AM
+ * Created by Elias Fazel on 10/1/20 12:21 PM
+ * Last modified 10/1/20 12:21 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,9 +10,11 @@
 
 package net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI
 
+import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -21,6 +23,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.gms.maps.model.LatLng
@@ -46,6 +51,7 @@ import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListenerInterface
+import net.geeksempire.vicinity.android.Utils.UI.Display.DpToInteger
 import net.geeksempire.vicinity.android.Utils.UI.Theme.OverallTheme
 import net.geeksempire.vicinity.android.VicinityApplication
 import net.geeksempire.vicinity.android.databinding.PublicCommunityViewBinding
@@ -67,15 +73,36 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
     companion object {
 
+        const val IMAGE_PICKER_REQUEST_CODE: Int = 123
+
         fun open(context: Context, currentCommunityCoordinates: LatLng, nameOfCountry: String) {
             context.startActivity(Intent(context, PublicCommunity::class.java).apply {
-                putExtra(PublicCommunity.Configurations.PublicCommunityName, vicinityName(currentCommunityCoordinates))
-                putExtra(PublicCommunity.Configurations.PublicCommunityDatabasePath, PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(nameOfCountry, currentCommunityCoordinates))
+                putExtra(
+                    PublicCommunity.Configurations.PublicCommunityName, vicinityName(
+                        currentCommunityCoordinates
+                    )
+                )
+                putExtra(
+                    PublicCommunity.Configurations.PublicCommunityDatabasePath,
+                    PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(
+                        nameOfCountry,
+                        currentCommunityCoordinates
+                    )
+                )
                 putExtra(PublicCommunity.Configurations.PublicCommunityCountryName, nameOfCountry)
-                putExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude, currentCommunityCoordinates.latitude)
-                putExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLongitude, currentCommunityCoordinates.longitude)
+                putExtra(
+                    PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude,
+                    currentCommunityCoordinates.latitude
+                )
+                putExtra(
+                    PublicCommunity.Configurations.PublicCommunityCenterLocationLongitude,
+                    currentCommunityCoordinates.longitude
+                )
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            }, ActivityOptions.makeCustomAnimation(context, R.anim.slide_in_right, R.anim.fade_out).toBundle())
+            },
+                ActivityOptions.makeCustomAnimation(context, R.anim.slide_in_right, R.anim.fade_out)
+                    .toBundle()
+            )
         }
 
     }
@@ -127,21 +154,36 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
         networkConnectionListener.networkConnectionListenerInterface = this@PublicCommunity
 
         val publicCommunityName: String? = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityName)
-        val publicCommunityMessagesDatabasePath: String = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityDatabasePath).plus("/Messages")
+        val publicCommunityMessagesDatabasePath: String = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityDatabasePath).plus(
+            "/Messages"
+        )
 
         val publicCommunityCountryName: String? = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityCountryName)
 
         val communityCenterVicinity = LatLng(
-            intent.getDoubleExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude, 0.0),
-            intent.getDoubleExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLongitude, 0.0)
+            intent.getDoubleExtra(
+                PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude,
+                0.0
+            ),
+            intent.getDoubleExtra(
+                PublicCommunity.Configurations.PublicCommunityCenterLocationLongitude,
+                0.0
+            )
         )
 
 
         publicCommunityName?.let {
 
-            FirebaseMessaging.getInstance().subscribeToTopic(publicCommunityPrepareNotificationTopic(publicCommunityName))
+            FirebaseMessaging.getInstance().subscribeToTopic(
+                publicCommunityPrepareNotificationTopic(
+                    publicCommunityName
+                )
+            )
                 .addOnSuccessListener {
-                    Log.d(this@PublicCommunity.javaClass.simpleName, "Subscribed To ${publicCommunityName}")
+                    Log.d(
+                        this@PublicCommunity.javaClass.simpleName,
+                        "Subscribed To ${publicCommunityName}"
+                    )
 
                 }.addOnFailureListener {
                     Log.d(this@PublicCommunity.javaClass.simpleName, "Failed To Subscribe")
@@ -162,23 +204,31 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
             .setQuery(publicMessageCollectionReference, PublicMessageData::class.java)
             .build()
 
-        firebaseRecyclerAdapter = PublicCommunityAdapter(this@PublicCommunity, firebaseRecyclerOptions)
+        firebaseRecyclerAdapter = PublicCommunityAdapter(
+            this@PublicCommunity,
+            firebaseRecyclerOptions
+        )
 
         publicCommunityViewBinding.messageRecyclerView.layoutManager = linearLayoutManager
         publicCommunityViewBinding.messageRecyclerView.adapter = firebaseRecyclerAdapter
 
-        firebaseRecyclerAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+        firebaseRecyclerAdapter.registerAdapterDataObserver(object :
+            RecyclerView.AdapterDataObserver() {
 
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 super.onItemRangeInserted(positionStart, itemCount)
 
                 val friendlyMessageCount = firebaseRecyclerAdapter.itemCount
-                val lastVisiblePosition = linearLayoutManager.findLastCompletelyVisibleItemPosition()
+                val lastVisiblePosition =
+                    linearLayoutManager.findLastCompletelyVisibleItemPosition()
 
                 if (lastVisiblePosition == -1 || positionStart >= friendlyMessageCount - 1 && lastVisiblePosition == positionStart - 1) {
                     Handler(Looper.getMainLooper()).postDelayed({
 
-                        publicCommunityViewBinding.nestedScrollView.smoothScrollTo(0, publicCommunityViewBinding.messageRecyclerView.height)
+                        publicCommunityViewBinding.nestedScrollView.smoothScrollTo(
+                            0,
+                            publicCommunityViewBinding.messageRecyclerView.height
+                        )
 
                         publicCommunityViewBinding.loadingView.visibility = View.GONE
 
@@ -208,9 +258,11 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                                 Handler(Looper.getMainLooper()).postDelayed({
 
-                                    val animationSpeed = publicCommunityViewBinding.sendMessageView.speed
+                                    val animationSpeed =
+                                        publicCommunityViewBinding.sendMessageView.speed
 
-                                    publicCommunityViewBinding.sendMessageView.speed = -(animationSpeed)
+                                    publicCommunityViewBinding.sendMessageView.speed =
+                                        -(animationSpeed)
                                     publicCommunityViewBinding.sendMessageView.playAnimation()
 
                                 }, 157)
@@ -225,7 +277,14 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                             firebaseCloudFunctions
                                 .getHttpsCallable(PublicCommunity.Configurations.NotificationCloudFunction)
-                                .call(publicCommunityPrepareNotificationData(messageContent, publicCommunityName, publicCommunityCountryName, communityCenterVicinity))
+                                .call(
+                                    publicCommunityPrepareNotificationData(
+                                        messageContent,
+                                        publicCommunityName,
+                                        publicCommunityCountryName,
+                                        communityCenterVicinity
+                                    )
+                                )
                                 .continueWith {
 
                                 }
@@ -233,6 +292,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                         }
 
                         publicCommunityViewBinding.textMessageContentView.text = null
+                        publicCommunityViewBinding.addImageView.setImageDrawable(null)
 
                         publicCommunityViewBinding.nestedScrollView.smoothScrollTo(
                             0,
@@ -265,6 +325,33 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
         }
 
+        publicCommunityViewBinding.addImageView.setOnClickListener {
+
+            publicCommunityViewBinding.addImageView.playAnimation()
+            publicCommunityViewBinding.addImageView.addAnimatorUpdateListener { valueAnimator ->
+
+                val animationProgress = (valueAnimator.animatedValue as Float * 100).roundToInt()
+
+                if (animationProgress == 49) {
+
+                    val imagePicker = Intent(Intent.ACTION_GET_CONTENT)
+                    imagePicker.type = "image/*"
+                    startActivityForResult(Intent.createChooser(imagePicker, getString(R.string.shareImage)), PublicCommunity.IMAGE_PICKER_REQUEST_CODE)
+
+                }
+
+            }
+
+        }
+
+        publicCommunityViewBinding.imageMessageContentView.setOnClickListener {
+
+            val imagePicker = Intent(Intent.ACTION_GET_CONTENT)
+            imagePicker.type = "image/*"
+            startActivityForResult(Intent.createChooser(imagePicker, getString(R.string.shareImage)), PublicCommunity.IMAGE_PICKER_REQUEST_CODE)
+
+        }
+
     }
 
     override fun onResume() {
@@ -285,6 +372,30 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
         this@PublicCommunity.finish()
         overridePendingTransition(R.anim.fade_in, R.anim.slide_out_right)
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, resultData)
+
+        when (requestCode) {
+            PublicCommunity.IMAGE_PICKER_REQUEST_CODE -> {
+
+                if (resultCode == Activity.RESULT_OK) {
+
+                    publicCommunityViewBinding.imageMessageContentView.visibility = View.VISIBLE
+
+                    val selectedImage: Uri? = resultData?.data
+
+                    Glide.with(applicationContext)
+                        .load(selectedImage)
+                        .transform(CenterCrop(), RoundedCorners(DpToInteger(applicationContext, 13)))
+                        .into(publicCommunityViewBinding.imageMessageContentView)
+
+                }
+
+            }
+        }
 
     }
 
