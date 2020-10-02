@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/2/20 9:37 AM
- * Last modified 10/2/20 9:36 AM
+ * Created by Elias Fazel on 10/2/20 9:40 AM
+ * Last modified 10/2/20 9:40 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -270,8 +270,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                                     val animationSpeed =
                                         publicCommunityViewBinding.sendMessageView.speed
 
-                                    publicCommunityViewBinding.sendMessageView.speed =
-                                        -(animationSpeed)
+                                    publicCommunityViewBinding.sendMessageView.speed = -(animationSpeed)
                                     publicCommunityViewBinding.sendMessageView.playAnimation()
 
                                 }, 157)
@@ -286,14 +285,12 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                             firebaseCloudFunctions
                                 .getHttpsCallable(PublicCommunity.Configurations.NotificationCloudFunction)
-                                .call(
-                                    publicCommunityPrepareNotificationData(
-                                        messageContent,
-                                        publicCommunityName,
-                                        publicCommunityCountryName,
-                                        communityCenterVicinity
-                                    )
-                                )
+                                .call(publicCommunityPrepareNotificationData(
+                                    messageContent,
+                                    publicCommunityName,
+                                    publicCommunityCountryName,
+                                    communityCenterVicinity
+                                ))
                                 .continueWith {
 
                                 }
@@ -303,10 +300,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                         publicCommunityViewBinding.textMessageContentView.text = null
                         publicCommunityViewBinding.addImageView.setImageDrawable(null)
 
-                        publicCommunityViewBinding.nestedScrollView.smoothScrollTo(
-                            0,
-                            publicCommunityViewBinding.messageRecyclerView.height
-                        )
+                        publicCommunityViewBinding.nestedScrollView.smoothScrollTo(0, publicCommunityViewBinding.messageRecyclerView.height)
 
                     }.addOnFailureListener {
 
