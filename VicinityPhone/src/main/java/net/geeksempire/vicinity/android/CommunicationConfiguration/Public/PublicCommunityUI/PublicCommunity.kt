@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/1/20 12:21 PM
- * Last modified 10/1/20 12:21 PM
+ * Created by Elias Fazel on 10/2/20 6:46 AM
+ * Last modified 10/2/20 6:46 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -74,6 +74,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
     companion object {
 
         const val IMAGE_PICKER_REQUEST_CODE: Int = 123
+        const val IMAGE_CAPTURE_REQUEST_CODE: Int = 456
 
         fun open(context: Context, currentCommunityCoordinates: LatLng, nameOfCountry: String) {
             context.startActivity(Intent(context, PublicCommunity::class.java).apply {
@@ -327,10 +328,14 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
         publicCommunityViewBinding.addImageView.setOnClickListener {
 
-            publicCommunityViewBinding.addImageView.playAnimation()
+            publicCommunityViewBinding.addImageView.apply {
+                setMinAndMaxFrame(0, 41)
+            }.playAnimation()
             publicCommunityViewBinding.addImageView.addAnimatorUpdateListener { valueAnimator ->
 
                 val animationProgress = (valueAnimator.animatedValue as Float * 100).roundToInt()
+
+                println(">>>>>>>>>>>>>> " + animationProgress)
 
                 if (animationProgress == 49) {
 
@@ -382,6 +387,38 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
             PublicCommunity.IMAGE_PICKER_REQUEST_CODE -> {
 
                 if (resultCode == Activity.RESULT_OK) {
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+
+                        publicCommunityViewBinding.addImageView.apply {
+                            setMinAndMaxFrame(41, 75)
+                        }.playAnimation()
+
+                    }, 777)
+
+                    publicCommunityViewBinding.imageMessageContentView.visibility = View.VISIBLE
+
+                    val selectedImage: Uri? = resultData?.data
+
+                    Glide.with(applicationContext)
+                        .load(selectedImage)
+                        .transform(CenterCrop(), RoundedCorners(DpToInteger(applicationContext, 13)))
+                        .into(publicCommunityViewBinding.imageMessageContentView)
+
+                }
+
+            }
+            PublicCommunity.IMAGE_CAPTURE_REQUEST_CODE -> {
+
+                if (resultCode == Activity.RESULT_OK) {
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+
+                        publicCommunityViewBinding.addImageView.apply {
+                            setMinAndMaxFrame(41, 75)
+                        }.playAnimation()
+
+                    }, 777)
 
                     publicCommunityViewBinding.imageMessageContentView.visibility = View.VISIBLE
 
