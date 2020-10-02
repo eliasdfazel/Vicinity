@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/2/20 10:51 AM
- * Last modified 10/2/20 10:51 AM
+ * Created by Elias Fazel on 10/2/20 10:59 AM
+ * Last modified 10/2/20 10:59 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -27,8 +27,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.gms.maps.model.LatLng
@@ -327,8 +325,8 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                         }
 
                         publicCommunityViewBinding.textMessageContentView.text = null
-                        publicCommunityViewBinding.addImageView.setImageDrawable(null)
-                        publicCommunityViewBinding.addImageView.visibility = View.GONE
+                        publicCommunityViewBinding.imageMessageContentView.setImageDrawable(null)
+                        publicCommunityViewBinding.imageMessageContentView.visibility = View.GONE
 
                         publicCommunityViewBinding.nestedScrollView.smoothScrollTo(0, publicCommunityViewBinding.messageRecyclerView.height)
 
@@ -508,7 +506,6 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                     Glide.with(applicationContext)
                         .load(selectedImage)
-                        .transform(CenterCrop(), RoundedCorners(DpToInteger(applicationContext, 13)))
                         .into(publicCommunityViewBinding.imageMessageContentView)
 
                 }
@@ -532,7 +529,6 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                     Glide.with(applicationContext)
                         .load(selectedImage)
-                        .transform(CenterCrop(), RoundedCorners(DpToInteger(applicationContext, 13)))
                         .into(publicCommunityViewBinding.imageMessageContentView)
 
                 }
