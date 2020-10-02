@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/2/20 6:54 AM
- * Last modified 10/2/20 6:53 AM
+ * Created by Elias Fazel on 10/2/20 9:37 AM
+ * Last modified 10/2/20 9:36 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -14,12 +14,15 @@ import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
+import android.view.animation.TranslateAnimation
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -48,6 +51,8 @@ import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extens
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.Adapter.PublicCommunityAdapter
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.IMAGE_CAPTURE_REQUEST_CODE
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.IMAGE_PICKER_REQUEST_CODE
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.startImageCapture
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.startImagePicker
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.vicinityName
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
@@ -76,30 +81,34 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
     companion object {
 
         fun open(context: Context, currentCommunityCoordinates: LatLng, nameOfCountry: String) {
-            context.startActivity(Intent(context, PublicCommunity::class.java).apply {
-                putExtra(
-                    PublicCommunity.Configurations.PublicCommunityName, vicinityName(
-                        currentCommunityCoordinates
+            context.startActivity(
+                Intent(context, PublicCommunity::class.java).apply {
+                    putExtra(
+                        PublicCommunity.Configurations.PublicCommunityName, vicinityName(
+                            currentCommunityCoordinates
+                        )
                     )
-                )
-                putExtra(
-                    PublicCommunity.Configurations.PublicCommunityDatabasePath,
-                    PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(
-                        nameOfCountry,
-                        currentCommunityCoordinates
+                    putExtra(
+                        PublicCommunity.Configurations.PublicCommunityDatabasePath,
+                        PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(
+                            nameOfCountry,
+                            currentCommunityCoordinates
+                        )
                     )
-                )
-                putExtra(PublicCommunity.Configurations.PublicCommunityCountryName, nameOfCountry)
-                putExtra(
-                    PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude,
-                    currentCommunityCoordinates.latitude
-                )
-                putExtra(
-                    PublicCommunity.Configurations.PublicCommunityCenterLocationLongitude,
-                    currentCommunityCoordinates.longitude
-                )
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            },
+                    putExtra(
+                        PublicCommunity.Configurations.PublicCommunityCountryName,
+                        nameOfCountry
+                    )
+                    putExtra(
+                        PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude,
+                        currentCommunityCoordinates.latitude
+                    )
+                    putExtra(
+                        PublicCommunity.Configurations.PublicCommunityCenterLocationLongitude,
+                        currentCommunityCoordinates.longitude
+                    )
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                },
                 ActivityOptions.makeCustomAnimation(context, R.anim.slide_in_right, R.anim.fade_out)
                     .toBundle()
             )
@@ -327,26 +336,106 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
         publicCommunityViewBinding.addImageView.setOnClickListener {
 
-            publicCommunityViewBinding.addImageView.apply {
-                setMinAndMaxFrame(0, 41)
-            }.playAnimation()
-            publicCommunityViewBinding.addImageView.addAnimatorUpdateListener { valueAnimator ->
+            publicCommunityViewBinding.addImageView.isEnabled = false
 
-                val animationProgress = (valueAnimator.animatedValue as Float * 100).roundToInt()
+            if (publicCommunityViewBinding.imageGallery.isShown && publicCommunityViewBinding.imageCapture.isShown) {
 
-                if (animationProgress == 49) {
+                publicCommunityViewBinding.imageGallery.startAnimation(TranslateAnimation(
+                    0f,
+                    -(DpToInteger(applicationContext, 51)).toFloat(),
+                    0f,
+                    0f
+                ).apply {
+                    duration = 379
+                })
 
+                publicCommunityViewBinding.imageCapture.startAnimation(TranslateAnimation(
+                    0f,
+                    -(DpToInteger(applicationContext, 101)).toFloat(),
+                    0f,
+                    0f
+                ).apply {
+                    duration = 379
+                })
 
+                Handler(Looper.getMainLooper()).postDelayed({
+
+                    publicCommunityViewBinding.imageGallery.visibility = View.INVISIBLE
+                    publicCommunityViewBinding.imageGallery.startAnimation(AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out))
+
+                    publicCommunityViewBinding.imageCapture.visibility = View.INVISIBLE
+                    publicCommunityViewBinding.imageCapture.startAnimation(AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out))
+
+                    publicCommunityViewBinding.addImageView.apply {
+                        setMinAndMaxFrame(41, 75)
+                    }.playAnimation()
+
+                }, 379)
+
+            } else {
+
+                publicCommunityViewBinding.addImageView.apply {
+                    setMinAndMaxFrame(0, 41)
+                }.playAnimation()
+                publicCommunityViewBinding.addImageView.addAnimatorUpdateListener { valueAnimator ->
+
+                    val animationProgress = (valueAnimator.animatedValue as Float * 100).roundToInt()
+
+                    if (animationProgress == 49) {
+
+                        publicCommunityViewBinding.imageGallery.visibility = View.VISIBLE
+                        publicCommunityViewBinding.imageGallery.startAnimation(TranslateAnimation(
+                            -(DpToInteger(applicationContext, 51)).toFloat(),
+                            0f,
+                            0f,
+                            0f
+                        ).apply {
+                            duration = 555
+                        })
+
+                        publicCommunityViewBinding.imageCapture.visibility = View.VISIBLE
+                        publicCommunityViewBinding.imageCapture.startAnimation(TranslateAnimation(
+                            -(DpToInteger(applicationContext, 101)).toFloat(),
+                            0f,
+                            0f,
+                            0f
+                        ).apply {
+                            duration = 555
+                        })
+
+                    }
 
                 }
 
             }
 
+            Handler(Looper.getMainLooper()).postDelayed({
+                publicCommunityViewBinding.addImageView.isEnabled = true
+            }, 1531)
+
         }
 
-        publicCommunityViewBinding.imageMessageContentView.setOnClickListener {
+        publicCommunityViewBinding.imageGallery.setOnClickListener {
 
+            publicCommunityViewBinding.imageGallery.visibility = View.INVISIBLE
+            publicCommunityViewBinding.imageGallery.startAnimation(AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out))
 
+            publicCommunityViewBinding.imageCapture.visibility = View.INVISIBLE
+            publicCommunityViewBinding.imageCapture.startAnimation(AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out))
+
+            startImagePicker(this@PublicCommunity)
+
+        }
+
+        publicCommunityViewBinding.imageCapture.setOnClickListener {
+
+            publicCommunityViewBinding.imageGallery.visibility = View.INVISIBLE
+            publicCommunityViewBinding.imageGallery.startAnimation(AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out))
+
+            publicCommunityViewBinding.imageCapture.visibility = View.INVISIBLE
+            publicCommunityViewBinding.imageCapture.startAnimation(AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out))
+
+            startImageCapture(this@PublicCommunity)
 
         }
 
@@ -415,7 +504,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                     publicCommunityViewBinding.imageMessageContentView.visibility = View.VISIBLE
 
-                    val selectedImage: Uri? = resultData?.data
+                    val selectedImage = resultData?.extras?.get("data") as Bitmap
 
                     Glide.with(applicationContext)
                         .load(selectedImage)
