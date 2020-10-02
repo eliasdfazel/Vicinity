@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/2/20 10:29 AM
- * Last modified 10/2/20 10:27 AM
+ * Created by Elias Fazel on 10/2/20 10:50 AM
+ * Last modified 10/2/20 10:47 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -42,6 +42,7 @@ import com.google.firebase.firestore.ktx.firestoreSettings
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.storage.ktx.storage
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.DataStructure.PublicMessageData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoint.PublicCommunicationEndpoint
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunityPrepareMessage
@@ -59,6 +60,7 @@ import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListenerInterface
 import net.geeksempire.vicinity.android.Utils.UI.Display.DpToInteger
+import net.geeksempire.vicinity.android.Utils.UI.Images.drawableToByteArray
 import net.geeksempire.vicinity.android.Utils.UI.Theme.OverallTheme
 import net.geeksempire.vicinity.android.VicinityApplication
 import net.geeksempire.vicinity.android.databinding.PublicCommunityViewBinding
@@ -257,7 +259,32 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                 firestoreDatabase
                     .collection(publicCommunityMessagesDatabasePath)
                     .add(publicCommunityPrepareMessage)
-                    .addOnSuccessListener {
+                    .addOnSuccessListener { documentSnapshot ->
+
+                        if (publicCommunityViewBinding.imageMessageContentView.drawable != null) {
+
+                            val sentMessagePath = publicCommunityMessagesDatabasePath + "/" + documentSnapshot.id
+
+                            val firebaseStorage = Firebase.storage
+                            val storageReference = firebaseStorage.reference
+                                .child(sentMessagePath)
+                            storageReference
+                                .putBytes(drawableToByteArray(publicCommunityViewBinding.imageMessageContentView.drawable)!!)
+                                .addOnSuccessListener {
+
+                                    storageReference.downloadUrl.addOnSuccessListener { imageDownloadLink ->
+
+                                        firestoreDatabase
+                                            .document(sentMessagePath)
+                                            .update(
+                                                "userMessageImageContent", imageDownloadLink.toString(),
+                                            )
+
+                                    }
+
+                                }
+
+                        }
 
                         publicCommunityViewBinding.sendMessageView.setAnimation(R.raw.sending_animation)
                         publicCommunityViewBinding.sendMessageView.playAnimation()

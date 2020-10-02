@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/2/20 10:29 AM
- * Last modified 10/2/20 10:29 AM
+ * Created by Elias Fazel on 10/2/20 10:50 AM
+ * Last modified 10/2/20 10:30 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -25,7 +25,6 @@ fun PublicCommunity.publicCommunityPrepareMessage() : LinkedHashMap<String, Any?
     publicMessageDataItem["userProfileImage"] = firebaseUser.photoUrl.toString()?:Unknown.unknownProfileImage
     publicMessageDataItem["userDisplayName"] = firebaseUser.displayName?:Unknown.unknownUserDisplayName
     publicMessageDataItem["userMessageTextContent"] = publicCommunityViewBinding.textMessageContentView.text.toString()
-//    publicMessageDataItem["userMessageImageContent"] = drawableToByteArray(publicCommunityViewBinding.imageMessageContentView.drawable).contentToString()
 
     publicMessageDataItem["userMessageDate"] = FieldValue.serverTimestamp()
 
