@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/1/20 9:44 AM
- * Last modified 9/1/20 9:43 AM
+ * Created by Elias Fazel on 10/2/20 10:26 AM
+ * Last modified 10/2/20 10:09 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -75,14 +75,22 @@ fun drawableToBitmap(drawable: Drawable): Bitmap {
     }
 }
 
-fun drawableToByteArray(drawable: Drawable) : ByteArray{
+fun drawableToByteArray(drawable: Drawable?) : ByteArray? {
 
-    val byteArrayOutputStream = ByteArrayOutputStream()
+    var imageByteArray: ByteArray? = null
 
-    val bitmap = (drawable as BitmapDrawable).bitmap
-    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+    drawable?.let {
 
-    return byteArrayOutputStream.toByteArray()
+        val byteArrayOutputStream = ByteArrayOutputStream()
+
+        val bitmap = (drawable as BitmapDrawable).bitmap
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+
+        imageByteArray = byteArrayOutputStream.toByteArray()
+
+    }
+
+    return imageByteArray
 }
 
 fun getCircularBitmapWithWhiteBorder(
@@ -120,4 +128,20 @@ fun getCircularBitmapWithWhiteBorder(
     canvas.drawCircle((canvas.width / 2).toFloat(), (canvas.height / 2).toFloat(), radius - borderWidth / 2, paint)
 
     return canvasBitmap
+}
+
+fun rawStringToByteArray(rawString: String): ByteArray {
+
+    val listOfRawString = rawString.replace("[", "").replace("]", "").split(",")
+
+    val resultByteArray = ByteArray(listOfRawString.size)
+    for (aByte in listOfRawString.withIndex()) {
+        try {
+            resultByteArray[aByte.index] = aByte.value.replace("\\s".toRegex(), "").toByte()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    return resultByteArray
 }
