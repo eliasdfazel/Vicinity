@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/2/20 6:46 AM
- * Last modified 10/2/20 6:46 AM
+ * Created by Elias Fazel on 10/2/20 6:54 AM
+ * Last modified 10/2/20 6:53 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -46,6 +46,8 @@ import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extens
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunityPrepareNotificationTopic
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunitySetupUI
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.Adapter.PublicCommunityAdapter
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.IMAGE_CAPTURE_REQUEST_CODE
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.IMAGE_PICKER_REQUEST_CODE
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.vicinityName
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
@@ -72,9 +74,6 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
     }
 
     companion object {
-
-        const val IMAGE_PICKER_REQUEST_CODE: Int = 123
-        const val IMAGE_CAPTURE_REQUEST_CODE: Int = 456
 
         fun open(context: Context, currentCommunityCoordinates: LatLng, nameOfCountry: String) {
             context.startActivity(Intent(context, PublicCommunity::class.java).apply {
@@ -335,13 +334,9 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                 val animationProgress = (valueAnimator.animatedValue as Float * 100).roundToInt()
 
-                println(">>>>>>>>>>>>>> " + animationProgress)
-
                 if (animationProgress == 49) {
 
-                    val imagePicker = Intent(Intent.ACTION_GET_CONTENT)
-                    imagePicker.type = "image/*"
-                    startActivityForResult(Intent.createChooser(imagePicker, getString(R.string.shareImage)), PublicCommunity.IMAGE_PICKER_REQUEST_CODE)
+
 
                 }
 
@@ -351,9 +346,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
         publicCommunityViewBinding.imageMessageContentView.setOnClickListener {
 
-            val imagePicker = Intent(Intent.ACTION_GET_CONTENT)
-            imagePicker.type = "image/*"
-            startActivityForResult(Intent.createChooser(imagePicker, getString(R.string.shareImage)), PublicCommunity.IMAGE_PICKER_REQUEST_CODE)
+
 
         }
 
@@ -384,7 +377,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
         super.onActivityResult(requestCode, resultCode, resultData)
 
         when (requestCode) {
-            PublicCommunity.IMAGE_PICKER_REQUEST_CODE -> {
+            IMAGE_PICKER_REQUEST_CODE -> {
 
                 if (resultCode == Activity.RESULT_OK) {
 
@@ -408,7 +401,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                 }
 
             }
-            PublicCommunity.IMAGE_CAPTURE_REQUEST_CODE -> {
+            IMAGE_CAPTURE_REQUEST_CODE -> {
 
                 if (resultCode == Activity.RESULT_OK) {
 
