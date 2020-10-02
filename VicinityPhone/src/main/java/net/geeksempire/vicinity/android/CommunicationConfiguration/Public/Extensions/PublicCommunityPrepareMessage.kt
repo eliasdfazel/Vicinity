@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/2/20 10:26 AM
- * Last modified 10/2/20 10:05 AM
+ * Created by Elias Fazel on 10/2/20 10:29 AM
+ * Last modified 10/2/20 10:29 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -15,7 +15,6 @@ import com.google.firebase.firestore.FieldValue
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.DataStructure.Unknown
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity
 import net.geeksempire.vicinity.android.R
-import net.geeksempire.vicinity.android.Utils.UI.Images.drawableToByteArray
 
 
 fun PublicCommunity.publicCommunityPrepareMessage() : LinkedHashMap<String, Any?> {
@@ -26,7 +25,7 @@ fun PublicCommunity.publicCommunityPrepareMessage() : LinkedHashMap<String, Any?
     publicMessageDataItem["userProfileImage"] = firebaseUser.photoUrl.toString()?:Unknown.unknownProfileImage
     publicMessageDataItem["userDisplayName"] = firebaseUser.displayName?:Unknown.unknownUserDisplayName
     publicMessageDataItem["userMessageTextContent"] = publicCommunityViewBinding.textMessageContentView.text.toString()
-    publicMessageDataItem["userMessageImageContent"] = drawableToByteArray(publicCommunityViewBinding.imageMessageContentView.drawable).contentToString()
+//    publicMessageDataItem["userMessageImageContent"] = drawableToByteArray(publicCommunityViewBinding.imageMessageContentView.drawable).contentToString()
 
     publicMessageDataItem["userMessageDate"] = FieldValue.serverTimestamp()
 

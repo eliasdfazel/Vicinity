@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/2/20 10:26 AM
- * Last modified 10/2/20 9:59 AM
+ * Created by Elias Fazel on 10/2/20 10:29 AM
+ * Last modified 10/2/20 10:27 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -253,9 +253,10 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
             if (publicCommunityViewBinding.textMessageContentView.text.toString().isNotEmpty()
                 || publicCommunityViewBinding.imageMessageContentView.drawable != null) {
 
+                val publicCommunityPrepareMessage = publicCommunityPrepareMessage()
                 firestoreDatabase
                     .collection(publicCommunityMessagesDatabasePath)
-                    .add(publicCommunityPrepareMessage())
+                    .add(publicCommunityPrepareMessage)
                     .addOnSuccessListener {
 
                         publicCommunityViewBinding.sendMessageView.setAnimation(R.raw.sending_animation)
