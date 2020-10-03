@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/21/20 11:10 AM
- * Last modified 9/21/20 11:09 AM
+ * Created by Elias Fazel on 10/3/20 11:40 AM
+ * Last modified 10/3/20 11:40 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,17 +10,23 @@
 
 package net.geeksempire.vicinity.android.CommunicationConfiguration.Private.PrivateMessengerUI
 
+import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
+import android.view.animation.TranslateAnimation
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseUser
@@ -33,6 +39,7 @@ import com.google.firebase.firestore.ktx.firestoreSettings
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.storage.ktx.storage
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.DataStructure.PrivateMessageData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.DataStructure.PrivateMessengerData
@@ -42,10 +49,16 @@ import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Exten
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Extensions.privateMessengerPrepareNotificationTopic
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Extensions.privateMessengerSetupUI
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.PrivateMessengerUI.Adapter.PrivateMessengerAdapter
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.IMAGE_CAPTURE_REQUEST_CODE
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.IMAGE_PICKER_REQUEST_CODE
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.startImageCapture
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.startImagePicker
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListenerInterface
+import net.geeksempire.vicinity.android.Utils.UI.Display.DpToInteger
+import net.geeksempire.vicinity.android.Utils.UI.Images.drawableToByteArray
 import net.geeksempire.vicinity.android.Utils.UI.Theme.OverallTheme
 import net.geeksempire.vicinity.android.VicinityApplication
 import net.geeksempire.vicinity.android.databinding.PrivateMessengerViewBinding
@@ -184,7 +197,8 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
         privateMessengerViewBinding.messageRecyclerView.layoutManager = linearLayoutManager
         privateMessengerViewBinding.messageRecyclerView.adapter = firebaseRecyclerAdapter
 
-        firebaseRecyclerAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+        firebaseRecyclerAdapter.registerAdapterDataObserver(object :
+            RecyclerView.AdapterDataObserver() {
 
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 super.onItemRangeInserted(positionStart, itemCount)
@@ -208,12 +222,39 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
 
         privateMessengerViewBinding.sendMessageView.setOnClickListener {
 
-            if (privateMessengerViewBinding.textMessageContentView.text.toString().isNotEmpty()) {
+            if (privateMessengerViewBinding.textMessageContentView.text.toString().isNotEmpty()
+                || privateMessengerViewBinding.imageMessageContentView.drawable != null) {
 
+                val publicCommunityPrepareMessage = privateMessengerPrepareMessage()
                 firestoreDatabase
                     .collection(privateMessagesDatabasePath)
-                    .add(privateMessengerPrepareMessage())
-                    .addOnSuccessListener {
+                    .add(publicCommunityPrepareMessage)
+                    .addOnSuccessListener { documentSnapshot ->
+
+                        if (privateMessengerViewBinding.imageMessageContentView.drawable != null) {
+
+                            val sentMessagePath = privateMessagesDatabasePath + "/" + documentSnapshot.id
+
+                            val firebaseStorage = Firebase.storage
+                            val storageReference = firebaseStorage.reference
+                                .child(sentMessagePath)
+                            storageReference
+                                .putBytes(drawableToByteArray(privateMessengerViewBinding.imageMessageContentView.drawable)!!)
+                                .addOnSuccessListener {
+
+                                    storageReference.downloadUrl.addOnSuccessListener { imageDownloadLink ->
+
+                                        firestoreDatabase
+                                            .document(sentMessagePath)
+                                            .update(
+                                                "userMessageImageContent", imageDownloadLink.toString(),
+                                            )
+
+                                    }
+
+                                }
+
+                        }
 
                         privateMessengerViewBinding.sendMessageView.setAnimation(R.raw.sending_animation)
                         privateMessengerViewBinding.sendMessageView.playAnimation()
@@ -250,6 +291,8 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
                         }
 
                         privateMessengerViewBinding.textMessageContentView.text = null
+                        privateMessengerViewBinding.imageMessageContentView.setImageDrawable(null)
+                        privateMessengerViewBinding.imageMessageContentView.visibility = View.GONE
 
                         privateMessengerViewBinding.nestedScrollView.smoothScrollTo(
                             0,
@@ -282,6 +325,115 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
 
         }
 
+        privateMessengerViewBinding.addImageView.setOnClickListener {
+
+            privateMessengerViewBinding.addImageView.isEnabled = false
+
+            if (privateMessengerViewBinding.imageGallery.isShown && privateMessengerViewBinding.imageCapture.isShown) {
+
+                privateMessengerViewBinding.imageGallery.startAnimation(
+                    TranslateAnimation(
+                    0f,
+                    -(DpToInteger(applicationContext, 51)).toFloat(),
+                    0f,
+                    0f
+                ).apply {
+                    duration = 379
+                })
+
+                privateMessengerViewBinding.imageCapture.startAnimation(
+                    TranslateAnimation(
+                    0f,
+                    -(DpToInteger(applicationContext, 101)).toFloat(),
+                    0f,
+                    0f
+                ).apply {
+                    duration = 379
+                })
+
+                Handler(Looper.getMainLooper()).postDelayed({
+
+                    privateMessengerViewBinding.imageGallery.visibility = View.INVISIBLE
+                    privateMessengerViewBinding.imageGallery.startAnimation(AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out))
+
+                    privateMessengerViewBinding.imageCapture.visibility = View.INVISIBLE
+                    privateMessengerViewBinding.imageCapture.startAnimation(AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out))
+
+                    privateMessengerViewBinding.addImageView.apply {
+                        setMinAndMaxFrame(41, 75)
+                    }.playAnimation()
+
+                }, 379)
+
+            } else {
+
+                privateMessengerViewBinding.addImageView.apply {
+                    setMinAndMaxFrame(0, 41)
+                }.playAnimation()
+                privateMessengerViewBinding.addImageView.addAnimatorUpdateListener { valueAnimator ->
+
+                    val animationProgress = (valueAnimator.animatedValue as Float * 100).roundToInt()
+
+                    if (animationProgress == 49) {
+
+                        privateMessengerViewBinding.imageGallery.visibility = View.VISIBLE
+                        privateMessengerViewBinding.imageGallery.startAnimation(
+                            TranslateAnimation(
+                            -(DpToInteger(applicationContext, 51)).toFloat(),
+                            0f,
+                            0f,
+                            0f
+                        ).apply {
+                            duration = 555
+                        })
+
+                        privateMessengerViewBinding.imageCapture.visibility = View.VISIBLE
+                        privateMessengerViewBinding.imageCapture.startAnimation(
+                            TranslateAnimation(
+                            -(DpToInteger(applicationContext, 101)).toFloat(),
+                            0f,
+                            0f,
+                            0f
+                        ).apply {
+                            duration = 555
+                        })
+
+                    }
+
+                }
+
+            }
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                privateMessengerViewBinding.addImageView.isEnabled = true
+            }, 1531)
+
+        }
+
+        privateMessengerViewBinding.imageGallery.setOnClickListener {
+
+            privateMessengerViewBinding.imageGallery.visibility = View.INVISIBLE
+            privateMessengerViewBinding.imageGallery.startAnimation(AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out))
+
+            privateMessengerViewBinding.imageCapture.visibility = View.INVISIBLE
+            privateMessengerViewBinding.imageCapture.startAnimation(AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out))
+
+            startImagePicker(this@PrivateMessenger)
+
+        }
+
+        privateMessengerViewBinding.imageCapture.setOnClickListener {
+
+            privateMessengerViewBinding.imageGallery.visibility = View.INVISIBLE
+            privateMessengerViewBinding.imageGallery.startAnimation(AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out))
+
+            privateMessengerViewBinding.imageCapture.visibility = View.INVISIBLE
+            privateMessengerViewBinding.imageCapture.startAnimation(AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out))
+
+            startImageCapture(this@PrivateMessenger)
+
+        }
+
     }
 
     override fun onResume() {
@@ -302,6 +454,60 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
 
         this@PrivateMessenger.finish()
         overridePendingTransition(R.anim.fade_in, R.anim.slide_out_right)
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, resultData)
+
+        when (requestCode) {
+            IMAGE_PICKER_REQUEST_CODE -> {
+
+                if (resultCode == Activity.RESULT_OK) {
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+
+                        privateMessengerViewBinding.addImageView.apply {
+                            setMinAndMaxFrame(41, 75)
+                        }.playAnimation()
+
+                    }, 777)
+
+                    privateMessengerViewBinding.imageMessageContentView.visibility = View.VISIBLE
+
+                    val selectedImage: Uri? = resultData?.data
+
+                    Glide.with(applicationContext)
+                        .load(selectedImage)
+                        .into(privateMessengerViewBinding.imageMessageContentView)
+
+                }
+
+            }
+            IMAGE_CAPTURE_REQUEST_CODE -> {
+
+                if (resultCode == Activity.RESULT_OK) {
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+
+                        privateMessengerViewBinding.addImageView.apply {
+                            setMinAndMaxFrame(41, 75)
+                        }.playAnimation()
+
+                    }, 777)
+
+                    privateMessengerViewBinding.imageMessageContentView.visibility = View.VISIBLE
+
+                    val selectedImage = resultData?.extras?.get("data") as Bitmap
+
+                    Glide.with(applicationContext)
+                        .load(selectedImage)
+                        .into(privateMessengerViewBinding.imageMessageContentView)
+
+                }
+
+            }
+        }
 
     }
 
