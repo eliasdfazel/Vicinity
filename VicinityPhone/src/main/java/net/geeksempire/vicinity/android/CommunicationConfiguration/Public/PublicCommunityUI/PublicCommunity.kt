@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/5/20 6:16 AM
- * Last modified 10/5/20 6:16 AM
+ * Created by Elias Fazel on 10/5/20 6:17 AM
+ * Last modified 10/5/20 6:17 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -303,7 +303,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                                 publicCommunityMessagesDatabasePath = publicCommunityMessagesDatabasePath,
                                 documentSnapshotId = documentSnapshot.id)
 
-                            layerDrawableToByteArray(selectedImagePreview)?.let { drawableByteArray ->
+                            layerDrawableToByteArray(publicCommunityViewBinding.imageMessageContentView.drawable as LayerDrawable)?.let { drawableByteArray ->
 
                                 val firebaseStorage = Firebase.storage
                                 val storageReference = firebaseStorage.reference
