@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/2/20 6:54 AM
- * Last modified 10/2/20 6:53 AM
+ * Created by Elias Fazel on 10/5/20 6:16 AM
+ * Last modified 10/5/20 5:06 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -11,6 +11,8 @@
 package net.geeksempire.vicinity.android.CommunicationConfiguration.Utils
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.LayerDrawable
 import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
 import net.geeksempire.vicinity.android.R
@@ -31,4 +33,11 @@ fun startImageCapture(context: AppCompatActivity) {
     val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
     context.startActivityForResult(takePictureIntent, IMAGE_CAPTURE_REQUEST_CODE)
 
+}
+
+fun renderSelectedImagePreview(selectedImagePreview: LayerDrawable, imageIndex: Int, selectedImage: Drawable) : Drawable {
+
+    selectedImagePreview.setDrawable(imageIndex, selectedImage)
+
+    return selectedImagePreview
 }

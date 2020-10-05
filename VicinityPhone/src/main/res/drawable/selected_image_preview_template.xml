@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2020 By Geeks Empire.
+  ~
+  ~ Created by Elias Fazel on 10/5/20 6:16 AM
+  ~ Last modified 10/5/20 5:56 AM
+  ~
+  ~ Licensed Under MIT License.
+  ~ https://opensource.org/licenses/MIT
+  -->
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/one"
+        android:width="13dp"
+        android:height="13dp"
+        android:drawable="@drawable/android"
+        android:gravity="top|left"
+        android:left="0dp"
+        android:top="0dp" />
+
+    <item
+        android:id="@+id/two"
+        android:width="13dp"
+        android:height="13dp"
+        android:drawable="@drawable/android"
+        android:gravity="top|right"
+        android:left="15dp"
+        android:top="0dp" />
+
+    <item
+        android:id="@+id/three"
+        android:width="13dp"
+        android:height="13dp"
+        android:drawable="@drawable/android"
+        android:gravity="bottom|center_horizontal"
+        android:left="0dp"
+        android:top="15dp" />
+
+</layer-list>

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/2/20 10:26 AM
- * Last modified 10/2/20 10:26 AM
+ * Created by Elias Fazel on 10/5/20 6:16 AM
+ * Last modified 10/5/20 6:16 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -20,7 +20,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
@@ -79,7 +78,7 @@ class PublicCommunityAdapter(private val context: PublicCommunity,
                     .asDrawable()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .load(userMessageImageContent)
-                    .transform(CenterCrop(), RoundedCorners(DpToInteger(context, 11)))
+                    .transform(RoundedCorners(DpToInteger(context, 11)))
                     .into(viewHolder.userMessageImageContent)
 
                 viewHolder.userMessageImageContent.visibility = View.VISIBLE

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/2/20 10:59 AM
- * Last modified 10/2/20 10:59 AM
+ * Created by Elias Fazel on 10/5/20 6:16 AM
+ * Last modified 10/5/20 6:16 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -15,6 +15,8 @@ import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.LayerDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -27,6 +29,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.gms.maps.model.LatLng
@@ -48,10 +55,7 @@ import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extens
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunityPrepareNotificationTopic
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunitySetupUI
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.Adapter.PublicCommunityAdapter
-import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.IMAGE_CAPTURE_REQUEST_CODE
-import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.IMAGE_PICKER_REQUEST_CODE
-import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.startImageCapture
-import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.startImagePicker
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.*
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.vicinityName
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
@@ -59,6 +63,7 @@ import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListen
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListenerInterface
 import net.geeksempire.vicinity.android.Utils.UI.Display.DpToInteger
 import net.geeksempire.vicinity.android.Utils.UI.Images.drawableToByteArray
+import net.geeksempire.vicinity.android.Utils.UI.Images.layerDrawableToByteArray
 import net.geeksempire.vicinity.android.Utils.UI.Theme.OverallTheme
 import net.geeksempire.vicinity.android.VicinityApplication
 import net.geeksempire.vicinity.android.databinding.PublicCommunityViewBinding
@@ -131,6 +136,12 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
     }
 
     private val firebaseCloudFunctions: FirebaseFunctions = FirebaseFunctions.getInstance()
+
+    val listOfSelectedImages: ArrayList<Drawable> = ArrayList<Drawable>(3)
+
+    val selectedImagePreview: LayerDrawable by lazy {
+        getDrawable(R.drawable.selected_image_preview_template) as LayerDrawable
+    }
 
     @Inject lateinit var networkCheckpoint: NetworkCheckpoint
 
@@ -261,26 +272,59 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                         if (publicCommunityViewBinding.imageMessageContentView.drawable != null) {
 
+                            repeat(listOfSelectedImages.size) { imageIndex ->
+
+                                val sentMessagePath = publicCommunityMessagesDatabasePath + "/" + documentSnapshot.id
+
+                                val sentMessagePathForImages = PublicCommunicationEndpoint.publicCommunityStorageImageEndpoint(
+                                    publicCommunityMessagesDatabasePath = publicCommunityMessagesDatabasePath,
+                                    documentSnapshotId = documentSnapshot.id,
+                                    imageIndex = imageIndex.toString()
+                                )
+
+                                drawableToByteArray(listOfSelectedImages[imageIndex])?.let { drawableByteArray ->
+
+                                    val firebaseStorage = Firebase.storage
+                                    val storageReference = firebaseStorage.reference
+                                        .child(sentMessagePathForImages)
+                                    storageReference
+                                        .putBytes(drawableByteArray)
+                                        .addOnSuccessListener {
+
+                                        }
+
+                                }
+
+                            }
+
                             val sentMessagePath = publicCommunityMessagesDatabasePath + "/" + documentSnapshot.id
 
-                            val firebaseStorage = Firebase.storage
-                            val storageReference = firebaseStorage.reference
-                                .child(sentMessagePath)
-                            storageReference
-                                .putBytes(drawableToByteArray(publicCommunityViewBinding.imageMessageContentView.drawable)!!)
-                                .addOnSuccessListener {
+                            val sentMessagePathForImages = PublicCommunicationEndpoint.publicCommunityStoragePreviewImageEndpoint(
+                                publicCommunityMessagesDatabasePath = publicCommunityMessagesDatabasePath,
+                                documentSnapshotId = documentSnapshot.id)
 
-                                    storageReference.downloadUrl.addOnSuccessListener { imageDownloadLink ->
+                            layerDrawableToByteArray(selectedImagePreview)?.let { drawableByteArray ->
 
-                                        firestoreDatabase
-                                            .document(sentMessagePath)
-                                            .update(
-                                                "userMessageImageContent", imageDownloadLink.toString(),
-                                            )
+                                val firebaseStorage = Firebase.storage
+                                val storageReference = firebaseStorage.reference
+                                    .child(sentMessagePathForImages)
+                                storageReference
+                                    .putBytes(drawableByteArray)
+                                    .addOnSuccessListener {
+
+                                        storageReference.downloadUrl.addOnSuccessListener { imageDownloadLink ->
+
+                                            firestoreDatabase
+                                                .document(sentMessagePath)
+                                                .update(
+                                                    "userMessageImageContent", imageDownloadLink.toString(),
+                                                )
+
+                                        }
 
                                     }
 
-                                }
+                            }
 
                         }
 
@@ -506,7 +550,32 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                     Glide.with(applicationContext)
                         .load(selectedImage)
-                        .into(publicCommunityViewBinding.imageMessageContentView)
+                        .transform(CenterCrop())
+                        .listener(object : RequestListener<Drawable> {
+                            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+
+                                return false
+                            }
+
+                            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+
+                                resource?.let {
+
+                                    listOfSelectedImages.add(resource)
+
+                                    runOnUiThread {
+                                        publicCommunityViewBinding.imageMessageContentView.setImageDrawable(
+                                            renderSelectedImagePreview(selectedImagePreview, listOfSelectedImages.size - 1, resource)
+                                        )
+                                    }
+
+                                }
+
+                                return false
+                            }
+
+                        })
+                        .submit()
 
                 }
 
@@ -529,7 +598,34 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                     Glide.with(applicationContext)
                         .load(selectedImage)
-                        .into(publicCommunityViewBinding.imageMessageContentView)
+                        .transform(CenterCrop())
+                        .listener(object : RequestListener<Drawable> {
+                            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+
+                                return false
+                            }
+
+                            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+
+                                resource?.let {
+
+                                    listOfSelectedImages.add(resource)
+
+                                    runOnUiThread {
+                                        publicCommunityViewBinding.imageMessageContentView.setImageDrawable(
+                                            renderSelectedImagePreview(selectedImagePreview, listOfSelectedImages.size - 1, resource)
+                                        )
+                                    }
+
+                                }
+
+                                return false
+                            }
+
+                        })
+                        .submit()
+
+
 
                 }
 

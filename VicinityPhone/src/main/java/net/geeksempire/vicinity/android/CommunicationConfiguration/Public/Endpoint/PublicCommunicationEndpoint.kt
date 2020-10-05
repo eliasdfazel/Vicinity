@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/20/20 9:10 AM
- * Last modified 9/20/20 8:17 AM
+ * Created by Elias Fazel on 10/5/20 6:16 AM
+ * Last modified 10/5/20 5:27 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -33,6 +33,16 @@ class PublicCommunicationEndpoint {
         fun publicCommunityCollectionEndpoint(countryName: String) : String {
 
             return PublicCommunicationEndpoint.commonPublicEndpoint + countryName
+        }
+
+        fun publicCommunityStorageImageEndpoint(publicCommunityMessagesDatabasePath: String, documentSnapshotId: String, imageIndex: String) : String {
+
+            return publicCommunityMessagesDatabasePath + "/" + documentSnapshotId + "/" + "Image${imageIndex}.JPEG"
+        }
+
+        fun publicCommunityStoragePreviewImageEndpoint(publicCommunityMessagesDatabasePath: String, documentSnapshotId: String) : String {
+
+            return publicCommunityMessagesDatabasePath + "/" + documentSnapshotId + "/" + "PreviewImage.JPEG"
         }
 
     }

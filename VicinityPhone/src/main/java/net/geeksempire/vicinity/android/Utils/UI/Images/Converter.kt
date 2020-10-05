@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/2/20 10:26 AM
- * Last modified 10/2/20 10:09 AM
+ * Created by Elias Fazel on 10/5/20 6:16 AM
+ * Last modified 10/5/20 5:53 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -85,6 +85,29 @@ fun drawableToByteArray(drawable: Drawable?) : ByteArray? {
 
         val bitmap = (drawable as BitmapDrawable).bitmap
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+
+        imageByteArray = byteArrayOutputStream.toByteArray()
+
+    }
+
+    return imageByteArray
+}
+
+fun layerDrawableToByteArray(layerDrawable: LayerDrawable?) : ByteArray? {
+
+    var imageByteArray: ByteArray? = null
+
+    layerDrawable?.let {
+
+        val bitmap = Bitmap.createBitmap(layerDrawable.intrinsicWidth, layerDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+
+        val canvas = Canvas(bitmap)
+        layerDrawable.setBounds(0, 0, canvas.width, canvas.height)
+        layerDrawable.draw(canvas)
+
+        val byteArrayOutputStream = ByteArrayOutputStream()
+
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
 
         imageByteArray = byteArrayOutputStream.toByteArray()
 
