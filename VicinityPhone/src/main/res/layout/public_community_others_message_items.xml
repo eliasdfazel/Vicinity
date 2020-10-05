@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 10/5/20 6:16 AM
-  ~ Last modified 10/5/20 6:00 AM
+  ~ Created by Elias Fazel on 10/5/20 8:58 AM
+  ~ Last modified 10/5/20 8:37 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -76,10 +76,11 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/userMessageImageContent"
-            android:layout_width="240dp"
-            android:layout_height="240dp"
+            android:layout_width="237dp"
+            android:layout_height="237dp"
             android:paddingTop="13dp"
             android:paddingBottom="19dp"
+            android:scaleType="centerCrop"
             android:visibility="gone"
 
             apps:layout_constraintStart_toStartOf="parent"
@@ -99,7 +100,7 @@
             android:visibility="gone"
 
             apps:layout_constraintStart_toStartOf="parent"
-            apps:layout_constraintTop_toBottomOf="@id/userMessageTextContent"/>
+            apps:layout_constraintTop_toBottomOf="@id/userMessageImageContent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/5/20 6:17 AM
- * Last modified 10/5/20 6:17 AM
+ * Created by Elias Fazel on 10/5/20 8:58 AM
+ * Last modified 10/5/20 8:47 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -62,8 +62,9 @@ import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListenerInterface
 import net.geeksempire.vicinity.android.Utils.UI.Display.DpToInteger
+import net.geeksempire.vicinity.android.Utils.UI.Images.bitmapToByteArray
 import net.geeksempire.vicinity.android.Utils.UI.Images.drawableToByteArray
-import net.geeksempire.vicinity.android.Utils.UI.Images.layerDrawableToByteArray
+import net.geeksempire.vicinity.android.Utils.UI.Images.takeViewSnapshot
 import net.geeksempire.vicinity.android.Utils.UI.Theme.OverallTheme
 import net.geeksempire.vicinity.android.VicinityApplication
 import net.geeksempire.vicinity.android.databinding.PublicCommunityViewBinding
@@ -274,9 +275,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                             repeat(listOfSelectedImages.size) { imageIndex ->
 
-                                val sentMessagePath = publicCommunityMessagesDatabasePath + "/" + documentSnapshot.id
-
-                                val sentMessagePathForImages = PublicCommunicationEndpoint.publicCommunityStorageImageEndpoint(
+                                val sentMessagePathForImages = PublicCommunicationEndpoint.publicCommunityStorageImagesItemEndpoint(
                                     publicCommunityMessagesDatabasePath = publicCommunityMessagesDatabasePath,
                                     documentSnapshotId = documentSnapshot.id,
                                     imageIndex = imageIndex.toString()
@@ -297,13 +296,15 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                             }
 
+                            listOfSelectedImages.clear()
+
                             val sentMessagePath = publicCommunityMessagesDatabasePath + "/" + documentSnapshot.id
 
                             val sentMessagePathForImages = PublicCommunicationEndpoint.publicCommunityStoragePreviewImageEndpoint(
                                 publicCommunityMessagesDatabasePath = publicCommunityMessagesDatabasePath,
                                 documentSnapshotId = documentSnapshot.id)
 
-                            layerDrawableToByteArray(publicCommunityViewBinding.imageMessageContentView.drawable as LayerDrawable)?.let { drawableByteArray ->
+                            bitmapToByteArray(takeViewSnapshot(publicCommunityViewBinding.imageMessageContentView))?.let { drawableByteArray ->
 
                                 val firebaseStorage = Firebase.storage
                                 val storageReference = firebaseStorage.reference
@@ -318,6 +319,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                                                 .document(sentMessagePath)
                                                 .update(
                                                     "userMessageImageContent", imageDownloadLink.toString(),
+                                                    "publicCommunityStorageImagesItemEndpoint", PublicCommunicationEndpoint.publicCommunityStorageImagesItemEndpoint(publicCommunityMessagesDatabasePath, documentSnapshot.id),
                                                 )
 
                                         }

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/8/20 10:55 AM
- * Last modified 9/8/20 10:32 AM
+ * Created by Elias Fazel on 10/5/20 8:58 AM
+ * Last modified 10/5/20 8:48 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -28,12 +28,15 @@ class PublicMessageData {
     var userMessageTextContent: String? = null
     var userMessageImageContent: String? = null
 
+    var publicCommunityStorageImagesItemEndpoint: String? = null
+
     @ServerTimestamp var userMessageDate: Timestamp? = null
     @ServerTimestamp var userMessageEditDate: Timestamp? = null
 
     constructor() {/*  */}
 
     constructor(userIdentifier: String, userProfileImage: String, userDisplayName: String, userMessageTextContent: String, userMessageImageContent: String,
+                publicCommunityStorageImagesItemEndpoint: String,
                 userMessageDate: Timestamp, userMessageEditDate: Timestamp) {
 
         this@PublicMessageData.userIdentifier = userIdentifier
@@ -42,6 +45,8 @@ class PublicMessageData {
 
         this@PublicMessageData.userMessageTextContent = userMessageTextContent
         this@PublicMessageData.userMessageImageContent = userMessageImageContent
+
+        this@PublicMessageData.publicCommunityStorageImagesItemEndpoint = publicCommunityStorageImagesItemEndpoint
 
         this@PublicMessageData.userMessageDate = userMessageDate
         this@PublicMessageData.userMessageEditDate = userMessageEditDate
