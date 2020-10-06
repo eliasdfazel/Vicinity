@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/29/20 6:54 AM
- * Last modified 9/29/20 6:53 AM
+ * Created by Elias Fazel on 10/6/20 7:12 AM
+ * Last modified 10/6/20 6:28 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -20,12 +20,14 @@ import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
 
 fun PublicCommunity.publicCommunitySetupUI() {
 
+    publicCommunityViewBinding.messageContentWrapper.bringToFront()
+
     when (overallTheme.checkThemeLightDark()) {
         ThemeType.ThemeLight -> {
 
             publicCommunityViewBinding.rootView.setBackgroundColor(getColor(R.color.light))
 
-            publicCommunityViewBinding.messageContentWrapper.setBackgroundColor(getColor(R.color.light))
+            publicCommunityViewBinding.messageContentBlurryBackground.setBackgroundColor(getColor(R.color.light_blurry_color))
 
             publicCommunityViewBinding.textMessageContentLayout.boxBackgroundColor = getColor(R.color.white)
 
@@ -36,7 +38,7 @@ fun PublicCommunity.publicCommunitySetupUI() {
 
             publicCommunityViewBinding.rootView.setBackgroundColor(getColor(R.color.dark))
 
-            publicCommunityViewBinding.messageContentWrapper.setBackgroundColor(getColor(R.color.dark))
+            publicCommunityViewBinding.messageContentBlurryBackground.setBackgroundColor(getColor(R.color.dark_blurry_color))
 
             publicCommunityViewBinding.textMessageContentLayout.boxBackgroundColor = getColor(R.color.black)
 

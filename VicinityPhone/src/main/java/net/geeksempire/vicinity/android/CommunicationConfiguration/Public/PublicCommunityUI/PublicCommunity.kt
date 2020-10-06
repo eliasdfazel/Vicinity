@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/5/20 8:58 AM
- * Last modified 10/5/20 8:47 AM
+ * Created by Elias Fazel on 10/6/20 7:12 AM
+ * Last modified 10/6/20 7:12 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -16,7 +16,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.LayerDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -31,7 +30,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -139,10 +137,6 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
     private val firebaseCloudFunctions: FirebaseFunctions = FirebaseFunctions.getInstance()
 
     val listOfSelectedImages: ArrayList<Drawable> = ArrayList<Drawable>(3)
-
-    val selectedImagePreview: LayerDrawable by lazy {
-        getDrawable(R.drawable.selected_image_preview_template) as LayerDrawable
-    }
 
     @Inject lateinit var networkCheckpoint: NetworkCheckpoint
 
@@ -263,7 +257,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
         publicCommunityViewBinding.sendMessageView.setOnClickListener {
 
             if (publicCommunityViewBinding.textMessageContentView.text.toString().isNotEmpty()
-                || publicCommunityViewBinding.imageMessageContentView.drawable != null) {
+                || publicCommunityViewBinding.imageMessageContentView.isShown) {
 
                 val publicCommunityPrepareMessage = publicCommunityPrepareMessage()
                 firestoreDatabase
@@ -271,7 +265,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                     .add(publicCommunityPrepareMessage)
                     .addOnSuccessListener { documentSnapshot ->
 
-                        if (publicCommunityViewBinding.imageMessageContentView.drawable != null) {
+                        if (publicCommunityViewBinding.imageMessageContentView.isShown) {
 
                             repeat(listOfSelectedImages.size) { imageIndex ->
 
@@ -371,7 +365,9 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                         }
 
                         publicCommunityViewBinding.textMessageContentView.text = null
-                        publicCommunityViewBinding.imageMessageContentView.setImageDrawable(null)
+                        publicCommunityViewBinding.imageMessageContentOne.setImageDrawable(null)
+                        publicCommunityViewBinding.imageMessageContentTwo.setImageDrawable(null)
+                        publicCommunityViewBinding.imageMessageContentThree.setImageDrawable(null)
                         publicCommunityViewBinding.imageMessageContentView.visibility = View.GONE
 
                         publicCommunityViewBinding.nestedScrollView.smoothScrollTo(0, publicCommunityViewBinding.messageRecyclerView.height)
@@ -552,8 +548,8 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                     Glide.with(applicationContext)
                         .load(selectedImage)
-                        .transform(CenterCrop())
                         .listener(object : RequestListener<Drawable> {
+
                             override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
 
                                 return false
@@ -566,9 +562,9 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                                     listOfSelectedImages.add(resource)
 
                                     runOnUiThread {
-                                        publicCommunityViewBinding.imageMessageContentView.setImageDrawable(
-                                            renderSelectedImagePreview(selectedImagePreview, listOfSelectedImages.size - 1, resource)
-                                        )
+
+                                        renderSelectedImagePreview(publicCommunityViewBinding, listOfSelectedImages, resource)
+
                                     }
 
                                 }
@@ -600,8 +596,8 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                     Glide.with(applicationContext)
                         .load(selectedImage)
-                        .transform(CenterCrop())
                         .listener(object : RequestListener<Drawable> {
+
                             override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
 
                                 return false
@@ -614,9 +610,9 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                                     listOfSelectedImages.add(resource)
 
                                     runOnUiThread {
-                                        publicCommunityViewBinding.imageMessageContentView.setImageDrawable(
-                                            renderSelectedImagePreview(selectedImagePreview, listOfSelectedImages.size - 1, resource)
-                                        )
+
+                                        renderSelectedImagePreview(publicCommunityViewBinding, listOfSelectedImages, resource)
+
                                     }
 
                                 }
