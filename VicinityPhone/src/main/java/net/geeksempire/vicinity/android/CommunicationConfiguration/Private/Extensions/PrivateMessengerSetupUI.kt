@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/29/20 6:54 AM
- * Last modified 9/29/20 6:54 AM
+ * Created by Elias Fazel on 10/8/20 7:59 AM
+ * Last modified 10/8/20 7:55 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -20,12 +20,14 @@ import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
 
 fun PrivateMessenger.privateMessengerSetupUI() {
 
+    privateMessengerViewBinding.messageContentWrapper.bringToFront()
+
     when (overallTheme.checkThemeLightDark()) {
         ThemeType.ThemeLight -> {
 
             privateMessengerViewBinding.rootView.setBackgroundColor(getColor(R.color.light))
 
-            privateMessengerViewBinding.messageContentWrapper.setBackgroundColor(getColor(R.color.light))
+            privateMessengerViewBinding.messageContentBlurryBackground.setBackgroundColor(getColor(R.color.light_blurry_color))
 
             privateMessengerViewBinding.textMessageContentLayout.boxBackgroundColor = getColor(R.color.white)
 
@@ -36,7 +38,7 @@ fun PrivateMessenger.privateMessengerSetupUI() {
 
             privateMessengerViewBinding.rootView.setBackgroundColor(getColor(R.color.dark))
 
-            privateMessengerViewBinding.messageContentWrapper.setBackgroundColor(getColor(R.color.dark))
+            privateMessengerViewBinding.messageContentBlurryBackground.setBackgroundColor(getColor(R.color.dark_blurry_color))
 
             privateMessengerViewBinding.textMessageContentLayout.boxBackgroundColor = getColor(R.color.black)
 

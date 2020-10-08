@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/21/20 11:03 AM
- * Last modified 9/21/20 10:55 AM
+ * Created by Elias Fazel on 10/8/20 7:59 AM
+ * Last modified 10/8/20 7:40 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -20,6 +20,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -31,6 +33,7 @@ import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Calendar.formatToCurrentTimeZone
 import net.geeksempire.vicinity.android.Utils.UI.Colors.extractDominantColor
 import net.geeksempire.vicinity.android.Utils.UI.Colors.isColorDark
+import net.geeksempire.vicinity.android.Utils.UI.Display.DpToInteger
 import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
 
 class PrivateMessengerAdapter(private val context: PrivateMessenger,
@@ -69,6 +72,27 @@ class PrivateMessengerAdapter(private val context: PrivateMessenger,
 
             viewHolder.userDisplayName.text = privateMessageData.userDisplayName
             viewHolder.userMessageTextContent.text = privateMessageData.userMessageTextContent
+
+            privateMessageData.userMessageImageContent?.let { userMessageImageContent ->
+
+                Glide.with(context)
+                    .asDrawable()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .load(userMessageImageContent)
+                    .transform(CenterCrop(), RoundedCorners(DpToInteger(context, 11)))
+                    .into(viewHolder.userMessageImageContent)
+
+                viewHolder.userMessageImageContent.visibility = View.VISIBLE
+
+                viewHolder.userMessageImageContent.setOnClickListener {
+
+                    val imagesStorageReference = privateMessageData.privateMessengerStorageImagesItemEndpoint
+
+
+
+                }
+
+            }
 
             privateMessageData.userMessageDate?.let {
 
@@ -158,6 +182,27 @@ class PrivateMessengerAdapter(private val context: PrivateMessenger,
 
             viewHolder.userDisplayName.text = privateMessageData.userDisplayName
             viewHolder.userMessageTextContent.text = privateMessageData.userMessageTextContent
+
+            privateMessageData.userMessageImageContent?.let { userMessageImageContent ->
+
+                Glide.with(context)
+                    .asDrawable()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .load(userMessageImageContent)
+                    .transform(CenterCrop(), RoundedCorners(DpToInteger(context, 11)))
+                    .into(viewHolder.userMessageImageContent)
+
+                viewHolder.userMessageImageContent.visibility = View.VISIBLE
+
+                viewHolder.userMessageImageContent.setOnClickListener {
+
+                    val imagesStorageReference = privateMessageData.privateMessengerStorageImagesItemEndpoint
+
+
+
+                }
+
+            }
 
             privateMessageData.userMessageDate?.let {
 
