@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/21/20 10:29 AM
- * Last modified 9/21/20 10:29 AM
+ * Created by Elias Fazel on 10/8/20 7:09 AM
+ * Last modified 10/8/20 7:09 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -11,13 +11,6 @@
 package net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Endpoint
 
 class PrivateCommunicationEndpoint {
-
-//    val privateChatName: String = firebaseUser.uid + "|" + markerClick.title
-//    val privateChatNameReverse: String = markerClick.title + "|" + firebaseUser.uid
-
-    // if (documentSnapshot.id == privateChatName) {}
-    // else if (documentSnapshot.id == reversePrivateChatName) {}
-    // else {}
 
     companion object {
 
@@ -37,7 +30,20 @@ class PrivateCommunicationEndpoint {
             return PrivateCommunicationEndpoint.commonPrivateEndpoint + privateMessengerName
         }
 
-        //  Vicinity/OnlineSociety/Private/Messenger/[uid]/
+        fun privateMessengerStorageImagesItemEndpoint(privateMessengerMessagesDatabasePath: String, documentSnapshotId: String) : String {
+
+            return "$privateMessengerMessagesDatabasePath/$documentSnapshotId"
+        }
+
+        fun privateMessengerStorageImagesItemEndpoint(privateMessengerMessagesDatabasePath: String, documentSnapshotId: String, imageIndex: String) : String {
+
+            return privateMessengerMessagesDatabasePath + "/" + documentSnapshotId + "/" + "Image${imageIndex}.JPEG"
+        }
+
+        fun privateMessengerStoragePreviewImageEndpoint(privateMessengerMessagesDatabasePath: String, documentSnapshotId: String) : String {
+
+            return privateMessengerMessagesDatabasePath + "/" + documentSnapshotId + "/" + "PreviewImage.JPEG"
+        }
 
     }
 }

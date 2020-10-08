@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 10/3/20 11:40 AM
-  ~ Last modified 10/3/20 11:34 AM
+  ~ Created by Elias Fazel on 10/8/20 7:09 AM
+  ~ Last modified 10/8/20 6:42 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -60,7 +60,6 @@
         android:layout_height="wrap_content"
         android:paddingStart="7dp"
         android:paddingEnd="7dp"
-        android:background="@color/light"
 
         apps:layout_constraintBottom_toBottomOf="parent"
         apps:layout_constraintStart_toStartOf="parent"
@@ -96,7 +95,7 @@
                 android:id="@+id/textMessageContentView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="23dp"
+                android:paddingStart="71dp"
                 android:paddingEnd="59dp"
                 android:paddingBottom="23dp"
                 android:gravity="center_vertical"
@@ -110,15 +109,59 @@
                 android:enabled="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/imageMessageContentView"
             android:layout_width="match_parent"
-            android:layout_height="303dp"
-            android:paddingVertical="13dp"
-            android:paddingHorizontal="33dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="7dp"
             android:visibility="gone"
 
-            apps:layout_constraintBottom_toTopOf="@id/textMessageContentLayout"/>
+            apps:layout_constraintBottom_toTopOf="@id/textMessageContentLayout">
+
+            <net.geekstools.imageview.customshapes.ShapesImage
+                android:id="@+id/imageMessageContentOne"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+
+                apps:shape="circle"
+
+                apps:layout_constraintBottom_toBottomOf="parent"
+                apps:layout_constraintStart_toStartOf="parent"
+                apps:layout_constraintEnd_toEndOf="parent"/>
+
+            <net.geekstools.imageview.customshapes.ShapesImage
+                android:id="@+id/imageMessageContentTwo"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginEnd="33dp"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+
+                apps:shape="circle"
+
+                apps:layout_constraintTop_toTopOf="parent"
+                apps:layout_constraintBottom_toTopOf="@id/imageMessageContentOne"
+                apps:layout_constraintStart_toStartOf="parent"
+                apps:layout_constraintEnd_toEndOf="@id/imageMessageContentOne"/>
+
+            <net.geekstools.imageview.customshapes.ShapesImage
+                android:id="@+id/imageMessageContentThree"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="33dp"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+
+                apps:shape="circle"
+
+                apps:layout_constraintTop_toTopOf="parent"
+                apps:layout_constraintBottom_toTopOf="@id/imageMessageContentOne"
+                apps:layout_constraintStart_toStartOf="@id/imageMessageContentOne"
+                apps:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/sendMessageView"
@@ -203,6 +246,17 @@
             apps:layout_constraintStart_toEndOf="@id/imageGallery"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <net.geeksempire.blurry.effect.view.RealtimeBlurView
+        android:id="@+id/messageContentBlurryBackground"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+
+        apps:realtimeBlurRadius="11dp"
+        apps:realtimeOverlayColor="@color/light_blurry_color"
+
+        apps:layout_constraintTop_toTopOf="@id/messageContentWrapper"
+        apps:layout_constraintBottom_toBottomOf="@id/messageContentWrapper"/>
 
     <net.geeksempire.loadingspin.SpinKitView
         android:id="@+id/loadingView"

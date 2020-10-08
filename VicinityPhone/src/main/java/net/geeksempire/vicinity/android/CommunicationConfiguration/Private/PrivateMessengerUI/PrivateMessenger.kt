@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/3/20 11:40 AM
- * Last modified 10/3/20 11:40 AM
+ * Created by Elias Fazel on 10/8/20 7:09 AM
+ * Last modified 10/8/20 7:08 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -15,6 +15,7 @@ import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -27,6 +28,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseUser
@@ -49,16 +54,15 @@ import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Exten
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Extensions.privateMessengerPrepareNotificationTopic
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Extensions.privateMessengerSetupUI
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.PrivateMessengerUI.Adapter.PrivateMessengerAdapter
-import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.IMAGE_CAPTURE_REQUEST_CODE
-import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.IMAGE_PICKER_REQUEST_CODE
-import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.startImageCapture
-import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.startImagePicker
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.*
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListenerInterface
 import net.geeksempire.vicinity.android.Utils.UI.Display.DpToInteger
+import net.geeksempire.vicinity.android.Utils.UI.Images.bitmapToByteArray
 import net.geeksempire.vicinity.android.Utils.UI.Images.drawableToByteArray
+import net.geeksempire.vicinity.android.Utils.UI.Images.takeViewSnapshot
 import net.geeksempire.vicinity.android.Utils.UI.Theme.OverallTheme
 import net.geeksempire.vicinity.android.VicinityApplication
 import net.geeksempire.vicinity.android.databinding.PrivateMessengerViewBinding
@@ -105,6 +109,8 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
     }
 
     private val firebaseCloudFunctions: FirebaseFunctions = FirebaseFunctions.getInstance()
+
+    val listOfSelectedImages: ArrayList<Drawable> = ArrayList<Drawable>(3)
 
     @Inject lateinit var networkCheckpoint: NetworkCheckpoint
 
@@ -223,7 +229,7 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
         privateMessengerViewBinding.sendMessageView.setOnClickListener {
 
             if (privateMessengerViewBinding.textMessageContentView.text.toString().isNotEmpty()
-                || privateMessengerViewBinding.imageMessageContentView.drawable != null) {
+                || privateMessengerViewBinding.imageMessageContentView.isShown) {
 
                 val publicCommunityPrepareMessage = privateMessengerPrepareMessage()
                 firestoreDatabase
@@ -231,28 +237,62 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
                     .add(publicCommunityPrepareMessage)
                     .addOnSuccessListener { documentSnapshot ->
 
-                        if (privateMessengerViewBinding.imageMessageContentView.drawable != null) {
+                        if (privateMessengerViewBinding.imageMessageContentView.isShown) {
+
+                            repeat(listOfSelectedImages.size) { imageIndex ->
+
+                                val sentMessagePathForImages = PrivateCommunicationEndpoint.privateMessengerStorageImagesItemEndpoint(
+                                    privateMessengerMessagesDatabasePath = privateMessagesDatabasePath,
+                                    documentSnapshotId = documentSnapshot.id,
+                                    imageIndex = imageIndex.toString()
+                                )
+
+                                drawableToByteArray(listOfSelectedImages[imageIndex])?.let { drawableByteArray ->
+
+                                    val firebaseStorage = Firebase.storage
+                                    val storageReference = firebaseStorage.reference
+                                        .child(sentMessagePathForImages)
+                                    storageReference
+                                        .putBytes(drawableByteArray)
+                                        .addOnSuccessListener {
+
+                                        }
+
+                                }
+
+                            }
+
+                            listOfSelectedImages.clear()
 
                             val sentMessagePath = privateMessagesDatabasePath + "/" + documentSnapshot.id
 
-                            val firebaseStorage = Firebase.storage
-                            val storageReference = firebaseStorage.reference
-                                .child(sentMessagePath)
-                            storageReference
-                                .putBytes(drawableToByteArray(privateMessengerViewBinding.imageMessageContentView.drawable)!!)
-                                .addOnSuccessListener {
+                            val sentMessagePathForImages = PrivateCommunicationEndpoint.privateMessengerStoragePreviewImageEndpoint(
+                                privateMessengerMessagesDatabasePath = privateMessagesDatabasePath,
+                                documentSnapshotId = documentSnapshot.id)
 
-                                    storageReference.downloadUrl.addOnSuccessListener { imageDownloadLink ->
+                            bitmapToByteArray(takeViewSnapshot(privateMessengerViewBinding.imageMessageContentView))?.let { drawableByteArray ->
 
-                                        firestoreDatabase
-                                            .document(sentMessagePath)
-                                            .update(
-                                                "userMessageImageContent", imageDownloadLink.toString(),
-                                            )
+                                val firebaseStorage = Firebase.storage
+                                val storageReference = firebaseStorage.reference
+                                    .child(sentMessagePathForImages)
+                                storageReference
+                                    .putBytes(drawableByteArray)
+                                    .addOnSuccessListener {
+
+                                        storageReference.downloadUrl.addOnSuccessListener { imageDownloadLink ->
+
+                                            firestoreDatabase
+                                                .document(sentMessagePath)
+                                                .update(
+                                                    "userMessageImageContent", imageDownloadLink.toString(),
+                                                    "publicCommunityStorageImagesItemEndpoint", PrivateCommunicationEndpoint.privateMessengerStorageImagesItemEndpoint(privateMessagesDatabasePath, documentSnapshot.id),
+                                                )
+
+                                        }
 
                                     }
 
-                                }
+                            }
 
                         }
 
@@ -291,7 +331,9 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
                         }
 
                         privateMessengerViewBinding.textMessageContentView.text = null
-                        privateMessengerViewBinding.imageMessageContentView.setImageDrawable(null)
+                        privateMessengerViewBinding.imageMessageContentOne.setImageDrawable(null)
+                        privateMessengerViewBinding.imageMessageContentTwo.setImageDrawable(null)
+                        privateMessengerViewBinding.imageMessageContentThree.setImageDrawable(null)
                         privateMessengerViewBinding.imageMessageContentView.visibility = View.GONE
 
                         privateMessengerViewBinding.nestedScrollView.smoothScrollTo(
@@ -479,7 +521,32 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
 
                     Glide.with(applicationContext)
                         .load(selectedImage)
-                        .into(privateMessengerViewBinding.imageMessageContentView)
+                        .listener(object : RequestListener<Drawable> {
+
+                            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+
+                                return false
+                            }
+
+                            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+
+                                resource?.let {
+
+                                    listOfSelectedImages.add(resource)
+
+                                    runOnUiThread {
+
+                                        renderSelectedImagePreview(privateMessengerViewBinding, listOfSelectedImages, resource)
+
+                                    }
+
+                                }
+
+                                return false
+                            }
+
+                        })
+                        .submit()
 
                 }
 
@@ -502,7 +569,34 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
 
                     Glide.with(applicationContext)
                         .load(selectedImage)
-                        .into(privateMessengerViewBinding.imageMessageContentView)
+                        .listener(object : RequestListener<Drawable> {
+
+                            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+
+                                return false
+                            }
+
+                            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+
+                                resource?.let {
+
+                                    listOfSelectedImages.add(resource)
+
+                                    runOnUiThread {
+
+                                        renderSelectedImagePreview(privateMessengerViewBinding, listOfSelectedImages, resource)
+
+                                    }
+
+                                }
+
+                                return false
+                            }
+
+                        })
+                        .submit()
+
+
 
                 }
 
