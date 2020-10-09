@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2020 By Geeks Empire.
+  ~
+  ~ Created by Elias Fazel on 10/9/20 7:19 AM
+  ~ Last modified 10/9/20 7:15 AM
+  ~
+  ~ Licensed Under MIT License.
+  ~ https://opensource.org/licenses/MIT
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:apps="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootViewItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="29dp"
+    android:paddingHorizontal="13dp"
+    android:background="@android:color/transparent">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageMessageItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        apps:layout_constraintTop_toTopOf="parent"/>
+    
+</androidx.constraintlayout.widget.ConstraintLayout>

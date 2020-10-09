@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/8/20 7:59 AM
- * Last modified 10/8/20 7:40 AM
+ * Created by Elias Fazel on 10/9/20 7:19 AM
+ * Last modified 10/9/20 6:45 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -27,6 +27,7 @@ import com.bumptech.glide.request.target.Target
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestoreException
+import net.geeksempire.vicinity.android.CommunicationConfiguration.ImageMessage.UI.MessageImagesViewer
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.DataStructure.PrivateMessageData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.PrivateMessengerUI.PrivateMessenger
 import net.geeksempire.vicinity.android.R
@@ -88,7 +89,22 @@ class PrivateMessengerAdapter(private val context: PrivateMessenger,
 
                     val imagesStorageReference = privateMessageData.privateMessengerStorageImagesItemEndpoint
 
+                    imagesStorageReference?.let {
 
+                        context.privateMessengerViewBinding.fragmentContainer.visibility = View.VISIBLE
+                        context.privateMessengerViewBinding.fragmentContainer.bringToFront()
+
+                        val messageImagesViewer = MessageImagesViewer()
+
+                        messageImagesViewer.fragmentPlaceHolder = context.privateMessengerViewBinding.fragmentContainer
+
+                        MessageImagesViewer.open(
+                            activity = context,
+                            messageImagesViewer = messageImagesViewer,
+                            imageMessageDatabasePath = imagesStorageReference
+                        )
+
+                    }
 
                 }
 
@@ -198,7 +214,22 @@ class PrivateMessengerAdapter(private val context: PrivateMessenger,
 
                     val imagesStorageReference = privateMessageData.privateMessengerStorageImagesItemEndpoint
 
+                    imagesStorageReference?.let {
 
+                        context.privateMessengerViewBinding.fragmentContainer.visibility = View.VISIBLE
+                        context.privateMessengerViewBinding.fragmentContainer.bringToFront()
+
+                        val messageImagesViewer = MessageImagesViewer()
+
+                        messageImagesViewer.fragmentPlaceHolder = context.privateMessengerViewBinding.fragmentContainer
+
+                        MessageImagesViewer.open(
+                            activity = context,
+                            messageImagesViewer = messageImagesViewer,
+                            imageMessageDatabasePath = imagesStorageReference
+                        )
+
+                    }
 
                 }
 

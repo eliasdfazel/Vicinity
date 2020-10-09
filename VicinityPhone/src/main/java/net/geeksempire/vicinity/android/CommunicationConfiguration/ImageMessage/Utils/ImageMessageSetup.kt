@@ -1,14 +1,14 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/8/20 7:09 AM
- * Last modified 10/8/20 6:43 AM
+ * Created by Elias Fazel on 10/9/20 7:19 AM
+ * Last modified 10/9/20 5:27 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geeksempire.vicinity.android.CommunicationConfiguration.Utils
+package net.geeksempire.vicinity.android.CommunicationConfiguration.ImageMessage.Utils
 
 import android.content.Intent
 import android.graphics.drawable.Drawable
@@ -21,6 +21,8 @@ import net.geeksempire.vicinity.android.databinding.PublicCommunityViewBinding
 
 const val IMAGE_PICKER_REQUEST_CODE: Int = 123
 const val IMAGE_CAPTURE_REQUEST_CODE: Int = 456
+
+const val IMAGE_MESSAGE_DATA_STRUCTURE: String = "IMAGE_MESSAGE_DATA_STRUCTURE"
 
 fun startImagePicker(context: AppCompatActivity) {
 

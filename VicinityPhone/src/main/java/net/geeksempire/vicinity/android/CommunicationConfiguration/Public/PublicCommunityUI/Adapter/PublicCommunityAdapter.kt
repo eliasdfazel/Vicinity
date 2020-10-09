@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/5/20 8:58 AM
- * Last modified 10/5/20 8:58 AM
+ * Created by Elias Fazel on 10/9/20 7:19 AM
+ * Last modified 10/9/20 6:45 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -27,6 +27,7 @@ import com.bumptech.glide.request.target.Target
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestoreException
+import net.geeksempire.vicinity.android.CommunicationConfiguration.ImageMessage.UI.MessageImagesViewer
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.DataStructure.PublicMessageData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity
 import net.geeksempire.vicinity.android.R
@@ -88,7 +89,22 @@ class PublicCommunityAdapter(private val context: PublicCommunity,
 
                     val imagesStorageReference = publicMessageData.publicCommunityStorageImagesItemEndpoint
 
+                    imagesStorageReference?.let {
 
+                        context.publicCommunityViewBinding.fragmentContainer.visibility = View.VISIBLE
+                        context.publicCommunityViewBinding.fragmentContainer.bringToFront()
+
+                        val messageImagesViewer = MessageImagesViewer()
+
+                        messageImagesViewer.fragmentPlaceHolder = context.publicCommunityViewBinding.fragmentContainer
+
+                        MessageImagesViewer.open(
+                            activity = context,
+                            messageImagesViewer = messageImagesViewer,
+                            imageMessageDatabasePath = imagesStorageReference
+                        )
+
+                    }
 
                 }
 
@@ -197,6 +213,23 @@ class PublicCommunityAdapter(private val context: PublicCommunity,
                 viewHolder.userMessageImageContent.setOnClickListener {
 
                     val imagesStorageReference = publicMessageData.publicCommunityStorageImagesItemEndpoint
+
+                    imagesStorageReference?.let {
+
+                        context.publicCommunityViewBinding.fragmentContainer.visibility = View.VISIBLE
+                        context.publicCommunityViewBinding.fragmentContainer.bringToFront()
+
+                        val messageImagesViewer = MessageImagesViewer()
+
+                        messageImagesViewer.fragmentPlaceHolder = context.publicCommunityViewBinding.fragmentContainer
+
+                        MessageImagesViewer.open(
+                            activity = context,
+                            messageImagesViewer = messageImagesViewer,
+                            imageMessageDatabasePath = imagesStorageReference
+                        )
+
+                    }
 
 
                 }
