@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/9/20 7:19 AM
- * Last modified 10/9/20 5:27 AM
+ * Created by Elias Fazel on 10/9/20 7:35 AM
+ * Last modified 10/9/20 7:34 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -46,6 +46,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.ktx.storage
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
+import net.geeksempire.vicinity.android.CommunicationConfiguration.ImageMessage.UI.MessageImagesViewer
 import net.geeksempire.vicinity.android.CommunicationConfiguration.ImageMessage.Utils.*
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.DataStructure.PrivateMessageData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.DataStructure.PrivateMessengerData
@@ -111,6 +112,8 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
     private val firebaseCloudFunctions: FirebaseFunctions = FirebaseFunctions.getInstance()
 
     val listOfSelectedImages: ArrayList<Drawable> = ArrayList<Drawable>(3)
+
+    val messageImagesViewer = MessageImagesViewer()
 
     @Inject lateinit var networkCheckpoint: NetworkCheckpoint
 
@@ -494,8 +497,19 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
 
     override fun onBackPressed() {
 
-        this@PrivateMessenger.finish()
-        overridePendingTransition(R.anim.fade_in, R.anim.slide_out_right)
+        if (privateMessengerViewBinding.fragmentContainer.isShown) {
+
+            privateMessengerViewBinding.fragmentContainer.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.slide_out_right))
+            privateMessengerViewBinding.fragmentContainer.visibility = View.GONE
+
+            supportFragmentManager.beginTransaction().detach(messageImagesViewer)
+
+        } else {
+
+            this@PrivateMessenger.finish()
+            overridePendingTransition(R.anim.fade_in, R.anim.slide_out_right)
+
+        }
 
     }
 

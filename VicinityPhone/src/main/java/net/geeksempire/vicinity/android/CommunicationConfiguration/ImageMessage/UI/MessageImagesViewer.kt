@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/9/20 7:19 AM
- * Last modified 10/9/20 7:09 AM
+ * Created by Elias Fazel on 10/9/20 7:35 AM
+ * Last modified 10/9/20 7:35 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -13,7 +13,6 @@ package net.geeksempire.vicinity.android.CommunicationConfiguration.ImageMessage
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -119,29 +118,11 @@ class MessageImagesViewer : Fragment() {
 
         }
 
-        this@MessageImagesViewer.view?.setOnKeyListener { view, keyCode, keyEvent ->
-
-            when (keyCode) {
-                KeyEvent.KEYCODE_BACK -> {
-
-                    requireActivity().supportFragmentManager.beginTransaction().remove(this@MessageImagesViewer)
-
-                }
-            }
-
-            true
-        }
-
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        fragmentPlaceHolder?.visibility = View.GONE
-
     }
 
     private fun downloadImage(downloadLink: Uri) {
+
+        requireContext()?:return
 
         Glide.with(requireContext())
             .load(downloadLink)

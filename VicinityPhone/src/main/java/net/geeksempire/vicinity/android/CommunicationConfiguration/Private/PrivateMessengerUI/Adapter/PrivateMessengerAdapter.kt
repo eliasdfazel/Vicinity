@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/9/20 7:19 AM
- * Last modified 10/9/20 6:45 AM
+ * Created by Elias Fazel on 10/9/20 7:35 AM
+ * Last modified 10/9/20 7:22 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -94,13 +94,11 @@ class PrivateMessengerAdapter(private val context: PrivateMessenger,
                         context.privateMessengerViewBinding.fragmentContainer.visibility = View.VISIBLE
                         context.privateMessengerViewBinding.fragmentContainer.bringToFront()
 
-                        val messageImagesViewer = MessageImagesViewer()
-
-                        messageImagesViewer.fragmentPlaceHolder = context.privateMessengerViewBinding.fragmentContainer
+                        context.messageImagesViewer.fragmentPlaceHolder = context.privateMessengerViewBinding.fragmentContainer
 
                         MessageImagesViewer.open(
                             activity = context,
-                            messageImagesViewer = messageImagesViewer,
+                            messageImagesViewer = context.messageImagesViewer,
                             imageMessageDatabasePath = imagesStorageReference
                         )
 
