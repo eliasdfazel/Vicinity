@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/29/20 7:40 AM
- * Last modified 9/29/20 7:26 AM
+ * Created by Elias Fazel on 10/9/20 10:37 AM
+ * Last modified 10/9/20 10:15 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -18,6 +18,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
+import android.text.Html
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
@@ -67,6 +68,9 @@ class EntryConfiguration : AppCompatActivity() {
 
             entryConfigurationViewBinding.proceedButton.visibility = View.VISIBLE
             entryConfigurationViewBinding.agreementDataView.visibility = View.VISIBLE
+
+            entryConfigurationViewBinding.locationDisclosureView.visibility = View.VISIBLE
+            entryConfigurationViewBinding.locationDisclosureView.text = Html.fromHtml(getString(R.string.locationDisclosureText), Html.FROM_HTML_MODE_LEGACY)
 
             Handler(Looper.getMainLooper()).postDelayed({
 
