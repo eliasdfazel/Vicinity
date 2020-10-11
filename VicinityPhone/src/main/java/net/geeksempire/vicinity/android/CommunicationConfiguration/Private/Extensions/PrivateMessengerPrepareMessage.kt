@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/21/20 10:29 AM
- * Last modified 9/21/20 10:27 AM
+ * Created by Elias Fazel on 10/11/20 11:46 AM
+ * Last modified 10/11/20 11:46 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -29,9 +29,12 @@ fun PrivateMessenger.privateMessengerPrepareMessage() : LinkedHashMap<String, An
     return publicMessageDataItem
 }
 
-fun PrivateMessenger.privateMessengerPrepareNotificationData(messageContent: String, privateMessengerName: String) : LinkedHashMap<String, Any> {
+fun PrivateMessenger.privateMessengerPrepareNotificationData(
+    messageContent: String,
+    privateMessengerName: String
+) : LinkedHashMap<String, Any?> {
 
-    val publicMessageDataItem: LinkedHashMap<String, Any> = LinkedHashMap<String, Any>()
+    val publicMessageDataItem: LinkedHashMap<String, Any?> = LinkedHashMap<String, Any?>()
 
     publicMessageDataItem["notificationTopic"] = privateMessengerPrepareNotificationTopic(privateMessengerName)
     publicMessageDataItem["selfUid"] = firebaseUser.uid
@@ -40,6 +43,7 @@ fun PrivateMessenger.privateMessengerPrepareNotificationData(messageContent: Str
     publicMessageDataItem["privateMessengerName"] = privateMessengerName
     publicMessageDataItem["notificationLargeIcon"] = firebaseUser.photoUrl.toString()
     publicMessageDataItem["messageContent"] = messageContent
+    publicMessageDataItem["imageMessage"] = sentMessagePathForImages
 
     return publicMessageDataItem
 }

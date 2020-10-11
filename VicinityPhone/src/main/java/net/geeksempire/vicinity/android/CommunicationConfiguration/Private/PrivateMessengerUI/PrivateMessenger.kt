@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/9/20 7:35 AM
- * Last modified 10/9/20 7:34 AM
+ * Created by Elias Fazel on 10/11/20 11:46 AM
+ * Last modified 10/11/20 11:46 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -114,6 +114,8 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
     val listOfSelectedImages: ArrayList<Drawable> = ArrayList<Drawable>(3)
 
     val messageImagesViewer = MessageImagesViewer()
+
+    var sentMessagePathForImages: String? = null
 
     @Inject lateinit var networkCheckpoint: NetworkCheckpoint
 
@@ -242,6 +244,46 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
 
                         if (privateMessengerViewBinding.imageMessageContentView.isShown) {
 
+                            val sentMessagePath = privateMessagesDatabasePath + "/" + documentSnapshot.id
+
+                            sentMessagePathForImages = PrivateCommunicationEndpoint.privateMessengerStoragePreviewImageEndpoint(
+                                privateMessengerMessagesDatabasePath = privateMessagesDatabasePath,
+                                documentSnapshotId = documentSnapshot.id)
+
+                            bitmapToByteArray(takeViewSnapshot(privateMessengerViewBinding.imageMessageContentView))?.let { drawableByteArray ->
+
+                                val firebaseStorage = Firebase.storage
+                                val storageReference = firebaseStorage.reference
+                                    .child(sentMessagePathForImages!!)
+                                storageReference
+                                    .putBytes(drawableByteArray)
+                                    .addOnSuccessListener {
+
+                                        storageReference.downloadUrl.addOnSuccessListener { imageDownloadLink ->
+
+                                            firestoreDatabase
+                                                .document(sentMessagePath)
+                                                .update(
+                                                    "userMessageImageContent", imageDownloadLink.toString(),
+                                                    "privateMessengerStorageImagesItemEndpoint", PrivateCommunicationEndpoint.privateMessengerStorageImagesItemEndpoint(privateMessagesDatabasePath, documentSnapshot.id),
+                                                ).addOnSuccessListener {
+
+                                                    val messageContent = privateMessengerViewBinding.textMessageContentView.text.toString()
+
+                                                    if (privateMessengerName != null) {
+
+                                                        sendNotificationToOthers(messageContent, privateMessengerName)
+
+                                                    }
+
+                                                }
+
+                                        }
+
+                                    }
+
+                            }
+
                             repeat(listOfSelectedImages.size) { imageIndex ->
 
                                 val sentMessagePathForImages = PrivateCommunicationEndpoint.privateMessengerStorageImagesItemEndpoint(
@@ -266,36 +308,6 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
                             }
 
                             listOfSelectedImages.clear()
-
-                            val sentMessagePath = privateMessagesDatabasePath + "/" + documentSnapshot.id
-
-                            val sentMessagePathForImages = PrivateCommunicationEndpoint.privateMessengerStoragePreviewImageEndpoint(
-                                privateMessengerMessagesDatabasePath = privateMessagesDatabasePath,
-                                documentSnapshotId = documentSnapshot.id)
-
-                            bitmapToByteArray(takeViewSnapshot(privateMessengerViewBinding.imageMessageContentView))?.let { drawableByteArray ->
-
-                                val firebaseStorage = Firebase.storage
-                                val storageReference = firebaseStorage.reference
-                                    .child(sentMessagePathForImages)
-                                storageReference
-                                    .putBytes(drawableByteArray)
-                                    .addOnSuccessListener {
-
-                                        storageReference.downloadUrl.addOnSuccessListener { imageDownloadLink ->
-
-                                            firestoreDatabase
-                                                .document(sentMessagePath)
-                                                .update(
-                                                    "userMessageImageContent", imageDownloadLink.toString(),
-                                                    "privateMessengerStorageImagesItemEndpoint", PrivateCommunicationEndpoint.privateMessengerStorageImagesItemEndpoint(privateMessagesDatabasePath, documentSnapshot.id),
-                                                )
-
-                                        }
-
-                                    }
-
-                            }
 
                         }
 
@@ -324,12 +336,16 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
 
                         if (privateMessengerName != null) {
 
-                            firebaseCloudFunctions
-                                .getHttpsCallable(PrivateMessenger.Configurations.NotificationCloudFunction)
-                                .call(privateMessengerPrepareNotificationData(messageContent, privateMessengerName))
-                                .continueWith {
+                            if (sentMessagePathForImages != null) {
 
-                                }
+
+
+                            } else {
+
+                                sendNotificationToOthers(messageContent, privateMessengerName)
+
+
+                            }
 
                         }
 
@@ -624,6 +640,17 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
     }
 
     override fun networkLost() {
+
+    }
+
+    private fun sendNotificationToOthers(messageContent: String, privateMessengerName: String) {
+
+        firebaseCloudFunctions
+            .getHttpsCallable(PrivateMessenger.Configurations.NotificationCloudFunction)
+            .call(privateMessengerPrepareNotificationData(messageContent, privateMessengerName))
+            .continueWith {
+
+            }
 
     }
 
