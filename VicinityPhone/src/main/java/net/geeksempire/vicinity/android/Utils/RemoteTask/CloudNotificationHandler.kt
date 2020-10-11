@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/17/20 10:01 AM
- * Last modified 9/17/20 10:01 AM
+ * Created by Elias Fazel on 10/11/20 11:26 AM
+ * Last modified 10/11/20 11:02 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -25,6 +25,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.google.firebase.storage.ktx.storage
 import net.geeksempire.vicinity.android.BuildConfig
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoint.PublicCommunicationEndpoint
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity
@@ -80,16 +81,77 @@ class CloudNotificationHandler : FirebaseMessagingService() {
 
                                 val publicCommunityPendingIntent: PendingIntent = PendingIntent.getActivity(applicationContext, 666, publicCommunityIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-                                notificationCreator.create(
-                                    notificationChannelId = linkedHashMapData["publicCommunityName"].toString(),
-                                    titleText = linkedHashMapData["selfDisplayName"].toString(),
-                                    contentText = linkedHashMapData["messageContent"].toString(),
-                                    largeIcon = bitmap,
-                                    notificationColor = extractDominantColor(applicationContext, bitmap),
-                                    notificationId = System.currentTimeMillis(),
-                                    locationKnownName = LocationCheckpoint.LOCATION_INFORMATION_DETAIL,
-                                    pendingIntent = publicCommunityPendingIntent
-                                )
+                                //imageMessage
+                                val imageMessage: String? = linkedHashMapData["imageMessage"]
+
+                                if (imageMessage != null) {
+
+                                    println(">>>>>>>>>>>>>> " + imageMessage)
+
+                                    Firebase.storage.reference.child(imageMessage).downloadUrl.addOnSuccessListener { imageUri ->
+
+                                        Glide.with(applicationContext)
+                                            .asBitmap()
+                                            .load(imageUri)
+                                            .listener(object : RequestListener<Bitmap> {
+                                                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Bitmap>?, isFirstResource: Boolean): Boolean {
+
+                                                    return false
+                                                }
+
+                                                override fun onResourceReady(resource: Bitmap?, model: Any?, target: Target<Bitmap>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+
+                                                    if (resource != null) {
+
+                                                        notificationCreator.createWithImage(
+                                                            notificationChannelId = linkedHashMapData["publicCommunityName"].toString(),
+                                                            titleText = linkedHashMapData["selfDisplayName"].toString(),
+                                                            contentText = linkedHashMapData["messageContent"].toString(),
+                                                            contentImage = resource,
+                                                            largeIcon = bitmap,
+                                                            notificationColor = extractDominantColor(applicationContext, bitmap),
+                                                            notificationId = System.currentTimeMillis(),
+                                                            locationKnownName = LocationCheckpoint.LOCATION_INFORMATION_DETAIL,
+                                                            pendingIntent = publicCommunityPendingIntent
+                                                        )
+
+                                                    } else {
+
+                                                        notificationCreator.create(
+                                                            notificationChannelId = linkedHashMapData["publicCommunityName"].toString(),
+                                                            titleText = linkedHashMapData["selfDisplayName"].toString(),
+                                                            contentText = linkedHashMapData["messageContent"].toString(),
+                                                            largeIcon = bitmap,
+                                                            notificationColor = extractDominantColor(applicationContext, bitmap),
+                                                            notificationId = System.currentTimeMillis(),
+                                                            locationKnownName = LocationCheckpoint.LOCATION_INFORMATION_DETAIL,
+                                                            pendingIntent = publicCommunityPendingIntent
+                                                        )
+
+                                                    }
+
+                                                    return false
+                                                }
+
+                                            })
+                                            .submit()
+
+                                    }
+
+                                } else {
+
+                                    notificationCreator.create(
+                                        notificationChannelId = linkedHashMapData["publicCommunityName"].toString(),
+                                        titleText = linkedHashMapData["selfDisplayName"].toString(),
+                                        contentText = linkedHashMapData["messageContent"].toString(),
+                                        largeIcon = bitmap,
+                                        notificationColor = extractDominantColor(applicationContext, bitmap),
+                                        notificationId = System.currentTimeMillis(),
+                                        locationKnownName = LocationCheckpoint.LOCATION_INFORMATION_DETAIL,
+                                        pendingIntent = publicCommunityPendingIntent
+                                    )
+
+                                }
 
                             }
 

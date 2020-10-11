@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/9/20 7:35 AM
- * Last modified 10/9/20 7:35 AM
+ * Created by Elias Fazel on 10/11/20 11:26 AM
+ * Last modified 10/11/20 11:24 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -141,6 +141,8 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
     val messageImagesViewer = MessageImagesViewer()
 
+    var sentMessagePathForImages: String? = null
+
     @Inject lateinit var networkCheckpoint: NetworkCheckpoint
 
     @Inject lateinit var networkConnectionListener: NetworkConnectionListener
@@ -270,6 +272,40 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                         if (publicCommunityViewBinding.imageMessageContentView.isShown) {
 
+                            val sentMessagePath = publicCommunityMessagesDatabasePath + "/" + documentSnapshot.id
+
+                            sentMessagePathForImages = PublicCommunicationEndpoint.publicCommunityStoragePreviewImageEndpoint(
+                                publicCommunityMessagesDatabasePath = publicCommunityMessagesDatabasePath,
+                                documentSnapshotId = documentSnapshot.id)
+
+                            bitmapToByteArray(takeViewSnapshot(publicCommunityViewBinding.imageMessageContentView))?.let { drawableByteArray ->
+
+                                val firebaseStorage = Firebase.storage
+                                val storageReference = firebaseStorage.reference
+                                    .child(sentMessagePathForImages!!)
+                                storageReference
+                                    .putBytes(drawableByteArray)
+                                    .addOnSuccessListener {
+
+                                        storageReference.downloadUrl.addOnSuccessListener { imageDownloadLink ->
+
+                                            firestoreDatabase
+                                                .document(sentMessagePath)
+                                                .update(
+                                                    "userMessageImageContent", imageDownloadLink.toString(),
+                                                    "publicCommunityStorageImagesItemEndpoint", PublicCommunicationEndpoint.publicCommunityStorageImagesItemEndpoint(publicCommunityMessagesDatabasePath, documentSnapshot.id),
+                                                ).addOnSuccessListener {
+
+
+
+                                                }
+
+                                        }
+
+                                    }
+
+                            }
+
                             repeat(listOfSelectedImages.size) { imageIndex ->
 
                                 val sentMessagePathForImages = PublicCommunicationEndpoint.publicCommunityStorageImagesItemEndpoint(
@@ -294,36 +330,6 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                             }
 
                             listOfSelectedImages.clear()
-
-                            val sentMessagePath = publicCommunityMessagesDatabasePath + "/" + documentSnapshot.id
-
-                            val sentMessagePathForImages = PublicCommunicationEndpoint.publicCommunityStoragePreviewImageEndpoint(
-                                publicCommunityMessagesDatabasePath = publicCommunityMessagesDatabasePath,
-                                documentSnapshotId = documentSnapshot.id)
-
-                            bitmapToByteArray(takeViewSnapshot(publicCommunityViewBinding.imageMessageContentView))?.let { drawableByteArray ->
-
-                                val firebaseStorage = Firebase.storage
-                                val storageReference = firebaseStorage.reference
-                                    .child(sentMessagePathForImages)
-                                storageReference
-                                    .putBytes(drawableByteArray)
-                                    .addOnSuccessListener {
-
-                                        storageReference.downloadUrl.addOnSuccessListener { imageDownloadLink ->
-
-                                            firestoreDatabase
-                                                .document(sentMessagePath)
-                                                .update(
-                                                    "userMessageImageContent", imageDownloadLink.toString(),
-                                                    "publicCommunityStorageImagesItemEndpoint", PublicCommunicationEndpoint.publicCommunityStorageImagesItemEndpoint(publicCommunityMessagesDatabasePath, documentSnapshot.id),
-                                                )
-
-                                        }
-
-                                    }
-
-                            }
 
                         }
 

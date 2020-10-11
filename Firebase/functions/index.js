@@ -26,6 +26,7 @@ exports.publicCommunityNewMessageNotification = functions.runWith(runtimeOptions
     const publicCommunityName = data.publicCommunityName;
     const notificationLargeIcon = data.notificationLargeIcon;
     const messageContent = data.messageContent;
+    const imageMessage = data.imageMessage;
 
     var message = {
 
@@ -44,7 +45,8 @@ exports.publicCommunityNewMessageNotification = functions.runWith(runtimeOptions
             "vicinityLongitude": vicinityLongitude,
             "publicCommunityName": publicCommunityName,
             "notificationLargeIcon": notificationLargeIcon,
-            "messageContent": messageContent
+            "messageContent": messageContent,
+            "imageMessage": '' + imageMessage
         },
 
         topic: notificationTopic

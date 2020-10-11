@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/2/20 10:50 AM
- * Last modified 10/2/20 10:30 AM
+ * Created by Elias Fazel on 10/11/20 11:26 AM
+ * Last modified 10/11/20 10:39 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -36,9 +36,9 @@ fun PublicCommunity.publicCommunityPrepareNotificationData(
     publicCommunityName: String,
     publicCommunityCountryName: String,
     communityCenterVicinity: LatLng
-) : LinkedHashMap<String, Any> {
+) : LinkedHashMap<String, Any?> {
 
-    val publicMessageDataItem: LinkedHashMap<String, Any> = LinkedHashMap<String, Any>()
+    val publicMessageDataItem: LinkedHashMap<String, Any?> = LinkedHashMap<String, Any?>()
 
     publicMessageDataItem["notificationTopic"] = publicCommunityPrepareNotificationTopic(
         publicCommunityName
@@ -52,6 +52,7 @@ fun PublicCommunity.publicCommunityPrepareNotificationData(
     publicMessageDataItem["publicCommunityName"] = publicCommunityName
     publicMessageDataItem["notificationLargeIcon"] = firebaseUser.photoUrl.toString()
     publicMessageDataItem["messageContent"] = messageContent
+    publicMessageDataItem["imageMessage"] = sentMessagePathForImages
 
     return publicMessageDataItem
 }
