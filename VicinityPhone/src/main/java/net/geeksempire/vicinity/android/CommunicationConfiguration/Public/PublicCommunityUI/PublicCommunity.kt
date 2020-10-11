@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/11/20 11:26 AM
- * Last modified 10/11/20 11:24 AM
+ * Created by Elias Fazel on 10/11/20 11:40 AM
+ * Last modified 10/11/20 11:36 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -296,7 +296,18 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                                                     "publicCommunityStorageImagesItemEndpoint", PublicCommunicationEndpoint.publicCommunityStorageImagesItemEndpoint(publicCommunityMessagesDatabasePath, documentSnapshot.id),
                                                 ).addOnSuccessListener {
 
+                                                    val messageContent = publicCommunityViewBinding.textMessageContentView.text.toString()
 
+                                                    if (publicCommunityName != null && publicCommunityCountryName != null) {
+
+                                                        sendNotificationToOthers(
+                                                            messageContent,
+                                                            publicCommunityName,
+                                                            publicCommunityCountryName,
+                                                            communityCenterVicinity
+                                                        )
+
+                                                    }
 
                                                 }
 
@@ -359,17 +370,20 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                         if (publicCommunityName != null && publicCommunityCountryName != null) {
 
-                            firebaseCloudFunctions
-                                .getHttpsCallable(PublicCommunity.Configurations.NotificationCloudFunction)
-                                .call(publicCommunityPrepareNotificationData(
+                            if (sentMessagePathForImages != null) {
+
+                                sendNotificationToOthers(
                                     messageContent,
                                     publicCommunityName,
                                     publicCommunityCountryName,
                                     communityCenterVicinity
-                                ))
-                                .continueWith {
+                                )
 
-                                }
+                            } else {
+
+
+
+                            }
 
                         }
 
@@ -657,6 +671,25 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
     }
 
     override fun networkLost() {
+
+    }
+
+    private fun sendNotificationToOthers(messageContent: String,
+                                 publicCommunityName: String,
+                                 publicCommunityCountryName: String,
+                                 communityCenterVicinity: LatLng) {
+
+        firebaseCloudFunctions
+            .getHttpsCallable(PublicCommunity.Configurations.NotificationCloudFunction)
+            .call(publicCommunityPrepareNotificationData(
+                messageContent,
+                publicCommunityName,
+                publicCommunityCountryName,
+                communityCenterVicinity
+            ))
+            .continueWith {
+
+            }
 
     }
 

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/11/20 11:26 AM
- * Last modified 10/11/20 11:02 AM
+ * Created by Elias Fazel on 10/11/20 11:40 AM
+ * Last modified 10/11/20 11:39 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -85,8 +85,6 @@ class CloudNotificationHandler : FirebaseMessagingService() {
                                 val imageMessage: String? = linkedHashMapData["imageMessage"]
 
                                 if (imageMessage != null) {
-
-                                    println(">>>>>>>>>>>>>> " + imageMessage)
 
                                     Firebase.storage.reference.child(imageMessage).downloadUrl.addOnSuccessListener { imageUri ->
 
