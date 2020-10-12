@@ -1,8 +1,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/29/20 6:00 AM
-  ~ Last modified 9/29/20 5:52 AM
+  ~ Created by Elias Fazel on 10/12/20 11:17 AM
+  ~ Last modified 10/12/20 11:15 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -12,6 +12,8 @@
 
     <string name="publicCommunityAction" translatable="false">Public_Community_Action</string>
     <string name="privateMessengerAction" translatable="false">Private_Messenger_Action</string>
+
+    <string name="playStoreLink" translatable="false">https://play.google.com/store/apps/details?id=com.abanabsalan.aban.magazine</string>
 
     <string name="privacyAgreementLink">https://GeeksEmpire.net/Projects/Android/Vicinity/PrivacyAgreement.html</string>
 

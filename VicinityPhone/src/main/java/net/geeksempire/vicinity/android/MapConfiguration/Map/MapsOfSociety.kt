@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/29/20 11:40 AM
- * Last modified 9/29/20 11:28 AM
+ * Created by Elias Fazel on 10/12/20 11:17 AM
+ * Last modified 10/12/20 11:13 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -55,6 +55,7 @@ import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.Operations.Vic
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.VicinityCalculations
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.vicinityName
 import net.geeksempire.vicinity.android.R
+import net.geeksempire.vicinity.android.Utils.InApplicationUpdate.InApplicationUpdateProcess
 import net.geeksempire.vicinity.android.Utils.Location.LocationCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
@@ -203,6 +204,10 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
             }
 
         })
+
+        /*Invoke In Applicatio Update*/
+        InApplicationUpdateProcess(this@MapsOfSociety, mapsViewBinding.rootView)
+            .initialize()
 
     }
 
