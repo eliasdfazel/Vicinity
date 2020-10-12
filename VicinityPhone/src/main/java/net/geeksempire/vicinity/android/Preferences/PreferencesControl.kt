@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/29/20 12:59 PM
- * Last modified 9/29/20 12:59 PM
+ * Created by Elias Fazel on 10/12/20 11:47 AM
+ * Last modified 10/12/20 11:40 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -28,6 +28,7 @@ import net.geeksempire.vicinity.android.Preferences.DataHolder.PreferencesLiveDa
 import net.geeksempire.vicinity.android.Preferences.Extensions.preferencesControlSetupUI
 import net.geeksempire.vicinity.android.Preferences.Extensions.toggleLightDark
 import net.geeksempire.vicinity.android.R
+import net.geeksempire.vicinity.android.Utils.InApplicationReview.InApplicationReviewProcess
 import net.geeksempire.vicinity.android.Utils.UI.Theme.OverallTheme
 import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
 import net.geeksempire.vicinity.android.databinding.PreferencesControlViewBinding
@@ -95,6 +96,39 @@ class PreferencesControl : AppCompatActivity() {
             startActivity(Intent(applicationContext, AccountInformation::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }, ActivityOptions.makeCustomAnimation(applicationContext, R.anim.fade_in, R.anim.fade_out).toBundle())
+
+        }
+
+        preferencesControlViewBinding.sharingView.setOnClickListener {
+
+            val shareText: String = "Vicinity | Online Society" +
+                    "\n" +
+                    "Communicate With Your Vicinity & Explore New Vicinity" +
+                    "\n" + "\n" +
+                    "Install Our Application" +
+                    "\n" +
+                    "${getString(R.string.playStoreLink)}" +
+                    "\n" + "\n" +
+                    "https://www.GeeksEmpire.net" +
+                    "\n" +
+                    "#Vicinity" +
+                    "\n" +
+                    "#OnlineSociety" +
+                    ""
+
+            val shareIntent: Intent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, shareText)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            startActivity(shareIntent)
+
+        }
+
+        preferencesControlViewBinding.rateReviewView.setOnClickListener {
+
+            InApplicationReviewProcess(this@PreferencesControl)
+                .start(true)
 
         }
 

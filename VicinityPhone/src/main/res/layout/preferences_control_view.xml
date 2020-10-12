@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/29/20 12:59 PM
-  ~ Last modified 9/29/20 12:54 PM
+  ~ Created by Elias Fazel on 10/12/20 11:47 AM
+  ~ Last modified 10/12/20 11:30 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -21,6 +21,7 @@
         android:id="@+id/rootContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/transparent"
 
         apps:layout_constraintTop_toTopOf="parent"
         apps:layout_constraintBottom_toBottomOf="parent"
@@ -88,6 +89,7 @@
                 android:layout_width="179dp"
                 android:layout_height="179dp"
                 android:padding="11dp"
+                android:layout_marginVertical="7dp"
 
                 apps:lottie_rawRes="@raw/toggle_theme"
 
@@ -95,6 +97,28 @@
                 apps:layout_constraintBottom_toBottomOf="parent"
                 apps:layout_constraintStart_toStartOf="parent"
                 apps:layout_constraintEnd_toEndOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/rateReviewView"
+                android:layout_width="99dp"
+                android:layout_height="99dp"
+                android:padding="7dp"
+                android:src="@drawable/rate_icon"
+
+                apps:layout_constraintTop_toTopOf="@id/toggleThemeView"
+                apps:layout_constraintBottom_toBottomOf="@id/toggleThemeView"
+                apps:layout_constraintEnd_toStartOf="@id/toggleThemeView"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/sharingView"
+                android:layout_width="99dp"
+                android:layout_height="99dp"
+                android:padding="7dp"
+                android:src="@drawable/share_icon"
+
+                apps:layout_constraintTop_toTopOf="@id/toggleThemeView"
+                apps:layout_constraintBottom_toBottomOf="@id/toggleThemeView"
+                apps:layout_constraintStart_toEndOf="@id/toggleThemeView"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
