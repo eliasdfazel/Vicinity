@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/13/20 11:38 AM
- * Last modified 10/13/20 11:38 AM
+ * Created by Elias Fazel on 10/13/20 12:12 PM
+ * Last modified 10/13/20 12:03 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -114,23 +114,7 @@ class EntryConfiguration : AppCompatActivity() {
                     && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
                     && checkSelfPermission(Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED) {
 
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
-
-                        if (checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-                            navigateToMap()
-
-                        } else {
-
-                            runtimePermissionMessage()
-
-                        }
-
-                    } else {
-
-                        navigateToMap()
-
-                    }
+                    navigateToMap()
 
                 } else {
 
