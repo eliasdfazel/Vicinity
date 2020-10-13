@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/6/20 7:12 AM
- * Last modified 10/6/20 6:28 AM
+ * Created by Elias Fazel on 10/13/20 5:02 AM
+ * Last modified 10/13/20 5:02 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -27,7 +27,7 @@ fun PublicCommunity.publicCommunitySetupUI() {
 
             publicCommunityViewBinding.rootView.setBackgroundColor(getColor(R.color.light))
 
-            publicCommunityViewBinding.messageContentBlurryBackground.setBackgroundColor(getColor(R.color.light_blurry_color))
+            publicCommunityViewBinding.messageContentBlurryBackground.setOverlayColor(getColor(R.color.light_blurry_color))
 
             publicCommunityViewBinding.textMessageContentLayout.boxBackgroundColor = getColor(R.color.white)
 
@@ -38,7 +38,7 @@ fun PublicCommunity.publicCommunitySetupUI() {
 
             publicCommunityViewBinding.rootView.setBackgroundColor(getColor(R.color.dark))
 
-            publicCommunityViewBinding.messageContentBlurryBackground.setBackgroundColor(getColor(R.color.dark_blurry_color))
+            publicCommunityViewBinding.messageContentBlurryBackground.setOverlayColor(getColor(R.color.dark_blurry_color))
 
             publicCommunityViewBinding.textMessageContentLayout.boxBackgroundColor = getColor(R.color.black)
 
