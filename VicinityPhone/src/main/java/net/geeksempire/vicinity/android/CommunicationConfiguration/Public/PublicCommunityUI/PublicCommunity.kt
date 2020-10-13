@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/13/20 6:08 AM
- * Last modified 10/13/20 6:08 AM
+ * Created by Elias Fazel on 10/13/20 6:24 AM
+ * Last modified 10/13/20 6:21 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -63,6 +63,7 @@ import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListenerInterface
+import net.geeksempire.vicinity.android.Utils.System.DeviceSystemInformation
 import net.geeksempire.vicinity.android.Utils.UI.Display.DpToInteger
 import net.geeksempire.vicinity.android.Utils.UI.Images.bitmapToByteArray
 import net.geeksempire.vicinity.android.Utils.UI.Images.drawableToByteArray
@@ -131,6 +132,10 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
         VicinityInformation(applicationContext)
     }
 
+    private val deviceSystemInformation: DeviceSystemInformation by lazy {
+        DeviceSystemInformation(applicationContext)
+    }
+
     @Inject lateinit var networkCheckpoint: NetworkCheckpoint
 
     @Inject lateinit var networkConnectionListener: NetworkConnectionListener
@@ -169,14 +174,8 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
         val publicCommunityCountryName: String? = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityCountryName)
 
         val communityCenterVicinity = LatLng(
-            intent.getDoubleExtra(
-                PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude,
-                0.0
-            ),
-            intent.getDoubleExtra(
-                PublicCommunity.Configurations.PublicCommunityCenterLocationLongitude,
-                0.0
-            )
+            intent.getDoubleExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude, 0.0),
+            intent.getDoubleExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLongitude, 0.0)
         )
 
         Handler(Looper.getMainLooper()).postDelayed({
@@ -186,6 +185,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                 if (knownLocationName.length > 1) {
 
                     publicCommunityViewBinding.vicinityKnownName.text = knownLocationName
+                    publicCommunityViewBinding.vicinityKnownName.icon = vicinityInformation.loadCountryFlag(deviceSystemInformation.getCountryIso())
 
                     publicCommunityViewBinding.vicinityKnownName.post {
 

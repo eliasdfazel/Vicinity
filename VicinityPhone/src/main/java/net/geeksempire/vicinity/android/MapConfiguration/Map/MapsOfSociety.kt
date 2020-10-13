@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/12/20 11:17 AM
- * Last modified 10/12/20 11:13 AM
+ * Created by Elias Fazel on 10/13/20 6:24 AM
+ * Last modified 10/13/20 6:24 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -47,12 +47,12 @@ import net.geeksempire.vicinity.android.MapConfiguration.LocationDataHolder.Maps
 import net.geeksempire.vicinity.android.MapConfiguration.Map.InformationWindow.InformationWindow
 import net.geeksempire.vicinity.android.MapConfiguration.Map.InformationWindow.InformationWindowData
 import net.geeksempire.vicinity.android.MapConfiguration.Utils.MapsMarker
-import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.CountryInformation
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.CountryInformationInterface
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.Operations.CreateVicinity
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.Operations.JoinVicinity
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.Operations.VicinityUserInformation
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.VicinityCalculations
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.VicinityInformation
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.vicinityName
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.InApplicationUpdate.InApplicationUpdateProcess
@@ -114,8 +114,8 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
     var userLatitudeLongitude: LatLng? = null
     var nameOfCountry: String? = null
 
-    val countryInformation: CountryInformation by lazy {
-        CountryInformation(applicationContext)
+    val vicinityInformation: VicinityInformation by lazy {
+        VicinityInformation(applicationContext)
     }
 
     val vicinityCalculations: VicinityCalculations = VicinityCalculations()
@@ -313,7 +313,7 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
 
             if (countryIso != "Undefined") {
 
-                countryInformation.getCurrentCountryName(deviceSystemInformation.getCountryIso(), object : CountryInformationInterface {
+                vicinityInformation.getCurrentCountryName(deviceSystemInformation.getCountryIso(), object : CountryInformationInterface {
 
                     override fun countryNameReady(nameOfCountry: String) {
 
