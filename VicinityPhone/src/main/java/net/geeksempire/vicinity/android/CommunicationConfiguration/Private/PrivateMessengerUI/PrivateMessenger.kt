@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/13/20 6:33 AM
- * Last modified 10/13/20 6:33 AM
+ * Created by Elias Fazel on 10/13/20 11:38 AM
+ * Last modified 10/13/20 11:36 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -47,6 +48,7 @@ import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.ktx.storage
+import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationDataStructure
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
 import net.geeksempire.vicinity.android.CommunicationConfiguration.ImageMessage.UI.MessageImagesViewer
 import net.geeksempire.vicinity.android.CommunicationConfiguration.ImageMessage.Utils.*
@@ -160,31 +162,57 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
             firestoreDatabase
                 .document(UserInformation.userProfileDatabasePath(otherUid!!))
                 .get()
-                .addOnSuccessListener {
+                .addOnSuccessListener { documentSnapshot ->
 
-                    privateMessengerViewBinding.vicinityFriendName.text = knownLocationName
-                    privateMessengerViewBinding.vicinityFriendName.icon = vicinityInformation.loadCountryFlag(privateMessengerViewBinding.getCountryIso())
+                    Glide.with(applicationContext)
+                        .load(documentSnapshot[UserInformationDataStructure.userProfileImage].toString())
+                        .transform(CircleCrop())
+                        .listener(object : RequestListener<Drawable> {
+                            override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
 
-                    privateMessengerViewBinding.vicinityFriendName.post {
+                                return false
+                            }
 
-                        privateMessengerViewBinding.vicinityFriendName.visibility = View.VISIBLE
+                            override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
 
-                        val valueAnimatorKnownName = ValueAnimator.ofInt(1, privateMessengerViewBinding.vicinityFriendName.width)
-                        valueAnimatorKnownName.duration = 777
-                        valueAnimatorKnownName.addUpdateListener { animator ->
-                            val animatorValue = animator.animatedValue as Int
+                                runOnUiThread {
 
-                            val vicinityKnownNameLayoutParams = privateMessengerViewBinding.vicinityFriendName.layoutParams as ConstraintLayout.LayoutParams
-                            vicinityKnownNameLayoutParams.width = animatorValue
-                            privateMessengerViewBinding.vicinityFriendName.layoutParams = vicinityKnownNameLayoutParams
+                                    privateMessengerViewBinding.vicinityFriendName.icon = resource
 
-                        }
-                        valueAnimatorKnownName.start()
+                                    privateMessengerViewBinding.vicinityFriendName.text = "${documentSnapshot[UserInformationDataStructure.userDisplayName]}"
 
-                    }
+                                    privateMessengerViewBinding.vicinityFriendName.post {
+
+                                        privateMessengerViewBinding.vicinityFriendName.visibility = View.VISIBLE
+
+                                        val valueAnimatorKnownName = ValueAnimator.ofInt(
+                                            1,
+                                            privateMessengerViewBinding.vicinityFriendName.width
+                                        )
+                                        valueAnimatorKnownName.duration = 777
+                                        valueAnimatorKnownName.addUpdateListener { animator ->
+                                            val animatorValue = animator.animatedValue as Int
+
+                                            val vicinityFriendNameLayoutParams =
+                                                privateMessengerViewBinding.vicinityFriendName.layoutParams as ConstraintLayout.LayoutParams
+                                            vicinityFriendNameLayoutParams.width = animatorValue
+                                            privateMessengerViewBinding.vicinityFriendName.layoutParams =
+                                                vicinityFriendNameLayoutParams
+
+                                        }
+                                        valueAnimatorKnownName.start()
+
+                                    }
+
+                                }
+
+                                return false
+                            }
+
+                        })
+                        .submit()
 
                 }.addOnFailureListener {
-
 
 
                 }

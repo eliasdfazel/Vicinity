@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 10/9/20 10:37 AM
-  ~ Last modified 10/9/20 10:30 AM
+  ~ Created by Elias Fazel on 10/13/20 11:38 AM
+  ~ Last modified 10/13/20 10:43 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -69,23 +69,4 @@
         apps:layout_constraintStart_toStartOf="parent"
         apps:layout_constraintEnd_toEndOf="parent"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/locationDisclosureView"
-        android:layout_width="253dp"
-        android:layout_height="wrap_content"
-        android:paddingVertical="7dp"
-        android:gravity="center_vertical|top"
-        android:justificationMode="inter_word"
-        android:text="@string/locationDisclosureText"
-        android:textSize="15sp"
-        android:textColor="@color/lighter"
-        android:shadowColor="@color/light"
-        android:shadowRadius="3"
-        android:fontFamily="monospace"
-        android:visibility="invisible"
-
-        apps:layout_constraintBottom_toTopOf="@id/proceedButton"
-        apps:layout_constraintStart_toStartOf="@id/proceedButton"
-        apps:layout_constraintEnd_toEndOf="@id/proceedButton"/>
-    
 </androidx.constraintlayout.widget.ConstraintLayout>

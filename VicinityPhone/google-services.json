@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "129570253684-1tph035t1b647v8e339bft4aaurh9jfg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.geeksempire.vicinity.android",
+            "certificate_hash": "1d15eb4e4e7fc488f568267af689e34209fc705f"
+          }
+        },
+        {
           "client_id": "129570253684-bbm0bov5bns6rmaac19nldj49g11bdah.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/13/20 6:24 AM
- * Last modified 10/13/20 6:21 AM
+ * Created by Elias Fazel on 10/13/20 11:38 AM
+ * Last modified 10/13/20 11:32 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -180,34 +180,41 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
         Handler(Looper.getMainLooper()).postDelayed({
 
-            vicinityInformation.knownLocationName(communityCenterVicinity)?.let { knownLocationName ->
+            vicinityInformation.knownLocationName(communityCenterVicinity)
+                ?.let { knownLocationName ->
 
-                if (knownLocationName.length > 1) {
+                    if (knownLocationName.length > 1) {
 
-                    publicCommunityViewBinding.vicinityKnownName.text = knownLocationName
-                    publicCommunityViewBinding.vicinityKnownName.icon = vicinityInformation.loadCountryFlag(deviceSystemInformation.getCountryIso())
+                        publicCommunityViewBinding.vicinityKnownName.text = "${knownLocationName}"
+                        publicCommunityViewBinding.vicinityKnownName.icon =
+                            vicinityInformation.loadCountryFlag(deviceSystemInformation.getCountryIso())
 
-                    publicCommunityViewBinding.vicinityKnownName.post {
+                        publicCommunityViewBinding.vicinityKnownName.post {
 
-                        publicCommunityViewBinding.vicinityKnownName.visibility = View.VISIBLE
+                            publicCommunityViewBinding.vicinityKnownName.visibility = View.VISIBLE
 
-                        val valueAnimatorKnownName = ValueAnimator.ofInt(1, publicCommunityViewBinding.vicinityKnownName.width)
-                        valueAnimatorKnownName.duration = 777
-                        valueAnimatorKnownName.addUpdateListener { animator ->
-                            val animatorValue = animator.animatedValue as Int
+                            val valueAnimatorKnownName = ValueAnimator.ofInt(
+                                1,
+                                publicCommunityViewBinding.vicinityKnownName.width
+                            )
+                            valueAnimatorKnownName.duration = 777
+                            valueAnimatorKnownName.addUpdateListener { animator ->
+                                val animatorValue = animator.animatedValue as Int
 
-                            val vicinityKnownNameLayoutParams = publicCommunityViewBinding.vicinityKnownName.layoutParams as ConstraintLayout.LayoutParams
-                            vicinityKnownNameLayoutParams.width = animatorValue
-                            publicCommunityViewBinding.vicinityKnownName.layoutParams = vicinityKnownNameLayoutParams
+                                val vicinityKnownNameLayoutParams =
+                                    publicCommunityViewBinding.vicinityKnownName.layoutParams as ConstraintLayout.LayoutParams
+                                vicinityKnownNameLayoutParams.width = animatorValue
+                                publicCommunityViewBinding.vicinityKnownName.layoutParams =
+                                    vicinityKnownNameLayoutParams
+
+                            }
+                            valueAnimatorKnownName.start()
 
                         }
-                        valueAnimatorKnownName.start()
 
                     }
 
                 }
-
-            }
 
         }, 1000)
 

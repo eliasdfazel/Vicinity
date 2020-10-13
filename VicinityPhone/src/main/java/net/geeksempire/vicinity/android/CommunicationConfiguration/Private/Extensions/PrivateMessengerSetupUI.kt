@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/13/20 6:29 AM
- * Last modified 10/13/20 6:28 AM
+ * Created by Elias Fazel on 10/13/20 11:38 AM
+ * Last modified 10/13/20 11:13 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -48,14 +48,14 @@ fun PrivateMessenger.privateMessengerSetupUI() {
     }
 
     privateMessengerViewBinding.vicinityFriendName.post {
-        val vicinityKnownNameLayoutParams = privateMessengerViewBinding.vicinityFriendName.layoutParams as ConstraintLayout.LayoutParams
-        vicinityKnownNameLayoutParams.setMargins(
-            vicinityKnownNameLayoutParams.marginStart,
-            statusBarHeight(applicationContext) + vicinityKnownNameLayoutParams.topMargin,
-            vicinityKnownNameLayoutParams.marginEnd,
-            vicinityKnownNameLayoutParams.topMargin
+        val vicinityFriendNameLayoutParams = privateMessengerViewBinding.vicinityFriendName.layoutParams as ConstraintLayout.LayoutParams
+        vicinityFriendNameLayoutParams.setMargins(
+            vicinityFriendNameLayoutParams.marginStart,
+            statusBarHeight(applicationContext) + vicinityFriendNameLayoutParams.topMargin,
+            vicinityFriendNameLayoutParams.marginEnd,
+            vicinityFriendNameLayoutParams.topMargin
         )
-        privateMessengerViewBinding.vicinityFriendName.layoutParams = vicinityKnownNameLayoutParams
+        privateMessengerViewBinding.vicinityFriendName.layoutParams = vicinityFriendNameLayoutParams
     }
 
     privateMessengerViewBinding.scrollWrapper.setPadding(0, privateMessengerViewBinding.scrollWrapper.paddingTop + statusBarHeight(applicationContext), 0, 0)

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/29/20 12:59 PM
- * Last modified 9/29/20 12:56 PM
+ * Created by Elias Fazel on 10/13/20 11:38 AM
+ * Last modified 10/13/20 10:49 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -23,6 +23,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationDataStructure
 import net.geeksempire.vicinity.android.AccountManager.Extensions.accountManagerSetupUI
 import net.geeksempire.vicinity.android.AccountManager.Extensions.createUserProfile
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
@@ -99,11 +100,11 @@ class AccountInformation : AppCompatActivity() {
                             accountViewBinding.socialMediaScrollView.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in))
                             accountViewBinding.socialMediaScrollView.visibility = View.VISIBLE
 
-                            accountViewBinding.instagramAddressView.setText(documentData.data?.get("instagramAccount").toString())
+                            accountViewBinding.instagramAddressView.setText(documentData.data?.get(UserInformationDataStructure.instagramAccount).toString())
 
-                            accountViewBinding.twitterAddressView.setText(documentData.data?.get("twitterAccount").toString())
+                            accountViewBinding.twitterAddressView.setText(documentData.data?.get(UserInformationDataStructure.twitterAccount).toString())
 
-                            accountViewBinding.phoneNumberAddressView.setText(documentData.data?.get("phoneNumber").toString())
+                            accountViewBinding.phoneNumberAddressView.setText(documentData.data?.get(UserInformationDataStructure.phoneNumber).toString())
 
                         }
 
@@ -124,28 +125,35 @@ class AccountInformation : AppCompatActivity() {
                 UserInformation.GoogleSignInRequestCode -> {
 
                     val googleSignInAccountTask = GoogleSignIn.getSignedInAccountFromIntent(data)
-                    val googleSignInAccount = googleSignInAccountTask.getResult(ApiException::class.java)
+                    googleSignInAccountTask.addOnSuccessListener {
 
-                    val authCredential = GoogleAuthProvider.getCredential(googleSignInAccount?.idToken, null)
-                    firebaseAuth.signInWithCredential(authCredential).addOnSuccessListener {
+                        val googleSignInAccount = googleSignInAccountTask.getResult(ApiException::class.java)
 
-                        val firebaseUser = firebaseAuth.currentUser
+                        val authCredential = GoogleAuthProvider.getCredential(googleSignInAccount?.idToken, null)
+                        firebaseAuth.signInWithCredential(authCredential).addOnSuccessListener {
 
-                        if (firebaseUser != null) {
+                            val firebaseUser = firebaseAuth.currentUser
 
-                            val accountName: String = firebaseUser.email.toString()
+                            if (firebaseUser != null) {
 
-                            userInformationIO.saveUserInformation(accountName)
+                                val accountName: String = firebaseUser.email.toString()
 
-                            createUserProfile()
+                                userInformationIO.saveUserInformation(accountName)
 
-                            startActivity(Intent(applicationContext, MapsOfSociety::class.java),
-                                ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_in_right, 0).toBundle())
+                                createUserProfile()
+
+                                startActivity(Intent(applicationContext, MapsOfSociety::class.java),
+                                    ActivityOptions.makeCustomAnimation(applicationContext, R.anim.slide_in_right, 0).toBundle())
+
+                            }
+
+                        }.addOnFailureListener {
+
 
                         }
 
                     }.addOnFailureListener {
-
+                        it.printStackTrace()
 
                     }
 
