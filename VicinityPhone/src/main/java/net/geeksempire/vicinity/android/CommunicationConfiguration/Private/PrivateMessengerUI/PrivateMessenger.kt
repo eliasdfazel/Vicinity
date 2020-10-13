@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/13/20 6:29 AM
- * Last modified 10/13/20 6:29 AM
+ * Created by Elias Fazel on 10/13/20 6:33 AM
+ * Last modified 10/13/20 6:33 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -157,29 +157,39 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
 
         Handler(Looper.getMainLooper()).postDelayed({
 
-            //load other user icon and name
-            privateMessengerViewBinding.vicinityFriendName.text = knownLocationName
-            privateMessengerViewBinding.vicinityFriendName.icon = vicinityInformation.loadCountryFlag(privateMessengerViewBinding.getCountryIso())
+            firestoreDatabase
+                .document(UserInformation.userProfileDatabasePath(otherUid!!))
+                .get()
+                .addOnSuccessListener {
 
-            privateMessengerViewBinding.vicinityFriendName.post {
+                    privateMessengerViewBinding.vicinityFriendName.text = knownLocationName
+                    privateMessengerViewBinding.vicinityFriendName.icon = vicinityInformation.loadCountryFlag(privateMessengerViewBinding.getCountryIso())
 
-                privateMessengerViewBinding.vicinityFriendName.visibility = View.VISIBLE
+                    privateMessengerViewBinding.vicinityFriendName.post {
 
-                val valueAnimatorKnownName = ValueAnimator.ofInt(1, privateMessengerViewBinding.vicinityFriendName.width)
-                valueAnimatorKnownName.duration = 777
-                valueAnimatorKnownName.addUpdateListener { animator ->
-                    val animatorValue = animator.animatedValue as Int
+                        privateMessengerViewBinding.vicinityFriendName.visibility = View.VISIBLE
 
-                    val vicinityKnownNameLayoutParams = privateMessengerViewBinding.vicinityFriendName.layoutParams as ConstraintLayout.LayoutParams
-                    vicinityKnownNameLayoutParams.width = animatorValue
-                    privateMessengerViewBinding.vicinityFriendName.layoutParams = vicinityKnownNameLayoutParams
+                        val valueAnimatorKnownName = ValueAnimator.ofInt(1, privateMessengerViewBinding.vicinityFriendName.width)
+                        valueAnimatorKnownName.duration = 777
+                        valueAnimatorKnownName.addUpdateListener { animator ->
+                            val animatorValue = animator.animatedValue as Int
+
+                            val vicinityKnownNameLayoutParams = privateMessengerViewBinding.vicinityFriendName.layoutParams as ConstraintLayout.LayoutParams
+                            vicinityKnownNameLayoutParams.width = animatorValue
+                            privateMessengerViewBinding.vicinityFriendName.layoutParams = vicinityKnownNameLayoutParams
+
+                        }
+                        valueAnimatorKnownName.start()
+
+                    }
+
+                }.addOnFailureListener {
+
+
 
                 }
-                valueAnimatorKnownName.start()
 
-            }
-
-        }, 1000)
+        }, 555)
 
         privateMessengerName?.let {
 
