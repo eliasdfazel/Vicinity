@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 10/13/20 5:02 AM
-  ~ Last modified 10/13/20 4:58 AM
+  ~ Created by Elias Fazel on 10/13/20 6:08 AM
+  ~ Last modified 10/13/20 6:05 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -17,6 +17,36 @@
     android:layout_height="match_parent"
     android:background="@color/light"
     tools:context=".CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/vicinityKnownName"
+        android:layout_width="0dp"
+        android:layout_height="47dp"
+        android:layout_marginHorizontal="17dp"
+        android:layout_marginVertical="7dp"
+        android:gravity="center"
+        android:textAllCaps="false"
+        android:textColor="@color/light"
+        android:textSize="12sp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:insetLeft="0dp"
+        android:insetRight="0dp"
+        android:visibility="invisible"
+
+        apps:cornerRadius="51dp"
+        apps:backgroundTint="@color/default_color"
+        apps:rippleColor="@color/cyan"
+        apps:iconTintMode="add"
+        apps:iconTint="@android:color/transparent"
+        apps:iconSize="19dp"
+        apps:iconPadding="0dp"
+        apps:iconGravity="textStart"
+
+        apps:layout_constraintWidth_percent="0.5"
+        apps:layout_constraintWidth_max="197dp"
+        apps:layout_constraintStart_toStartOf="parent"
+        apps:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -45,7 +75,7 @@
                 android:isScrollContainer="false"
                 android:nestedScrollingEnabled="false"
                 android:paddingHorizontal="13dp"
-                android:paddingVertical="13dp"
+                android:paddingVertical="57dp"
                 android:persistentDrawingCache="animation|scrolling"
 
                 apps:layout_constraintBottom_toBottomOf="parent"/>

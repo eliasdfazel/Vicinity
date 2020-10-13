@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/11/20 11:40 AM
- * Last modified 10/11/20 11:36 AM
+ * Created by Elias Fazel on 10/13/20 6:08 AM
+ * Last modified 10/13/20 6:08 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,6 +10,7 @@
 
 package net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI
 
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Context
@@ -25,6 +26,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.TranslateAnimation
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -55,6 +57,7 @@ import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extens
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunityPrepareNotificationTopic
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunitySetupUI
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.Adapter.PublicCommunityAdapter
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.VicinityInformation
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.vicinityName
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
@@ -88,30 +91,11 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
         fun open(context: Context, currentCommunityCoordinates: LatLng, nameOfCountry: String) {
             context.startActivity(
                 Intent(context, PublicCommunity::class.java).apply {
-                    putExtra(
-                        PublicCommunity.Configurations.PublicCommunityName, vicinityName(
-                            currentCommunityCoordinates
-                        )
-                    )
-                    putExtra(
-                        PublicCommunity.Configurations.PublicCommunityDatabasePath,
-                        PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(
-                            nameOfCountry,
-                            currentCommunityCoordinates
-                        )
-                    )
-                    putExtra(
-                        PublicCommunity.Configurations.PublicCommunityCountryName,
-                        nameOfCountry
-                    )
-                    putExtra(
-                        PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude,
-                        currentCommunityCoordinates.latitude
-                    )
-                    putExtra(
-                        PublicCommunity.Configurations.PublicCommunityCenterLocationLongitude,
-                        currentCommunityCoordinates.longitude
-                    )
+                    putExtra(PublicCommunity.Configurations.PublicCommunityName, vicinityName(currentCommunityCoordinates))
+                    putExtra(PublicCommunity.Configurations.PublicCommunityDatabasePath, PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(nameOfCountry, currentCommunityCoordinates))
+                    putExtra(PublicCommunity.Configurations.PublicCommunityCountryName, nameOfCountry)
+                    putExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude, currentCommunityCoordinates.latitude)
+                    putExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLongitude, currentCommunityCoordinates.longitude)
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 },
                 ActivityOptions.makeCustomAnimation(context, R.anim.slide_in_right, R.anim.fade_out)
@@ -142,6 +126,10 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
     val messageImagesViewer = MessageImagesViewer()
 
     var sentMessagePathForImages: String? = null
+
+    private val vicinityInformation: VicinityInformation by lazy {
+        VicinityInformation(applicationContext)
+    }
 
     @Inject lateinit var networkCheckpoint: NetworkCheckpoint
 
@@ -191,6 +179,37 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
             )
         )
 
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            vicinityInformation.knownLocationName(communityCenterVicinity)?.let { knownLocationName ->
+
+                if (knownLocationName.length > 1) {
+
+                    publicCommunityViewBinding.vicinityKnownName.text = knownLocationName
+
+                    publicCommunityViewBinding.vicinityKnownName.post {
+
+                        publicCommunityViewBinding.vicinityKnownName.visibility = View.VISIBLE
+
+                        val valueAnimatorKnownName = ValueAnimator.ofInt(1, publicCommunityViewBinding.vicinityKnownName.width)
+                        valueAnimatorKnownName.duration = 777
+                        valueAnimatorKnownName.addUpdateListener { animator ->
+                            val animatorValue = animator.animatedValue as Int
+
+                            val vicinityKnownNameLayoutParams = publicCommunityViewBinding.vicinityKnownName.layoutParams as ConstraintLayout.LayoutParams
+                            vicinityKnownNameLayoutParams.width = animatorValue
+                            publicCommunityViewBinding.vicinityKnownName.layoutParams = vicinityKnownNameLayoutParams
+
+                        }
+                        valueAnimatorKnownName.start()
+
+                    }
+
+                }
+
+            }
+
+        }, 1000)
 
         publicCommunityName?.let {
 

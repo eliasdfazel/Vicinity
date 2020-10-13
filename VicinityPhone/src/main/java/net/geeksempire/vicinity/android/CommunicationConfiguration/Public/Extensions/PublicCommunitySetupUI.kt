@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/13/20 5:02 AM
- * Last modified 10/13/20 5:02 AM
+ * Created by Elias Fazel on 10/13/20 6:08 AM
+ * Last modified 10/13/20 6:08 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -45,6 +45,17 @@ fun PublicCommunity.publicCommunitySetupUI() {
             publicCommunityViewBinding.textMessageContentView.setTextColor(getColor(R.color.light))
 
         }
+    }
+
+    publicCommunityViewBinding.vicinityKnownName.post {
+        val vicinityKnownNameLayoutParams = publicCommunityViewBinding.vicinityKnownName.layoutParams as ConstraintLayout.LayoutParams
+        vicinityKnownNameLayoutParams.setMargins(
+            vicinityKnownNameLayoutParams.marginStart,
+            statusBarHeight(applicationContext) + vicinityKnownNameLayoutParams.topMargin,
+            vicinityKnownNameLayoutParams.marginEnd,
+            vicinityKnownNameLayoutParams.topMargin
+        )
+        publicCommunityViewBinding.vicinityKnownName.layoutParams = vicinityKnownNameLayoutParams
     }
 
     publicCommunityViewBinding.scrollWrapper.setPadding(0, publicCommunityViewBinding.scrollWrapper.paddingTop + statusBarHeight(applicationContext), 0, 0)
