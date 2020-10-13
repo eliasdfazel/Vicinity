@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/8/20 7:59 AM
- * Last modified 10/8/20 7:55 AM
+ * Created by Elias Fazel on 10/13/20 6:29 AM
+ * Last modified 10/13/20 6:28 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -45,6 +45,17 @@ fun PrivateMessenger.privateMessengerSetupUI() {
             privateMessengerViewBinding.textMessageContentView.setTextColor(getColor(R.color.light))
 
         }
+    }
+
+    privateMessengerViewBinding.vicinityFriendName.post {
+        val vicinityKnownNameLayoutParams = privateMessengerViewBinding.vicinityFriendName.layoutParams as ConstraintLayout.LayoutParams
+        vicinityKnownNameLayoutParams.setMargins(
+            vicinityKnownNameLayoutParams.marginStart,
+            statusBarHeight(applicationContext) + vicinityKnownNameLayoutParams.topMargin,
+            vicinityKnownNameLayoutParams.marginEnd,
+            vicinityKnownNameLayoutParams.topMargin
+        )
+        privateMessengerViewBinding.vicinityFriendName.layoutParams = vicinityKnownNameLayoutParams
     }
 
     privateMessengerViewBinding.scrollWrapper.setPadding(0, privateMessengerViewBinding.scrollWrapper.paddingTop + statusBarHeight(applicationContext), 0, 0)

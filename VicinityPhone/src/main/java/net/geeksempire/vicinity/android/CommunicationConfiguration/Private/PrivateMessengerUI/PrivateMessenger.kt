@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/11/20 11:46 AM
- * Last modified 10/11/20 11:46 AM
+ * Created by Elias Fazel on 10/13/20 6:29 AM
+ * Last modified 10/13/20 6:29 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,6 +10,7 @@
 
 package net.geeksempire.vicinity.android.CommunicationConfiguration.Private.PrivateMessengerUI
 
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Context
@@ -25,6 +26,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.TranslateAnimation
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -152,6 +154,32 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
         val privateMessengerName = intent.getStringExtra(PrivateMessenger.Configurations.PrivateMessengerName)
 
         val privateMessagesDatabasePath: String = intent.getStringExtra(PrivateMessenger.Configurations.PrivateMessengerDatabasePath).plus("/Messages")
+
+        Handler(Looper.getMainLooper()).postDelayed({
+
+            //load other user icon and name
+            privateMessengerViewBinding.vicinityFriendName.text = knownLocationName
+            privateMessengerViewBinding.vicinityFriendName.icon = vicinityInformation.loadCountryFlag(privateMessengerViewBinding.getCountryIso())
+
+            privateMessengerViewBinding.vicinityFriendName.post {
+
+                privateMessengerViewBinding.vicinityFriendName.visibility = View.VISIBLE
+
+                val valueAnimatorKnownName = ValueAnimator.ofInt(1, privateMessengerViewBinding.vicinityFriendName.width)
+                valueAnimatorKnownName.duration = 777
+                valueAnimatorKnownName.addUpdateListener { animator ->
+                    val animatorValue = animator.animatedValue as Int
+
+                    val vicinityKnownNameLayoutParams = privateMessengerViewBinding.vicinityFriendName.layoutParams as ConstraintLayout.LayoutParams
+                    vicinityKnownNameLayoutParams.width = animatorValue
+                    privateMessengerViewBinding.vicinityFriendName.layoutParams = vicinityKnownNameLayoutParams
+
+                }
+                valueAnimatorKnownName.start()
+
+            }
+
+        }, 1000)
 
         privateMessengerName?.let {
 
