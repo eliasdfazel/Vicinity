@@ -15,7 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "129570253684-1tph035t1b647v8e339bft4aaurh9jfg.apps.googleusercontent.com",
+          "client_id": "129570253684-hmundm4gas0utkfpn8p5s6jq8alcg93g.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "net.geeksempire.vicinity.android",
@@ -23,19 +23,11 @@
           }
         },
         {
-          "client_id": "129570253684-bbm0bov5bns6rmaac19nldj49g11bdah.apps.googleusercontent.com",
+          "client_id": "129570253684-hdlt688dr7el9n14pufbbmp4h2v5gr2m.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "net.geeksempire.vicinity.android",
             "certificate_hash": "359686083b35d472d1622218c6697e33bf56da23"
-          }
-        },
-        {
-          "client_id": "129570253684-hq9udslvt8le5tv226l41q4g97fp7qbr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "net.geeksempire.vicinity.android",
-            "certificate_hash": "c4f7ba6ff825ee77e200fa6c3edc4a749be7baac"
           }
         },
         {
