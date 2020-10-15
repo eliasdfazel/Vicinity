@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/15/20 4:45 AM
- * Last modified 10/15/20 4:45 AM
+ * Created by Elias Fazel on 10/15/20 6:34 AM
+ * Last modified 10/15/20 6:29 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -103,9 +103,10 @@ class InformationWindow (private val context: MapsOfSociety) {
                 googleMapInformationWindowBinding.instagramAddressView.setText(informationWindowData.userDocument[UserInformationDataStructure.instagramAccount].toString().toLowerCase(
                     Locale.getDefault()))
 
-                clickOnProfileInformation(googleMapInformationWindowBinding.instagramAddressLayout, "https://instagram.com/${informationWindowData.userDocument[UserInformationDataStructure.instagramAccount].toString().toLowerCase(Locale.getDefault())}")
-
-                clickOnProfileInformation(googleMapInformationWindowBinding.instagramLogo, "https://instagram.com/${informationWindowData.userDocument[UserInformationDataStructure.instagramAccount].toString()}")
+                clickOnProfileInformation(
+                    googleMapInformationWindowBinding.instagramLogo,
+                    "https://instagram.com/${informationWindowData.userDocument[UserInformationDataStructure.instagramAccount].toString()}"
+                )
 
             }
 
@@ -118,9 +119,10 @@ class InformationWindow (private val context: MapsOfSociety) {
                 googleMapInformationWindowBinding.twitterAddressLayout.hint = "${informationWindowData.userDocument[UserInformationDataStructure.userDisplayName]}'s Twitter"
                 googleMapInformationWindowBinding.twitterAddressView.setText(informationWindowData.userDocument[UserInformationDataStructure.twitterAccount].toString())
 
-                clickOnProfileInformation(googleMapInformationWindowBinding.twitterAddressLayout, "https://twitter.com/${informationWindowData.userDocument[UserInformationDataStructure.twitterAccount].toString()}")
-
-                clickOnProfileInformation(googleMapInformationWindowBinding.twitterLogo, "https://twitter.com/${informationWindowData.userDocument[UserInformationDataStructure.twitterAccount].toString()}")
+                clickOnProfileInformation(
+                    googleMapInformationWindowBinding.twitterLogo,
+                    "https://twitter.com/${informationWindowData.userDocument[UserInformationDataStructure.twitterAccount].toString()}"
+                )
 
             }
 
@@ -133,9 +135,10 @@ class InformationWindow (private val context: MapsOfSociety) {
                 googleMapInformationWindowBinding.phoneNumberAddressLayout.hint = "${informationWindowData.userDocument[UserInformationDataStructure.userDisplayName]}'s Phone"
                 googleMapInformationWindowBinding.phoneNumberAddressView.setText(informationWindowData.userDocument[UserInformationDataStructure.phoneNumber].toString().plus(if (informationWindowData.userDocument[UserInformationDataStructure.phoneNumberVerified].toString().toBoolean()) { " ✔" } else { "" }))
 
-                clickOnProfileInformation(googleMapInformationWindowBinding.twitterAddressLayout, "tel:${informationWindowData.userDocument[UserInformationDataStructure.phoneNumber].toString()}")
-
-                clickOnProfileInformation(googleMapInformationWindowBinding.twitterLogo, "tel:${informationWindowData.userDocument[UserInformationDataStructure.phoneNumber].toString()}")
+                clickOnProfileInformation(
+                    googleMapInformationWindowBinding.phoneNumberLogo,
+                    "tel:${informationWindowData.userDocument[UserInformationDataStructure.phoneNumber].toString()}"
+                )
 
             }
 
