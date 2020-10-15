@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/13/20 11:38 AM
- * Last modified 10/13/20 10:49 AM
+ * Created by Elias Fazel on 10/15/20 4:45 AM
+ * Last modified 10/15/20 4:44 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -36,6 +36,7 @@ import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListen
 import net.geeksempire.vicinity.android.Utils.UI.Theme.OverallTheme
 import net.geeksempire.vicinity.android.VicinityApplication
 import net.geeksempire.vicinity.android.databinding.AccountViewBinding
+import java.util.*
 import javax.inject.Inject
 
 class AccountInformation : AppCompatActivity() {
@@ -100,7 +101,7 @@ class AccountInformation : AppCompatActivity() {
                             accountViewBinding.socialMediaScrollView.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in))
                             accountViewBinding.socialMediaScrollView.visibility = View.VISIBLE
 
-                            accountViewBinding.instagramAddressView.setText(documentData.data?.get(UserInformationDataStructure.instagramAccount).toString())
+                            accountViewBinding.instagramAddressView.setText(documentData.data?.get(UserInformationDataStructure.instagramAccount).toString().toLowerCase(Locale.getDefault()))
 
                             accountViewBinding.twitterAddressView.setText(documentData.data?.get(UserInformationDataStructure.twitterAccount).toString())
 

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/13/20 6:24 AM
- * Last modified 10/13/20 6:24 AM
+ * Created by Elias Fazel on 10/15/20 4:45 AM
+ * Last modified 10/15/20 4:32 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -383,7 +383,7 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
             val projection: Projection = readyGoogleMap.projection
             val screenPosition = projection.toScreenLocation(markerLocation)
 
-            val cameraUpdateFactory = CameraUpdateFactory.newLatLngZoom(LatLng(markerClick.position.latitude + 0.0029753, markerClick.position.longitude), 15.77f)
+            val cameraUpdateFactory = CameraUpdateFactory.newLatLng(LatLng(markerClick.position.latitude + 0.0029753, markerClick.position.longitude))
             readyGoogleMap.animateCamera(cameraUpdateFactory)
 
             val informationWindow: InformationWindow = InformationWindow(this@MapsOfSociety)

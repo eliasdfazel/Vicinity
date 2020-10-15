@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/29/20 11:40 AM
- * Last modified 9/29/20 11:28 AM
+ * Created by Elias Fazel on 10/15/20 4:45 AM
+ * Last modified 10/15/20 4:45 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,6 +10,8 @@
 
 package net.geeksempire.vicinity.android.MapConfiguration.Map.InformationWindow
 
+import android.content.Intent
+import android.net.Uri
 import android.text.Html
 import android.view.View
 import com.google.android.gms.maps.model.Marker
@@ -20,6 +22,7 @@ import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
 import net.geeksempire.vicinity.android.databinding.GoogleMapInformationWindowBinding
+import java.util.*
 
 class InformationWindow (private val context: MapsOfSociety) {
 
@@ -90,16 +93,23 @@ class InformationWindow (private val context: MapsOfSociety) {
 
             }
 
+            //Instagram
             if (informationWindowData.userDocument[UserInformationDataStructure.instagramAccount].toString().isNotEmpty()) {
 
                 googleMapInformationWindowBinding.instagramAddressLayout.visibility = View.VISIBLE
                 googleMapInformationWindowBinding.instagramLogo.visibility = View.VISIBLE
 
                 googleMapInformationWindowBinding.instagramAddressLayout.hint = "${informationWindowData.userDocument[UserInformationDataStructure.userDisplayName]}'s Instagram"
-                googleMapInformationWindowBinding.instagramAddressView.setText(informationWindowData.userDocument[UserInformationDataStructure.instagramAccount].toString())
+                googleMapInformationWindowBinding.instagramAddressView.setText(informationWindowData.userDocument[UserInformationDataStructure.instagramAccount].toString().toLowerCase(
+                    Locale.getDefault()))
+
+                clickOnProfileInformation(googleMapInformationWindowBinding.instagramAddressLayout, "https://instagram.com/${informationWindowData.userDocument[UserInformationDataStructure.instagramAccount].toString().toLowerCase(Locale.getDefault())}")
+
+                clickOnProfileInformation(googleMapInformationWindowBinding.instagramLogo, "https://instagram.com/${informationWindowData.userDocument[UserInformationDataStructure.instagramAccount].toString()}")
 
             }
 
+            //Twitter
             if (informationWindowData.userDocument[UserInformationDataStructure.twitterAccount].toString().isNotEmpty()) {
 
                 googleMapInformationWindowBinding.twitterAddressLayout.visibility = View.VISIBLE
@@ -108,8 +118,13 @@ class InformationWindow (private val context: MapsOfSociety) {
                 googleMapInformationWindowBinding.twitterAddressLayout.hint = "${informationWindowData.userDocument[UserInformationDataStructure.userDisplayName]}'s Twitter"
                 googleMapInformationWindowBinding.twitterAddressView.setText(informationWindowData.userDocument[UserInformationDataStructure.twitterAccount].toString())
 
+                clickOnProfileInformation(googleMapInformationWindowBinding.twitterAddressLayout, "https://twitter.com/${informationWindowData.userDocument[UserInformationDataStructure.twitterAccount].toString()}")
+
+                clickOnProfileInformation(googleMapInformationWindowBinding.twitterLogo, "https://twitter.com/${informationWindowData.userDocument[UserInformationDataStructure.twitterAccount].toString()}")
+
             }
 
+            //Phone Number
             if (informationWindowData.userDocument[UserInformationDataStructure.phoneNumber].toString().isNotEmpty()) {
 
                 googleMapInformationWindowBinding.phoneNumberAddressLayout.visibility = View.VISIBLE
@@ -117,6 +132,10 @@ class InformationWindow (private val context: MapsOfSociety) {
 
                 googleMapInformationWindowBinding.phoneNumberAddressLayout.hint = "${informationWindowData.userDocument[UserInformationDataStructure.userDisplayName]}'s Phone"
                 googleMapInformationWindowBinding.phoneNumberAddressView.setText(informationWindowData.userDocument[UserInformationDataStructure.phoneNumber].toString().plus(if (informationWindowData.userDocument[UserInformationDataStructure.phoneNumberVerified].toString().toBoolean()) { " ✔" } else { "" }))
+
+                clickOnProfileInformation(googleMapInformationWindowBinding.twitterAddressLayout, "tel:${informationWindowData.userDocument[UserInformationDataStructure.phoneNumber].toString()}")
+
+                clickOnProfileInformation(googleMapInformationWindowBinding.twitterLogo, "tel:${informationWindowData.userDocument[UserInformationDataStructure.phoneNumber].toString()}")
 
             }
 
@@ -128,7 +147,7 @@ class InformationWindow (private val context: MapsOfSociety) {
 
             }
 
-            if (context.firebaseUser!!.uid != informationWindowData.userDocument[UserInformationDataStructure.userIdentification].toString()) {
+            if (context.firebaseUser.uid != informationWindowData.userDocument[UserInformationDataStructure.userIdentification].toString()) {
 
                 googleMapInformationWindowBinding.enterPrivateChat.visibility = View.VISIBLE
 
@@ -162,6 +181,18 @@ class InformationWindow (private val context: MapsOfSociety) {
     fun getRootView() : GoogleMapInformationWindowBinding {
 
         return googleMapInformationWindowBinding
+    }
+
+    private fun clickOnProfileInformation(view: View, addressLink: String) {
+
+        view.setOnClickListener {
+
+            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(addressLink)).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            })
+
+        }
+
     }
 
 }

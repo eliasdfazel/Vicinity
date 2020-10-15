@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/29/20 11:16 AM
- * Last modified 9/29/20 11:14 AM
+ * Created by Elias Fazel on 10/15/20 4:45 AM
+ * Last modified 10/15/20 4:44 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -40,6 +40,7 @@ import net.geeksempire.vicinity.android.Utils.UI.Colors.extractVibrantColor
 import net.geeksempire.vicinity.android.Utils.UI.Colors.isColorDark
 import net.geeksempire.vicinity.android.Utils.UI.Display.statusBarHeight
 import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 fun AccountInformation.accountManagerSetupUI() {
@@ -185,7 +186,7 @@ fun AccountInformation.createUserProfile() {
         val userInformationProfileData: UserInformationProfileData = UserInformationProfileData(
             privacyAgreement = userInformationIO.readPrivacyAgreement(),
             userIdentification = firebaseUser.uid, userEmailAddress = firebaseUser.email.toString(), userDisplayName = firebaseUser.displayName.toString(), userProfileImage = firebaseUser.photoUrl.toString(),
-            instagramAccount = accountViewBinding.instagramAddressView.text.toString(),
+            instagramAccount = accountViewBinding.instagramAddressView.text.toString().toLowerCase(Locale.getDefault()),
             twitterAccount = accountViewBinding.twitterAddressView.text.toString(),
             phoneNumber = accountViewBinding.phoneNumberAddressView.text.toString(),
         )
