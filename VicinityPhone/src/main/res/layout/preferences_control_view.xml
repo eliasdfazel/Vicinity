@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 10/12/20 11:47 AM
-  ~ Last modified 10/12/20 11:30 AM
+  ~ Created by Elias Fazel on 10/15/20 7:32 AM
+  ~ Last modified 10/15/20 7:30 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -94,7 +94,6 @@
                 apps:lottie_rawRes="@raw/toggle_theme"
 
                 apps:layout_constraintTop_toBottomOf="@id/accountManagerView"
-                apps:layout_constraintBottom_toBottomOf="parent"
                 apps:layout_constraintStart_toStartOf="parent"
                 apps:layout_constraintEnd_toEndOf="parent"/>
 
@@ -119,6 +118,31 @@
                 apps:layout_constraintTop_toTopOf="@id/toggleThemeView"
                 apps:layout_constraintBottom_toBottomOf="@id/toggleThemeView"
                 apps:layout_constraintStart_toEndOf="@id/toggleThemeView"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/facebookView"
+                android:layout_width="wrap_content"
+                android:layout_height="57dp"
+                android:layout_marginVertical="19dp"
+                android:textAllCaps="false"
+                android:text="@string/followFacebook"
+                android:textSize="21sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/upcil"
+
+                apps:icon="@drawable/facebook_logo"
+                apps:iconSize="51dp"
+                apps:iconTintMode="add"
+                apps:iconTint="@android:color/transparent"
+                apps:iconGravity="textStart"
+                apps:backgroundTint="@color/blueDark"
+                apps:rippleColor="@color/default_color_bright"
+                apps:cornerRadius="51dp"
+                apps:elevation="23dp"
+
+                apps:layout_constraintTop_toBottomOf="@id/toggleThemeView"
+                apps:layout_constraintStart_toStartOf="parent"
+                apps:layout_constraintEnd_toEndOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

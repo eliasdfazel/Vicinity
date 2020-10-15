@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/12/20 11:47 AM
- * Last modified 10/12/20 11:40 AM
+ * Created by Elias Fazel on 10/15/20 7:32 AM
+ * Last modified 10/15/20 7:25 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,6 +12,7 @@ package net.geeksempire.vicinity.android.Preferences
 
 import android.app.ActivityOptions
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -129,6 +130,16 @@ class PreferencesControl : AppCompatActivity() {
 
             InApplicationReviewProcess(this@PreferencesControl)
                 .start(true)
+
+        }
+
+        preferencesControlViewBinding.facebookView.setOnClickListener {
+
+            startActivity(Intent().apply {
+                action = Intent.ACTION_VIEW
+                data = Uri.parse(getString(R.string.facebookLink))
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            })
 
         }
 
