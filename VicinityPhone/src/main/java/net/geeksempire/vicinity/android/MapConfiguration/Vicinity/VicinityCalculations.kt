@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/16/20 4:03 AM
- * Last modified 9/16/20 3:23 AM
+ * Created by Elias Fazel on 10/15/20 6:59 AM
+ * Last modified 10/15/20 6:59 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -18,8 +18,11 @@ class VicinityCalculations {
     companion object {
         const val VicinityRadius: Double = 500.000
         const val VicinitySafeArea: Double = VicinityRadius * 2
+
         const val CoordinatesOffset: Double = 500.000
         const val CoordinatesOffsetRadian: Double = ((360.0 * CoordinatesOffset) / 40075000.0)
+
+        const val MarkerClickCameraOffset: Double =  0.0001533
     }
 
     fun insideVicinity(userLocation: LatLng, vicinityCenter: LatLng) : Boolean {

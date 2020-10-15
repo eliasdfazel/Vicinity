@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/15/20 4:45 AM
- * Last modified 10/15/20 4:32 AM
+ * Created by Elias Fazel on 10/15/20 6:59 AM
+ * Last modified 10/15/20 6:59 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -114,11 +114,11 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
     var userLatitudeLongitude: LatLng? = null
     var nameOfCountry: String? = null
 
+    val vicinityCalculations: VicinityCalculations = VicinityCalculations()
+
     val vicinityInformation: VicinityInformation by lazy {
         VicinityInformation(applicationContext)
     }
-
-    val vicinityCalculations: VicinityCalculations = VicinityCalculations()
 
     val createVicinity: CreateVicinity by lazy {
         CreateVicinity(applicationContext, readyGoogleMap, firestoreDatabase)
@@ -383,7 +383,7 @@ class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnection
             val projection: Projection = readyGoogleMap.projection
             val screenPosition = projection.toScreenLocation(markerLocation)
 
-            val cameraUpdateFactory = CameraUpdateFactory.newLatLng(LatLng(markerClick.position.latitude + 0.0029753, markerClick.position.longitude))
+            val cameraUpdateFactory = CameraUpdateFactory.newLatLngZoom(LatLng(markerClick.position.latitude + VicinityCalculations.MarkerClickCameraOffset, markerClick.position.longitude), 19.7f)
             readyGoogleMap.animateCamera(cameraUpdateFactory)
 
             val informationWindow: InformationWindow = InformationWindow(this@MapsOfSociety)
