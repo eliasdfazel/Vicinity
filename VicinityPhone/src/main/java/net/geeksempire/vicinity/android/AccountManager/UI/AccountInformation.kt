@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/15/20 4:45 AM
- * Last modified 10/15/20 4:44 AM
+ * Created by Elias Fazel on 10/16/20 4:40 AM
+ * Last modified 10/16/20 4:27 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -33,13 +33,14 @@ import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Location.LocationCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
+import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListenerInterface
 import net.geeksempire.vicinity.android.Utils.UI.Theme.OverallTheme
 import net.geeksempire.vicinity.android.VicinityApplication
 import net.geeksempire.vicinity.android.databinding.AccountViewBinding
 import java.util.*
 import javax.inject.Inject
 
-class AccountInformation : AppCompatActivity() {
+class AccountInformation : AppCompatActivity(), NetworkConnectionListenerInterface {
 
     val overallTheme: OverallTheme by lazy {
         OverallTheme(applicationContext)
@@ -79,6 +80,8 @@ class AccountInformation : AppCompatActivity() {
             .subDependencyGraph()
             .create(this@AccountInformation, accountViewBinding.rootView)
             .inject(this@AccountInformation)
+
+        networkConnectionListener.networkConnectionListenerInterface = this@AccountInformation
 
         if (firebaseAuth.currentUser == null) {
 
@@ -183,6 +186,14 @@ class AccountInformation : AppCompatActivity() {
         }
 
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+
+    }
+
+    override fun networkAvailable() {
+
+    }
+
+    override fun networkLost() {
 
     }
 

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/15/20 6:59 AM
- * Last modified 10/15/20 6:59 AM
+ * Created by Elias Fazel on 10/16/20 4:40 AM
+ * Last modified 10/16/20 4:26 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -68,7 +68,8 @@ import net.geeksempire.vicinity.android.VicinityApplication
 import net.geeksempire.vicinity.android.databinding.MapsViewBinding
 import javax.inject.Inject
 
-class MapsOfSociety : AppCompatActivity(), OnMapReadyCallback, NetworkConnectionListenerInterface,
+class MapsOfSociety : AppCompatActivity(), NetworkConnectionListenerInterface,
+    OnMapReadyCallback,
     GoogleMap.OnMarkerClickListener,
     GoogleMap.OnMapLongClickListener, GoogleMap.OnMapClickListener,
     GoogleMap.OnCameraMoveListener, GoogleMap.OnCameraIdleListener {
