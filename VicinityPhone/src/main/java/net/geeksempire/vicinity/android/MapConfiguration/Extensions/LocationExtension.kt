@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/17/20 9:59 AM
- * Last modified 9/17/20 9:57 AM
+ * Created by Elias Fazel on 10/16/20 11:11 AM
+ * Last modified 10/16/20 10:45 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -127,9 +127,10 @@ fun MapsOfSociety.getLocationDetails() {
             resultToContinueWith["ClientAddressIP"] as String
 
         }.addOnSuccessListener {
-            Log.d(this@getLocationDetails.javaClass.simpleName, "IP Address ::: ${LocationCheckpoint.LOCATION_KNOWN_IP}")
 
             LocationCheckpoint.LOCATION_KNOWN_IP = it
+
+            Log.d(this@getLocationDetails.javaClass.simpleName, "IP Address ::: ${LocationCheckpoint.LOCATION_KNOWN_IP}")
 
         }.addOnFailureListener {
 

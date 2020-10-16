@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/16/20 4:40 AM
- * Last modified 10/16/20 4:26 AM
+ * Created by Elias Fazel on 10/16/20 11:11 AM
+ * Last modified 10/16/20 11:10 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -196,7 +196,7 @@ class MapsOfSociety : AppCompatActivity(), NetworkConnectionListenerInterface,
                     val vicinityUserInformation = VicinityUserInformation(firestoreDatabase,
                         PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(nameOfCountry!!, PublicCommunicationEndpoint.CurrentCommunityCoordinates!!))
 
-                    vicinityUserInformation.updateLocation(firebaseUser!!.uid,
+                    vicinityUserInformation.updateLocation(firebaseUser.uid,
                         location.latitude.toString(), location.longitude.toString(),
                         vicinityName(PublicCommunicationEndpoint.CurrentCommunityCoordinates!!), PublicCommunicationEndpoint.CurrentCommunityCoordinates!!)
 
@@ -399,7 +399,7 @@ class MapsOfSociety : AppCompatActivity(), NetworkConnectionListenerInterface,
                 .document(UserInformation.userProfileDatabasePath(markerClick.tag as String))
                 .get()
                 .addOnSuccessListener {
-                    Log.d(this@MapsOfSociety.javaClass.simpleName, "$it")
+                    Log.d(this@MapsOfSociety.javaClass.simpleName, "${it.data}")
 
                     val informationWindowData = InformationWindowData(
                         userDocument = it
