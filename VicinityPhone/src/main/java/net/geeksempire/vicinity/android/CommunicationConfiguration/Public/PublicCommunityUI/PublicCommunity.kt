@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/13/20 11:38 AM
- * Last modified 10/13/20 11:32 AM
+ * Created by Elias Fazel on 10/17/20 6:37 AM
+ * Last modified 10/17/20 6:37 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -48,8 +48,6 @@ import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.ktx.storage
-import net.geeksempire.vicinity.android.CommunicationConfiguration.ImageMessage.UI.MessageImagesViewer
-import net.geeksempire.vicinity.android.CommunicationConfiguration.ImageMessage.Utils.*
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.DataStructure.PublicMessageData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoint.PublicCommunicationEndpoint
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunityPrepareMessage
@@ -57,6 +55,8 @@ import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extens
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunityPrepareNotificationTopic
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunitySetupUI
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.Adapter.PublicCommunityAdapter
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.ImageMessage.UI.MessageImagesViewer
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.ImageMessage.Utils.*
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.VicinityInformation
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.vicinityName
 import net.geeksempire.vicinity.android.R

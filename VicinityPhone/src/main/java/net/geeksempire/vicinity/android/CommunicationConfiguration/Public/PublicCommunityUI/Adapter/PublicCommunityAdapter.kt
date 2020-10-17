@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/9/20 7:35 AM
- * Last modified 10/9/20 7:21 AM
+ * Created by Elias Fazel on 10/17/20 6:37 AM
+ * Last modified 10/17/20 6:37 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -27,9 +27,9 @@ import com.bumptech.glide.request.target.Target
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestoreException
-import net.geeksempire.vicinity.android.CommunicationConfiguration.ImageMessage.UI.MessageImagesViewer
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.DataStructure.PublicMessageData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.ImageMessage.UI.MessageImagesViewer
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Calendar.formatToCurrentTimeZone
 import net.geeksempire.vicinity.android.Utils.UI.Colors.extractDominantColor

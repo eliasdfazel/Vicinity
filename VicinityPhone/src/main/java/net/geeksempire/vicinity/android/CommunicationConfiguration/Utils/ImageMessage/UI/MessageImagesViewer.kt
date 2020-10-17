@@ -1,14 +1,14 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/9/20 7:35 AM
- * Last modified 10/9/20 7:35 AM
+ * Created by Elias Fazel on 10/17/20 6:37 AM
+ * Last modified 10/17/20 4:47 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geeksempire.vicinity.android.CommunicationConfiguration.ImageMessage.UI
+package net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.ImageMessage.UI
 
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -28,9 +28,9 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import net.geeksempire.vicinity.android.CommunicationConfiguration.ImageMessage.UI.Adapter.MessageImagesData
-import net.geeksempire.vicinity.android.CommunicationConfiguration.ImageMessage.UI.Adapter.MessageImagesViewerAdapter
-import net.geeksempire.vicinity.android.CommunicationConfiguration.ImageMessage.Utils.IMAGE_MESSAGE_DATA_STRUCTURE
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.ImageMessage.UI.Adapter.MessageImagesData
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.ImageMessage.UI.Adapter.MessageImagesViewerAdapter
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.ImageMessage.Utils.IMAGE_MESSAGE_DATA_STRUCTURE
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.databinding.MessageImagesViewBinding
 

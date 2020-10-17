@@ -1,14 +1,14 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/9/20 7:19 AM
- * Last modified 10/9/20 7:19 AM
+ * Created by Elias Fazel on 10/17/20 6:37 AM
+ * Last modified 10/17/20 4:47 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
  */
 
-package net.geeksempire.vicinity.android.CommunicationConfiguration.ImageMessage.UI.Adapter
+package net.geeksempire.vicinity.android.CommunicationConfiguration.Utils.ImageMessage.UI.Adapter
 
 import android.graphics.drawable.Drawable
 import android.view.View
