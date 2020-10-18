@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 8:32 AM
- * Last modified 10/18/20 8:31 AM
+ * Created by Elias Fazel on 10/18/20 8:33 AM
+ * Last modified 10/18/20 8:33 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -49,14 +49,14 @@ fun HistoryLists.historyListsSetupUI() {
 
 }
 
-fun historyButtonBackgroundChange(context: Context, publicHistory: MaterialButton, privateHistory: MaterialButton) {
+fun historyButtonBackgroundChange(context: Context, firstButton: MaterialButton, secondButton: MaterialButton) {
 
     val activatePublicValueAnimator = ValueAnimator.ofArgb(context.getColor(R.color.default_color_dark), context.getColor(R.color.default_color_bright))
     activatePublicValueAnimator.duration = 555
     activatePublicValueAnimator.addUpdateListener { animator ->
         val animatorValue = animator.animatedValue as Int
 
-        publicHistory.backgroundTintList = ColorStateList.valueOf(animatorValue)
+        firstButton.backgroundTintList = ColorStateList.valueOf(animatorValue)
 
     }
     activatePublicValueAnimator.start()
@@ -66,7 +66,7 @@ fun historyButtonBackgroundChange(context: Context, publicHistory: MaterialButto
     deactivatePrivateValueAnimator.addUpdateListener { animator ->
         val animatorValue = animator.animatedValue as Int
 
-        privateHistory.backgroundTintList = ColorStateList.valueOf(animatorValue)
+        secondButton.backgroundTintList = ColorStateList.valueOf(animatorValue)
 
     }
     deactivatePrivateValueAnimator.start()
