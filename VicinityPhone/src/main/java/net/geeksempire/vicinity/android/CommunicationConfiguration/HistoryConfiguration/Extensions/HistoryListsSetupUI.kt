@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 8:25 AM
- * Last modified 10/18/20 8:23 AM
+ * Created by Elias Fazel on 10/18/20 8:28 AM
+ * Last modified 10/18/20 8:28 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -51,7 +51,7 @@ fun HistoryLists.historyListsSetupUI() {
 
 fun publicHistoryButtonBackgroundChange(context: Context, publicHistory: MaterialButton, privateHistory: MaterialButton) {
 
-    val activatePublicValueAnimator = ValueAnimator.ofInt(context.getColor(R.color.default_color_dark), context.getColor(R.color.default_color_bright))
+    val activatePublicValueAnimator = ValueAnimator.ofArgb(context.getColor(R.color.default_color_dark), context.getColor(R.color.default_color_bright))
     activatePublicValueAnimator.duration = 555
     activatePublicValueAnimator.addUpdateListener { animator ->
         val animatorValue = animator.animatedValue as Int
@@ -61,7 +61,7 @@ fun publicHistoryButtonBackgroundChange(context: Context, publicHistory: Materia
     }
     activatePublicValueAnimator.start()
 
-    val deactivatePrivateValueAnimator = ValueAnimator.ofInt(context.getColor(R.color.default_color_bright), context.getColor(R.color.default_color_dark))
+    val deactivatePrivateValueAnimator = ValueAnimator.ofArgb(context.getColor(R.color.default_color_bright), context.getColor(R.color.default_color_dark))
     deactivatePrivateValueAnimator.duration = 555
     deactivatePrivateValueAnimator.addUpdateListener { animator ->
         val animatorValue = animator.animatedValue as Int
@@ -75,7 +75,7 @@ fun publicHistoryButtonBackgroundChange(context: Context, publicHistory: Materia
 
 fun privateHistoryButtonBackgroundChange(context: Context, publicHistory: MaterialButton, privateHistory: MaterialButton) {
 
-    val deactivatePublicValueAnimator = ValueAnimator.ofInt(context.getColor(R.color.default_color_bright), context.getColor(R.color.default_color_dark))
+    val deactivatePublicValueAnimator = ValueAnimator.ofArgb(context.getColor(R.color.default_color_bright), context.getColor(R.color.default_color_dark))
     deactivatePublicValueAnimator.duration = 555
     deactivatePublicValueAnimator.addUpdateListener { animator ->
         val animatorValue = animator.animatedValue as Int
@@ -85,7 +85,7 @@ fun privateHistoryButtonBackgroundChange(context: Context, publicHistory: Materi
     }
     deactivatePublicValueAnimator.start()
 
-    val activatePrivateValueAnimator = ValueAnimator.ofInt(context.getColor(R.color.default_color_dark), context.getColor(R.color.default_color_bright))
+    val activatePrivateValueAnimator = ValueAnimator.ofArgb(context.getColor(R.color.default_color_dark), context.getColor(R.color.default_color_bright))
     activatePrivateValueAnimator.duration = 555
     activatePrivateValueAnimator.addUpdateListener { animator ->
         val animatorValue = animator.animatedValue as Int
