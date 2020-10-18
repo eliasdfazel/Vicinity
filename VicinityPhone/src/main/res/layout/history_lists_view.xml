@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 10/18/20 5:38 AM
-  ~ Last modified 10/18/20 5:38 AM
+  ~ Created by Elias Fazel on 10/18/20 5:42 AM
+  ~ Last modified 10/18/20 5:41 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -54,7 +54,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/historySwitcher"
+        android:id="@+id/publicHistory"
         android:layout_width="177dp"
         android:layout_height="57dp"
         android:lines="1"
@@ -62,8 +62,22 @@
         android:textAllCaps="false"
         android:gravity="start|center_vertical"
 
+        apps:layout_constraintDimensionRatio="1:1"
         apps:layout_constraintBottom_toBottomOf="parent"
         apps:layout_constraintStart_toStartOf="parent"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/privateHistory"
+        android:layout_width="177dp"
+        android:layout_height="57dp"
+        android:lines="1"
+        android:ellipsize="end"
+        android:textAllCaps="false"
+        android:gravity="start|center_vertical"
+
+        apps:layout_constraintDimensionRatio="1:1"
+        apps:layout_constraintBottom_toBottomOf="parent"
         apps:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

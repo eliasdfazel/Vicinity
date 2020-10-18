@@ -1,8 +1,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 10/15/20 7:32 AM
-  ~ Last modified 10/15/20 7:09 AM
+  ~ Created by Elias Fazel on 10/18/20 5:42 AM
+  ~ Last modified 10/18/20 5:39 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -34,6 +34,9 @@
     <string name="sendMessageText">Send Message</string>
 
     <string name="shareImage">Share Image With Vicinity</string>
+
+    <string name="publicHistory">Public History</string>
+    <string name="privateHistory">Private History</string>
 
     <string name="messageSentError">⚠ An Error Occurred. Try Again…</string>
 
