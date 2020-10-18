@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/19/20 10:20 AM
- * Last modified 9/19/20 8:10 AM
+ * Created by Elias Fazel on 10/18/20 8:38 AM
+ * Last modified 10/18/20 8:36 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -33,6 +33,10 @@ fun MapsOfSociety.mapsOfSocietySetupUI() {
     val preferenceViewLayoutParams = mapsViewBinding.preferenceView.layoutParams as ConstraintLayout.LayoutParams
     preferenceViewLayoutParams.setMargins(0, preferenceViewLayoutParams.topMargin + statusBarHeight(applicationContext), 0, 0)
     mapsViewBinding.preferenceView.layoutParams = preferenceViewLayoutParams
+
+    val communicationHistoryLayoutParams = mapsViewBinding.communicationHistory.layoutParams as ConstraintLayout.LayoutParams
+    communicationHistoryLayoutParams.setMargins(0, communicationHistoryLayoutParams.topMargin + statusBarHeight(applicationContext), 0, 0)
+    mapsViewBinding.communicationHistory.layoutParams = communicationHistoryLayoutParams
 
     clicksSetup()
 

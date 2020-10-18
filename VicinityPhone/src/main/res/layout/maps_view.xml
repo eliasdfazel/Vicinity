@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 10/18/20 5:38 AM
-  ~ Last modified 10/18/20 5:30 AM
+  ~ Created by Elias Fazel on 10/18/20 8:38 AM
+  ~ Last modified 10/18/20 8:37 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -52,7 +52,7 @@
         android:layout_width="53dp"
         android:layout_height="53dp"
         android:layout_marginTop="13dp"
-        android:layout_marginEnd="13dp"
+        android:layout_marginStart="13dp"
         android:gravity="center"
         android:insetTop="0dp"
         android:insetBottom="0dp"
@@ -63,8 +63,8 @@
         apps:cornerRadius="51dp"
         apps:backgroundTint="@color/default_color_transparent_twice"
         apps:rippleColor="@color/default_color_game_light"
-        apps:icon="@drawable/setting_icon"
-        apps:iconSize="37dp"
+        apps:icon="@drawable/communication_history_icon"
+        apps:iconSize="43dp"
         apps:iconPadding="0dp"
         apps:iconGravity="textStart"
 
