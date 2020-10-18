@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/16/20 11:11 AM
- * Last modified 10/16/20 11:10 AM
+ * Created by Elias Fazel on 10/18/20 5:38 AM
+ * Last modified 10/18/20 5:28 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -39,6 +39,7 @@ import com.google.firebase.ktx.Firebase
 import net.geeksempire.chat.vicinity.Util.MapsUtil.LocationCoordinatesUpdater
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformationIO
+import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.HistoryUI.HistoryLists
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoint.PublicCommunicationEndpoint
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity
 import net.geeksempire.vicinity.android.EntryConfiguration
@@ -205,6 +206,12 @@ class MapsOfSociety : AppCompatActivity(), NetworkConnectionListenerInterface,
             }
 
         })
+
+        mapsViewBinding.communicationHistory.setOnClickListener {
+
+            startActivity(Intent(applicationContext, HistoryLists::class.java))
+
+        }
 
         /*Invoke In Applicatio Update*/
         InApplicationUpdateProcess(this@MapsOfSociety, mapsViewBinding.rootView)

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 5:18 AM
- * Last modified 10/18/20 5:17 AM
+ * Created by Elias Fazel on 10/18/20 5:38 AM
+ * Last modified 10/18/20 5:38 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -32,6 +32,7 @@ import net.geeksempire.vicinity.android.databinding.HistoryListsViewBinding
 import net.geekstools.floatshort.PRO.Utils.UI.Gesture.GestureConstants
 import net.geekstools.floatshort.PRO.Utils.UI.Gesture.GestureListenerConstants
 import net.geekstools.floatshort.PRO.Utils.UI.Gesture.GestureListenerInterface
+import net.geekstools.floatshort.PRO.Utils.UI.Gesture.SwipeGestureListener
 import javax.inject.Inject
 
 class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConnectionListenerInterface {
@@ -46,6 +47,10 @@ class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConne
 
     private val historyListsAdapter: HistoryListsAdapter by lazy {
         HistoryListsAdapter(this@HistoryLists)
+    }
+
+    private val swipeGestureListener: SwipeGestureListener by lazy {
+        SwipeGestureListener(applicationContext, this@HistoryLists)
     }
 
     @Inject lateinit var networkCheckpoint: NetworkCheckpoint
@@ -137,6 +142,14 @@ class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConne
         super.onBackPressed()
     }
 
+    override fun dispatchTouchEvent(motionEvent: MotionEvent?): Boolean {
+        motionEvent?.let {
+            swipeGestureListener.onTouchEvent(it)
+        }
+
+        return super.dispatchTouchEvent(motionEvent)
+    }
+
     override fun onSwipeGesture(gestureConstants: GestureConstants, downMotionEvent: MotionEvent, moveMotionEvent: MotionEvent, initVelocityX: Float, initVelocityY: Float) {
         super.onSwipeGesture(gestureConstants, downMotionEvent, moveMotionEvent, initVelocityX, initVelocityY)
 
@@ -145,12 +158,12 @@ class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConne
                 when (gestureConstants.horizontalDirection) {
                     GestureListenerConstants.SWIPE_RIGHT -> {
 
-
+                        historyLiveData.publicHistoryNetworkOperation()
 
                     }
                     GestureListenerConstants.SWIPE_LEFT -> {
 
-
+                        historyLiveData.privateHistoryNetworkOperation()
 
                     }
                 }
