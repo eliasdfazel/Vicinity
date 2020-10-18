@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 5:18 AM
- * Last modified 10/18/20 5:18 AM
+ * Created by Elias Fazel on 10/18/20 9:00 AM
+ * Last modified 10/18/20 8:59 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -44,11 +44,11 @@ class HistoryLiveData : ViewModel() {
 
                     publicMessengerData.add(UserInformationVicinityArchiveData(
                         vicinityCountry = documentSnapshot[VicinityDataStructure.vicinityCountry].toString(),
-                        vicinityName = documentSnapshot[VicinityDataStructure.vicinityCountry].toString(),
-                        vicinityLatitude = documentSnapshot[VicinityDataStructure.vicinityCountry].toString(),
-                        vicinityLongitude = documentSnapshot[VicinityDataStructure.vicinityCountry].toString(),
-                        lastLatitude = documentSnapshot[VicinityDataStructure.vicinityCountry].toString(),
-                        lastLongitude = documentSnapshot[VicinityDataStructure.vicinityCountry].toString()
+                        vicinityName = documentSnapshot[VicinityDataStructure.vicinityName].toString(),
+                        vicinityLatitude = documentSnapshot[VicinityDataStructure.vicinityLatitude].toString(),
+                        vicinityLongitude = documentSnapshot[VicinityDataStructure.vicinityLongitude].toString(),
+                        lastLatitude = documentSnapshot[VicinityDataStructure.lastLatitude].toString(),
+                        lastLongitude = documentSnapshot[VicinityDataStructure.lastLongitude].toString()
                     ))
 
                 }

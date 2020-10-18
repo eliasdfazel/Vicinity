@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 4:03 AM
- * Last modified 10/18/20 3:37 AM
+ * Created by Elias Fazel on 10/18/20 9:00 AM
+ * Last modified 10/18/20 8:57 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -15,8 +15,10 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.history_lists_items.view.*
+import net.geekstools.imageview.customshapes.ShapesImage
 
 class HistoryListsViewHolder (view: View) : RecyclerView.ViewHolder(view) {
     val rootViewItem: ConstraintLayout = view.rootViewItem
-    val vicinityKnownName: TextView = view.vicinityKnownName
+    val communicationLogo: ShapesImage = view.communicationLogo
+    val communicationName: TextView = view.communicationName
 }
