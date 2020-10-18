@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/21/20 11:10 AM
- * Last modified 9/21/20 11:05 AM
+ * Created by Elias Fazel on 10/18/20 9:04 AM
+ * Last modified 10/18/20 9:04 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -34,7 +34,7 @@ class UserInformation(private val context: AccountInformation) {
 
         fun userVicinityArchiveDatabasePath(userUniqueIdentifier: String, vicinityName: String) : String = "Vicinity/UserInformation/${userUniqueIdentifier}/History/PublicCommunity/${vicinityName}"
 
-        fun  userPrivateMessengerArchiveDatabasePath(userUniqueIdentifier: String, privateMessengerName:  String) : String = "Vicinity/UserInformation/${userUniqueIdentifier}/History/PrivateMessenger/${privateMessengerName}"
+        fun userPrivateMessengerArchiveDatabasePath(userUniqueIdentifier: String, privateMessengerName:  String) : String = "Vicinity/UserInformation/${userUniqueIdentifier}/History/PrivateMessenger/${privateMessengerName}"
 
     }
 
