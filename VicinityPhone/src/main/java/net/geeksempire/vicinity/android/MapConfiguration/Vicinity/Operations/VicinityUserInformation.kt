@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/20/20 9:10 AM
- * Last modified 9/20/20 9:10 AM
+ * Created by Elias Fazel on 10/18/20 9:14 AM
+ * Last modified 10/18/20 9:10 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -35,6 +35,7 @@ import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.DataStructure.VicinityData
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.vicinityName
 import net.geeksempire.vicinity.android.R
+import net.geeksempire.vicinity.android.Utils.Location.LocationCheckpoint
 import net.geeksempire.vicinity.android.Utils.UI.Images.drawableToBitmap
 import net.geeksempire.vicinity.android.Utils.UI.Images.getCircularBitmapWithWhiteBorder
 
@@ -55,6 +56,7 @@ class VicinityUserInformation (private val firestoreDatabase: FirebaseFirestore,
                     val userInformationArchiveData = UserInformationVicinityArchiveData(
                         vicinityCountry = vicinityData.countryName,
                         vicinityName = vicinityName(LatLng(vicinityData.centerLatitude.toDouble(), vicinityData.centerLongitude.toDouble())),
+                        vicinityKnownName = LocationCheckpoint.LOCATION_KNOWN_NAME.toString(),
                         vicinityLatitude = vicinityData.centerLatitude,
                         vicinityLongitude = vicinityData.centerLongitude,
                         lastLatitude = userInformationData.userLatitude,
@@ -169,6 +171,7 @@ class VicinityUserInformation (private val firestoreDatabase: FirebaseFirestore,
                 firestoreDatabase
                     .document(UserInformation.userVicinityArchiveDatabasePath(userIdentification, currentVicinityName))
                     .update(
+                        "vicinityKnownName", LocationCheckpoint.LOCATION_KNOWN_NAME.toString(),
                         "lastLatitude", userLatitude,
                         "lastLongitude", userLongitude,
                         "vicinityLatitude", currentVicinityLocation.latitude,
