@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/17/20 6:45 AM
- * Last modified 10/17/20 6:43 AM
+ * Created by Elias Fazel on 10/18/20 4:03 AM
+ * Last modified 10/18/20 3:50 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -15,7 +15,12 @@ import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.DataStructure.HistoryLiveData
+import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.Extensions.historyListsSetupUI
+import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.HistoryUI.Adapter.HistoryListsAdapter
+import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.HistoryUI.Adapter.HistoryType
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListenerInterface
@@ -56,7 +61,15 @@ class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConne
 
         networkConnectionListener.networkConnectionListenerInterface = this@HistoryLists
 
+        historyListsSetupUI()
+
+        historyListsViewBinding.historyRecyclerView.layoutManager = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
+
+        val historyListsAdapter: HistoryListsAdapter = HistoryListsAdapter(this@HistoryLists)
+
         historyLiveData.publicCommunicationHistory.observe(this@HistoryLists, Observer {
+
+            historyListsAdapter.historyType = HistoryType.PUBLIC
 
             if (!it.isNullOrEmpty()) {
 
@@ -71,6 +84,8 @@ class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConne
         })
 
         historyLiveData.privateCommunicationHistory.observe(this@HistoryLists, Observer {
+
+            historyListsAdapter.historyType = HistoryType.PRIVATE
 
             if (!it.isNullOrEmpty()) {
 

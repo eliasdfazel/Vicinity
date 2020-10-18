@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/15/20 6:34 AM
- * Last modified 10/15/20 6:29 AM
+ * Created by Elias Fazel on 10/18/20 4:03 AM
+ * Last modified 10/18/20 3:59 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -165,14 +165,18 @@ class InformationWindow (private val context: MapsOfSociety) {
             googleMapInformationWindowBinding.enterPrivateChat.setOnClickListener {
 
                 val selfUid = context.firebaseUser.uid
+                val selfUsername = context.firebaseUser.displayName
+
                 val otherUid = "${informationWindowData.userDocument[UserInformationDataStructure.userIdentification]}"
+                val otherUsername = "${informationWindowData.userDocument[UserInformationDataStructure.userDisplayName]}"
 
                 val privateMessengerName = privateMessengerName(selfUid, otherUid)
 
                 PrivateMessenger.open(
                     context = context,
                     privateMessengerName = privateMessengerName,
-                    otherUid = otherUid
+                    otherUid = otherUid,
+                    otherUsername = otherUsername
                 )
 
             }

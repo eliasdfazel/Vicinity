@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/17/20 6:37 AM
- * Last modified 10/17/20 6:37 AM
+ * Created by Elias Fazel on 10/18/20 4:03 AM
+ * Last modified 10/18/20 4:02 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -79,6 +79,7 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
     object Configurations {
         const val PrivateMessengerName: String = "PrivateMessengerName"
         const val OtherUid: String = "OtherUid"
+        const val OtherUsername: String = "OtherUsername"
         const val PrivateMessengerDatabasePath: String = "PrivateMessengerDatabasePath"
 
         const val NotificationCloudFunction: String = "privateNewMessageNotification"
@@ -86,11 +87,14 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
 
     companion object {
 
-        fun open(context: Context, privateMessengerName: String, otherUid: String) {
+        fun open(context: Context, privateMessengerName: String,
+                 otherUid: String,
+                 otherUsername: String) {
 
             context.startActivity(Intent(context, PrivateMessenger::class.java).apply {
                 putExtra(PrivateMessenger.Configurations.PrivateMessengerName, privateMessengerName)
                 putExtra(PrivateMessenger.Configurations.OtherUid, otherUid)
+                putExtra(PrivateMessenger.Configurations.OtherUsername, otherUsername)
                 putExtra(PrivateMessenger.Configurations.PrivateMessengerDatabasePath, PrivateCommunicationEndpoint.privateMessengerDocumentEndpoint(privateMessengerName))
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }, ActivityOptions.makeCustomAnimation(context, R.anim.slide_in_right, R.anim.fade_out).toBundle())
@@ -151,7 +155,8 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
 
         networkConnectionListener.networkConnectionListenerInterface = this@PrivateMessenger
 
-        val otherUid = intent.getStringExtra(PrivateMessenger.Configurations.OtherUid)
+        val otherUid = intent.getStringExtra(PrivateMessenger.Configurations.OtherUid)!!
+        val otherUsername = intent.getStringExtra(PrivateMessenger.Configurations.OtherUsername)!!
 
         val privateMessengerName = intent.getStringExtra(PrivateMessenger.Configurations.PrivateMessengerName)
 
@@ -160,7 +165,7 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
         Handler(Looper.getMainLooper()).postDelayed({
 
             firestoreDatabase
-                .document(UserInformation.userProfileDatabasePath(otherUid!!))
+                .document(UserInformation.userProfileDatabasePath(otherUid))
                 .get()
                 .addOnSuccessListener { documentSnapshot ->
 
@@ -232,26 +237,24 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
 
             intent.getStringExtra(PrivateMessenger.Configurations.PrivateMessengerDatabasePath)?.let {
 
-                if (otherUid != null) {
+                val privateMessengerData = PrivateMessengerData(
+                    PersonOne = firebaseUser.uid,
+                    PersonOneUsername = firebaseUser.displayName!!,
+                    PersonTwo = otherUid,
+                    PersonTwoUsername = otherUsername
+                )
 
-                    val privateMessengerData = PrivateMessengerData(
-                        PersonOne = firebaseUser.uid,
-                        PersonTwo = otherUid
-                    )
+                firestoreDatabase
+                    .document(it)
+                    .set(privateMessengerData)
 
-                    firestoreDatabase
-                        .document(it)
-                        .set(privateMessengerData)
+                firestoreDatabase
+                    .document(UserInformation.userPrivateMessengerArchiveDatabasePath(firebaseUser.uid, privateMessengerName))
+                    .set(privateMessengerData)
 
-                    firestoreDatabase
-                        .document(UserInformation.userPrivateMessengerArchiveDatabasePath(firebaseUser.uid, privateMessengerName))
-                        .set(privateMessengerData)
-
-                    firestoreDatabase
-                        .document(UserInformation.userPrivateMessengerArchiveDatabasePath(otherUid, privateMessengerName))
-                        .set(privateMessengerData)
-
-                }
+                firestoreDatabase
+                    .document(UserInformation.userPrivateMessengerArchiveDatabasePath(otherUid, privateMessengerName))
+                    .set(privateMessengerData)
 
             }
 
