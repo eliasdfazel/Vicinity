@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 4:03 AM
- * Last modified 10/18/20 3:50 AM
+ * Created by Elias Fazel on 10/18/20 5:18 AM
+ * Last modified 10/18/20 5:17 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -21,6 +21,8 @@ import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfig
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.Extensions.historyListsSetupUI
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.HistoryUI.Adapter.HistoryListsAdapter
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.HistoryUI.Adapter.HistoryType
+import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.Utils.defaultHistoryView
+import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.Utils.saveDefaultHistoryView
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListenerInterface
@@ -38,8 +40,12 @@ class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConne
         OverallTheme(applicationContext)
     }
 
-    val historyLiveData: HistoryLiveData by lazy {
+    private val historyLiveData: HistoryLiveData by lazy {
         ViewModelProvider(this@HistoryLists).get(HistoryLiveData::class.java)
+    }
+
+    private val historyListsAdapter: HistoryListsAdapter by lazy {
+        HistoryListsAdapter(this@HistoryLists)
     }
 
     @Inject lateinit var networkCheckpoint: NetworkCheckpoint
@@ -65,7 +71,7 @@ class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConne
 
         historyListsViewBinding.historyRecyclerView.layoutManager = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
 
-        val historyListsAdapter: HistoryListsAdapter = HistoryListsAdapter(this@HistoryLists)
+        historyListsViewBinding.historyRecyclerView.adapter = historyListsAdapter
 
         historyLiveData.publicCommunicationHistory.observe(this@HistoryLists, Observer {
 
@@ -73,7 +79,10 @@ class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConne
 
             if (!it.isNullOrEmpty()) {
 
+                historyListsAdapter.publicMessengerData.clear()
+                historyListsAdapter.publicMessengerData.addAll(it)
 
+                historyListsAdapter.notifyDataSetChanged()
 
             } else {
 
@@ -89,7 +98,10 @@ class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConne
 
             if (!it.isNullOrEmpty()) {
 
+                historyListsAdapter.privateMessengerData.clear()
+                historyListsAdapter.privateMessengerData.addAll(it)
 
+                historyListsAdapter.notifyDataSetChanged()
 
             } else {
 
@@ -98,6 +110,26 @@ class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConne
             }
 
         })
+
+        when (defaultHistoryView(applicationContext)) {
+            HistoryType.PUBLIC -> {
+
+                historyLiveData.publicHistoryNetworkOperation()
+
+            }
+            HistoryType.PRIVATE -> {
+
+                historyLiveData.privateHistoryNetworkOperation()
+
+            }
+        }
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        saveDefaultHistoryView(applicationContext, historyListsAdapter.historyType)
 
     }
 

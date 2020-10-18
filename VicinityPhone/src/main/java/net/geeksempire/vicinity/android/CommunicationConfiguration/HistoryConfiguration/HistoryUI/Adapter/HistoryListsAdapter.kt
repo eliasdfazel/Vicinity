@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 4:03 AM
- * Last modified 10/18/20 3:54 AM
+ * Created by Elias Fazel on 10/18/20 5:18 AM
+ * Last modified 10/18/20 5:08 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -28,8 +28,8 @@ class HistoryListsAdapter(private val context: HistoryLists) : RecyclerView.Adap
 
     var historyType: String = "public"
 
-    var publicMessengerData: ArrayList<UserInformationVicinityArchiveData> = ArrayList<UserInformationVicinityArchiveData>()
-    var privateMessengerData: ArrayList<PrivateMessengerData> = ArrayList<PrivateMessengerData>()
+    val publicMessengerData: ArrayList<UserInformationVicinityArchiveData> = ArrayList<UserInformationVicinityArchiveData>()
+    val privateMessengerData: ArrayList<PrivateMessengerData> = ArrayList<PrivateMessengerData>()
 
     override fun getItemViewType(position: Int): Int {
 
