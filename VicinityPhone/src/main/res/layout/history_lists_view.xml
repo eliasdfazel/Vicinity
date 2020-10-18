@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 10/18/20 5:42 AM
-  ~ Last modified 10/18/20 5:41 AM
+  ~ Created by Elias Fazel on 10/18/20 6:08 AM
+  ~ Last modified 10/18/20 6:08 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -44,7 +44,8 @@
                 android:isScrollContainer="false"
                 android:nestedScrollingEnabled="false"
                 android:paddingHorizontal="13dp"
-                android:paddingVertical="57dp"
+                android:paddingTop="17dp"
+                android:paddingBottom="71dp"
                 android:persistentDrawingCache="animation|scrolling"
 
                 apps:layout_constraintBottom_toBottomOf="parent"/>
@@ -53,6 +54,19 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <net.geeksempire.loadingspin.SpinKitView
+        android:id="@+id/loadingView"
+        android:layout_width="333dp"
+        android:layout_height="333dp"
+
+        apps:SpinKit_Color="@color/light_pink"
+        apps:SpinKit_Style="Pulse"
+
+        apps:layout_constraintTop_toTopOf="parent"
+        apps:layout_constraintBottom_toBottomOf="parent"
+        apps:layout_constraintStart_toStartOf="parent"
+        apps:layout_constraintEnd_toEndOf="parent"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/publicHistory"
         android:layout_width="177dp"
@@ -60,12 +74,19 @@
         android:lines="1"
         android:ellipsize="end"
         android:textAllCaps="false"
-        android:gravity="start|center_vertical"
+        android:text="@string/publicHistory"
+        android:textColor="@color/light"
+        android:textSize="13sp"
 
-        apps:layout_constraintDimensionRatio="1:1"
+        apps:cornerRadius="51dp"
+        apps:elevation="13dp"
+        apps:backgroundTint="@color/default_color_bright"
+
+
         apps:layout_constraintBottom_toBottomOf="parent"
         apps:layout_constraintStart_toStartOf="parent"
-        />
+        apps:layout_constraintEnd_toStartOf="@id/privateHistory"
+        apps:layout_constraintHorizontal_chainStyle="spread" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/privateHistory"
@@ -74,10 +95,17 @@
         android:lines="1"
         android:ellipsize="end"
         android:textAllCaps="false"
-        android:gravity="start|center_vertical"
+        android:text="@string/privateHistory"
+        android:textColor="@color/light"
+        android:textSize="13sp"
 
-        apps:layout_constraintDimensionRatio="1:1"
+        apps:cornerRadius="51dp"
+        apps:elevation="13dp"
+        apps:backgroundTint="@color/default_color_dark"
+
         apps:layout_constraintBottom_toBottomOf="parent"
-        apps:layout_constraintEnd_toEndOf="parent"/>
+        apps:layout_constraintEnd_toEndOf="parent"
+        apps:layout_constraintStart_toEndOf="@id/publicHistory"
+        apps:layout_constraintHorizontal_chainStyle="spread" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
