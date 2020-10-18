@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 9:29 AM
- * Last modified 10/18/20 9:29 AM
+ * Created by Elias Fazel on 10/18/20 9:41 AM
+ * Last modified 10/18/20 9:31 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -261,6 +261,7 @@ class VicinityInformation (private val context: Context) {
 //const val UK
 //const val UM
         const val US = "US"
+        const val UnitedStates = "United States"
 //const val UY
 //const val UZ
 //const val VA
@@ -320,7 +321,7 @@ class VicinityInformation (private val context: Context) {
     fun loadCountryFlag(countryISO: String?) : Drawable? {
 
         return when (countryISO) {
-            VicinityInformation.CountriesName.US -> {
+            VicinityInformation.CountriesName.US, VicinityInformation.CountriesName.UnitedStates -> {
                 context.getDrawable(R.drawable.ic_usd_flag)
             }
             else -> {

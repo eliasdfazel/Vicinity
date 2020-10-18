@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 9:29 AM
- * Last modified 10/18/20 9:26 AM
+ * Created by Elias Fazel on 10/18/20 9:41 AM
+ * Last modified 10/18/20 9:40 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -66,11 +66,11 @@ class HistoryListsAdapter(private val context: HistoryLists) : RecyclerView.Adap
             }
             HistoryType.PRIVATE -> {
 
-                historyListsViewHolder.communicationName.text = "${privateMessengerData[position].PersonOneUsername}" +
-                        " with " +
-                        "${privateMessengerData[position].PersonTwoUsername}"
-
                 if (privateMessengerData[position].PersonOne == context.firebaseUser.uid) {
+
+                    historyListsViewHolder.communicationName.text = "${privateMessengerData[position].PersonTwoUsername}" +
+                            " with " +
+                            "${privateMessengerData[position].PersonOneUsername}"
 
                     Glide.with(context)
                         .load(privateMessengerData[position].PersonTwoProfileImage)
@@ -78,6 +78,10 @@ class HistoryListsAdapter(private val context: HistoryLists) : RecyclerView.Adap
                         .into(historyListsViewHolder.communicationLogo)
 
                 } else {
+
+                    historyListsViewHolder.communicationName.text = "${privateMessengerData[position].PersonOneUsername}" +
+                            " with " +
+                            "${privateMessengerData[position].PersonTwoUsername}"
 
                     Glide.with(context)
                         .load(privateMessengerData[position].PersonOneProfileImage)
