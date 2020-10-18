@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 6:08 AM
- * Last modified 10/18/20 6:08 AM
+ * Created by Elias Fazel on 10/18/20 8:25 AM
+ * Last modified 10/18/20 8:25 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,6 +12,7 @@ package net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfi
 
 import android.os.Bundle
 import android.view.MotionEvent
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +20,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.DataStructure.HistoryLiveData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.Extensions.historyListsSetupUI
+import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.Extensions.privateHistoryButtonBackgroundChange
+import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.Extensions.publicHistoryButtonBackgroundChange
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.HistoryUI.Adapter.HistoryListsAdapter
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.HistoryUI.Adapter.HistoryType
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.Utils.defaultHistoryView
@@ -89,6 +92,10 @@ class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConne
 
                 historyListsAdapter.notifyDataSetChanged()
 
+                historyListsViewBinding.loadingView.visibility = View.INVISIBLE
+
+                publicHistoryButtonBackgroundChange(applicationContext, historyListsViewBinding.publicHistory, historyListsViewBinding.privateHistory)
+
             } else {
 
 
@@ -108,6 +115,11 @@ class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConne
 
                 historyListsAdapter.notifyDataSetChanged()
 
+                historyListsViewBinding.loadingView.visibility = View.INVISIBLE
+
+                privateHistoryButtonBackgroundChange(applicationContext, historyListsViewBinding.publicHistory, historyListsViewBinding.privateHistory)
+
+
             } else {
 
 
@@ -119,10 +131,14 @@ class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConne
         when (defaultHistoryView(applicationContext)) {
             HistoryType.PUBLIC -> {
 
+                historyListsViewBinding.loadingView.visibility = View.VISIBLE
+
                 historyLiveData.publicHistoryNetworkOperation()
 
             }
             HistoryType.PRIVATE -> {
+
+                historyListsViewBinding.loadingView.visibility = View.VISIBLE
 
                 historyLiveData.privateHistoryNetworkOperation()
 
@@ -131,15 +147,17 @@ class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConne
 
         historyListsViewBinding.publicHistory.setOnClickListener {
 
-            historyLiveData.publicHistoryNetworkOperation()
+            historyListsViewBinding.loadingView.visibility = View.VISIBLE
 
+            historyLiveData.publicHistoryNetworkOperation()
 
         }
 
         historyListsViewBinding.privateHistory.setOnClickListener {
 
-            historyLiveData.privateHistoryNetworkOperation()
+            historyListsViewBinding.loadingView.visibility = View.VISIBLE
 
+            historyLiveData.privateHistoryNetworkOperation()
 
         }
 
@@ -153,7 +171,9 @@ class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConne
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
+
+        this@HistoryLists.finish()
+
     }
 
     override fun dispatchTouchEvent(motionEvent: MotionEvent?): Boolean {
@@ -172,10 +192,14 @@ class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConne
                 when (gestureConstants.horizontalDirection) {
                     GestureListenerConstants.SWIPE_RIGHT -> {
 
+                        historyListsViewBinding.loadingView.visibility = View.VISIBLE
+
                         historyLiveData.publicHistoryNetworkOperation()
 
                     }
                     GestureListenerConstants.SWIPE_LEFT -> {
+
+                        historyListsViewBinding.loadingView.visibility = View.VISIBLE
 
                         historyLiveData.privateHistoryNetworkOperation()
 

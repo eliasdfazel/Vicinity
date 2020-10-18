@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 10/18/20 6:08 AM
-  ~ Last modified 10/18/20 6:08 AM
+  ~ Created by Elias Fazel on 10/18/20 8:25 AM
+  ~ Last modified 10/18/20 8:07 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -43,7 +43,7 @@
                 android:drawSelectorOnTop="true"
                 android:isScrollContainer="false"
                 android:nestedScrollingEnabled="false"
-                android:paddingHorizontal="13dp"
+                android:paddingHorizontal="19dp"
                 android:paddingTop="17dp"
                 android:paddingBottom="71dp"
                 android:persistentDrawingCache="animation|scrolling"
@@ -69,8 +69,9 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/publicHistory"
-        android:layout_width="177dp"
+        android:layout_width="191dp"
         android:layout_height="57dp"
+        android:layout_marginBottom="23dp"
         android:lines="1"
         android:ellipsize="end"
         android:textAllCaps="false"
@@ -90,8 +91,9 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/privateHistory"
-        android:layout_width="177dp"
+        android:layout_width="191dp"
         android:layout_height="57dp"
+        android:layout_marginBottom="23dp"
         android:lines="1"
         android:ellipsize="end"
         android:textAllCaps="false"
