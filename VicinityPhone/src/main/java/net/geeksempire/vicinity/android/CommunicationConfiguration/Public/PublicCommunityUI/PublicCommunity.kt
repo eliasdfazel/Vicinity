@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/17/20 6:37 AM
- * Last modified 10/17/20 6:37 AM
+ * Created by Elias Fazel on 10/18/20 9:03 AM
+ * Last modified 10/18/20 9:02 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -185,26 +185,26 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
                     if (knownLocationName.length > 1) {
 
-                        publicCommunityViewBinding.vicinityKnownName.text = "${knownLocationName}"
-                        publicCommunityViewBinding.vicinityKnownName.icon =
+                        publicCommunityViewBinding.communicationName.text = "${knownLocationName}"
+                        publicCommunityViewBinding.communicationName.icon =
                             vicinityInformation.loadCountryFlag(deviceSystemInformation.getCountryIso())
 
-                        publicCommunityViewBinding.vicinityKnownName.post {
+                        publicCommunityViewBinding.communicationName.post {
 
-                            publicCommunityViewBinding.vicinityKnownName.visibility = View.VISIBLE
+                            publicCommunityViewBinding.communicationName.visibility = View.VISIBLE
 
                             val valueAnimatorKnownName = ValueAnimator.ofInt(
                                 1,
-                                publicCommunityViewBinding.vicinityKnownName.width
+                                publicCommunityViewBinding.communicationName.width
                             )
                             valueAnimatorKnownName.duration = 777
                             valueAnimatorKnownName.addUpdateListener { animator ->
                                 val animatorValue = animator.animatedValue as Int
 
                                 val vicinityKnownNameLayoutParams =
-                                    publicCommunityViewBinding.vicinityKnownName.layoutParams as ConstraintLayout.LayoutParams
+                                    publicCommunityViewBinding.communicationName.layoutParams as ConstraintLayout.LayoutParams
                                 vicinityKnownNameLayoutParams.width = animatorValue
-                                publicCommunityViewBinding.vicinityKnownName.layoutParams =
+                                publicCommunityViewBinding.communicationName.layoutParams =
                                     vicinityKnownNameLayoutParams
 
                             }
