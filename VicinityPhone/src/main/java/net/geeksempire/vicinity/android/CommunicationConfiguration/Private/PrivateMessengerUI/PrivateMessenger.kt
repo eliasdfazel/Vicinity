@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 4:03 AM
- * Last modified 10/18/20 4:02 AM
+ * Created by Elias Fazel on 10/18/20 9:29 AM
+ * Last modified 10/18/20 9:20 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -80,6 +80,7 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
         const val PrivateMessengerName: String = "PrivateMessengerName"
         const val OtherUid: String = "OtherUid"
         const val OtherUsername: String = "OtherUsername"
+        const val OtherProfileImage: String = "OtherProfileImage"
         const val PrivateMessengerDatabasePath: String = "PrivateMessengerDatabasePath"
 
         const val NotificationCloudFunction: String = "privateNewMessageNotification"
@@ -89,12 +90,14 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
 
         fun open(context: Context, privateMessengerName: String,
                  otherUid: String,
-                 otherUsername: String) {
+                 otherUsername: String,
+                 otherProfileImage: String) {
 
             context.startActivity(Intent(context, PrivateMessenger::class.java).apply {
                 putExtra(PrivateMessenger.Configurations.PrivateMessengerName, privateMessengerName)
                 putExtra(PrivateMessenger.Configurations.OtherUid, otherUid)
                 putExtra(PrivateMessenger.Configurations.OtherUsername, otherUsername)
+                putExtra(PrivateMessenger.Configurations.OtherProfileImage, otherProfileImage)
                 putExtra(PrivateMessenger.Configurations.PrivateMessengerDatabasePath, PrivateCommunicationEndpoint.privateMessengerDocumentEndpoint(privateMessengerName))
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             }, ActivityOptions.makeCustomAnimation(context, R.anim.slide_in_right, R.anim.fade_out).toBundle())
@@ -157,6 +160,7 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
 
         val otherUid = intent.getStringExtra(PrivateMessenger.Configurations.OtherUid)!!
         val otherUsername = intent.getStringExtra(PrivateMessenger.Configurations.OtherUsername)!!
+        val otherProfileImage = intent.getStringExtra(PrivateMessenger.Configurations.OtherProfileImage)!!
 
         val privateMessengerName = intent.getStringExtra(PrivateMessenger.Configurations.PrivateMessengerName)
 
@@ -240,8 +244,10 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
                 val privateMessengerData = PrivateMessengerData(
                     PersonOne = firebaseUser.uid,
                     PersonOneUsername = firebaseUser.displayName!!,
+                    PersonOneProfileImage = firebaseUser.photoUrl.toString(),
                     PersonTwo = otherUid,
-                    PersonTwoUsername = otherUsername
+                    PersonTwoUsername = otherUsername,
+                    PersonTwoProfileImage = otherProfileImage
                 )
 
                 firestoreDatabase

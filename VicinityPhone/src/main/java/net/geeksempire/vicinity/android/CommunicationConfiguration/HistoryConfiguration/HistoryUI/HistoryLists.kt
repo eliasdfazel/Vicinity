@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 8:32 AM
- * Last modified 10/18/20 8:32 AM
+ * Created by Elias Fazel on 10/18/20 9:29 AM
+ * Last modified 10/18/20 9:23 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -18,6 +18,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.DataStructure.HistoryLiveData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.Extensions.historyButtonBackgroundChange
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.Extensions.historyListsSetupUI
@@ -38,6 +40,8 @@ import net.geekstools.floatshort.PRO.Utils.UI.Gesture.SwipeGestureListener
 import javax.inject.Inject
 
 class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConnectionListenerInterface {
+
+    val firebaseUser = Firebase.auth.currentUser!!
 
     val overallTheme: OverallTheme by lazy {
         OverallTheme(applicationContext)

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 9:14 AM
- * Last modified 10/18/20 9:09 AM
+ * Created by Elias Fazel on 10/18/20 9:29 AM
+ * Last modified 10/18/20 9:26 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -13,6 +13,8 @@ package net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfi
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationVicinityArchiveData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.HistoryUI.HistoryLists
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.DataStructure.PrivateMessengerData
@@ -59,12 +61,30 @@ class HistoryListsAdapter(private val context: HistoryLists) : RecyclerView.Adap
 
                 historyListsViewHolder.communicationName.text = publicMessengerData[position].vicinityKnownName
 
+
+
             }
             HistoryType.PRIVATE -> {
 
                 historyListsViewHolder.communicationName.text = "${privateMessengerData[position].PersonOneUsername}" +
                         " with " +
                         "${privateMessengerData[position].PersonTwoUsername}"
+
+                if (privateMessengerData[position].PersonOne == context.firebaseUser.uid) {
+
+                    Glide.with(context)
+                        .load(privateMessengerData[position].PersonTwoProfileImage)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(historyListsViewHolder.communicationLogo)
+
+                } else {
+
+                    Glide.with(context)
+                        .load(privateMessengerData[position].PersonOneProfileImage)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(historyListsViewHolder.communicationLogo)
+
+                }
 
             }
         }

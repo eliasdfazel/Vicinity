@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 5:18 AM
- * Last modified 10/18/20 5:10 AM
+ * Created by Elias Fazel on 10/18/20 9:29 AM
+ * Last modified 10/18/20 9:19 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -21,6 +21,8 @@ object PrivateMessengerUsersDataStructure {
 
 data class PrivateMessengerData (var PersonOne: String,
                                  var PersonOneUsername: String,
+                                 var PersonOneProfileImage: String,
                                  var PersonTwo: String,
                                  var PersonTwoUsername: String,
+                                 var PersonTwoProfileImage: String,
                                  var Date: FieldValue = FieldValue.serverTimestamp())

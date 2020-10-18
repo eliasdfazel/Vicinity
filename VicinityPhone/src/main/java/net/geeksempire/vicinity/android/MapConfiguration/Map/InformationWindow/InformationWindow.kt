@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 4:03 AM
- * Last modified 10/18/20 3:59 AM
+ * Created by Elias Fazel on 10/18/20 9:29 AM
+ * Last modified 10/18/20 9:18 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -166,9 +166,11 @@ class InformationWindow (private val context: MapsOfSociety) {
 
                 val selfUid = context.firebaseUser.uid
                 val selfUsername = context.firebaseUser.displayName
+                val selfProfileImage = context.firebaseUser.photoUrl.toString()
 
                 val otherUid = "${informationWindowData.userDocument[UserInformationDataStructure.userIdentification]}"
                 val otherUsername = "${informationWindowData.userDocument[UserInformationDataStructure.userDisplayName]}"
+                val otherProfileImage = "${informationWindowData.userDocument[UserInformationDataStructure.userProfileImage]}"
 
                 val privateMessengerName = privateMessengerName(selfUid, otherUid)
 
@@ -176,7 +178,8 @@ class InformationWindow (private val context: MapsOfSociety) {
                     context = context,
                     privateMessengerName = privateMessengerName,
                     otherUid = otherUid,
-                    otherUsername = otherUsername
+                    otherUsername = otherUsername,
+                    otherProfileImage = otherProfileImage
                 )
 
             }
