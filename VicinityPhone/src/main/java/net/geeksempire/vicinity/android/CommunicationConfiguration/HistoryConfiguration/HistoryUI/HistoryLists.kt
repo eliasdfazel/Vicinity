@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 9:29 AM
- * Last modified 10/18/20 9:23 AM
+ * Created by Elias Fazel on 10/18/20 9:52 AM
+ * Last modified 10/18/20 9:48 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -27,6 +27,7 @@ import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfig
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.HistoryUI.Adapter.HistoryType
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.Utils.defaultHistoryView
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.Utils.saveDefaultHistoryView
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.VicinityInformation
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkCheckpoint
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListener
 import net.geeksempire.vicinity.android.Utils.Networking.NetworkConnectionListenerInterface
@@ -53,6 +54,10 @@ class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConne
 
     private val historyListsAdapter: HistoryListsAdapter by lazy {
         HistoryListsAdapter(this@HistoryLists)
+    }
+
+    val vicinityInformation: VicinityInformation by lazy {
+        VicinityInformation(applicationContext)
     }
 
     private val swipeGestureListener: SwipeGestureListener by lazy {
