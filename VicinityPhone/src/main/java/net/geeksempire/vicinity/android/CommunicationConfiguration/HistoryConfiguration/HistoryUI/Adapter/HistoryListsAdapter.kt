@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 9:52 AM
- * Last modified 10/18/20 9:51 AM
+ * Created by Elias Fazel on 10/18/20 9:56 AM
+ * Last modified 10/18/20 9:53 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -48,10 +48,12 @@ class HistoryListsAdapter(private val context: HistoryLists) : RecyclerView.Adap
         when (context.overallTheme.checkThemeLightDark()) {
             ThemeType.ThemeLight -> {
 
+                historyListsViewHolder.communicationName.setTextColor(context.getColor(R.color.dark))
 
             }
             ThemeType.ThemeDark -> {
 
+                historyListsViewHolder.communicationName.setTextColor(context.getColor(R.color.light))
 
             }
         }
