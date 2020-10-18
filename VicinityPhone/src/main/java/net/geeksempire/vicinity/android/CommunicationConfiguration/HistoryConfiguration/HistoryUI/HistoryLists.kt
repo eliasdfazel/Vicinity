@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 8:25 AM
- * Last modified 10/18/20 8:25 AM
+ * Created by Elias Fazel on 10/18/20 8:32 AM
+ * Last modified 10/18/20 8:32 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -19,9 +19,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.DataStructure.HistoryLiveData
+import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.Extensions.historyButtonBackgroundChange
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.Extensions.historyListsSetupUI
-import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.Extensions.privateHistoryButtonBackgroundChange
-import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.Extensions.publicHistoryButtonBackgroundChange
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.HistoryUI.Adapter.HistoryListsAdapter
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.HistoryUI.Adapter.HistoryType
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.Utils.defaultHistoryView
@@ -94,7 +93,7 @@ class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConne
 
                 historyListsViewBinding.loadingView.visibility = View.INVISIBLE
 
-                publicHistoryButtonBackgroundChange(applicationContext, historyListsViewBinding.publicHistory, historyListsViewBinding.privateHistory)
+                historyButtonBackgroundChange(applicationContext, historyListsViewBinding.publicHistory, historyListsViewBinding.privateHistory)
 
             } else {
 
@@ -117,8 +116,7 @@ class HistoryLists : AppCompatActivity(), GestureListenerInterface, NetworkConne
 
                 historyListsViewBinding.loadingView.visibility = View.INVISIBLE
 
-                privateHistoryButtonBackgroundChange(applicationContext, historyListsViewBinding.publicHistory, historyListsViewBinding.privateHistory)
-
+                historyButtonBackgroundChange(applicationContext, historyListsViewBinding.privateHistory, historyListsViewBinding.publicHistory)
 
             } else {
 

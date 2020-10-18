@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 8:28 AM
- * Last modified 10/18/20 8:28 AM
+ * Created by Elias Fazel on 10/18/20 8:32 AM
+ * Last modified 10/18/20 8:31 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -49,7 +49,7 @@ fun HistoryLists.historyListsSetupUI() {
 
 }
 
-fun publicHistoryButtonBackgroundChange(context: Context, publicHistory: MaterialButton, privateHistory: MaterialButton) {
+fun historyButtonBackgroundChange(context: Context, publicHistory: MaterialButton, privateHistory: MaterialButton) {
 
     val activatePublicValueAnimator = ValueAnimator.ofArgb(context.getColor(R.color.default_color_dark), context.getColor(R.color.default_color_bright))
     activatePublicValueAnimator.duration = 555
@@ -70,29 +70,5 @@ fun publicHistoryButtonBackgroundChange(context: Context, publicHistory: Materia
 
     }
     deactivatePrivateValueAnimator.start()
-
-}
-
-fun privateHistoryButtonBackgroundChange(context: Context, publicHistory: MaterialButton, privateHistory: MaterialButton) {
-
-    val deactivatePublicValueAnimator = ValueAnimator.ofArgb(context.getColor(R.color.default_color_bright), context.getColor(R.color.default_color_dark))
-    deactivatePublicValueAnimator.duration = 555
-    deactivatePublicValueAnimator.addUpdateListener { animator ->
-        val animatorValue = animator.animatedValue as Int
-
-        publicHistory.backgroundTintList = ColorStateList.valueOf(animatorValue)
-
-    }
-    deactivatePublicValueAnimator.start()
-
-    val activatePrivateValueAnimator = ValueAnimator.ofArgb(context.getColor(R.color.default_color_dark), context.getColor(R.color.default_color_bright))
-    activatePrivateValueAnimator.duration = 555
-    activatePrivateValueAnimator.addUpdateListener { animator ->
-        val animatorValue = animator.animatedValue as Int
-
-        privateHistory.backgroundTintList = ColorStateList.valueOf(animatorValue)
-
-    }
-    activatePrivateValueAnimator.start()
 
 }
