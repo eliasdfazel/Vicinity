@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 9:14 AM
- * Last modified 10/18/20 9:10 AM
+ * Created by Elias Fazel on 10/18/20 10:15 AM
+ * Last modified 10/18/20 10:05 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -56,7 +56,7 @@ class VicinityUserInformation (private val firestoreDatabase: FirebaseFirestore,
                     val userInformationArchiveData = UserInformationVicinityArchiveData(
                         vicinityCountry = vicinityData.countryName,
                         vicinityName = vicinityName(LatLng(vicinityData.centerLatitude.toDouble(), vicinityData.centerLongitude.toDouble())),
-                        vicinityKnownName = LocationCheckpoint.LOCATION_KNOWN_NAME.toString(),
+                        vicinityKnownName = LocationCheckpoint.LOCATION_INFORMATION_DETAIL.toString(),
                         vicinityLatitude = vicinityData.centerLatitude,
                         vicinityLongitude = vicinityData.centerLongitude,
                         lastLatitude = userInformationData.userLatitude,

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 9:58 AM
- * Last modified 10/18/20 9:58 AM
+ * Created by Elias Fazel on 10/18/20 10:15 AM
+ * Last modified 10/18/20 10:15 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -15,9 +15,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.gms.maps.model.LatLng
 import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationVicinityArchiveData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.HistoryUI.HistoryLists
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.DataStructure.PrivateMessengerData
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.PrivateMessengerUI.PrivateMessenger
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.Utils.privateMessengerName
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
 
@@ -65,6 +69,16 @@ class HistoryListsAdapter(private val context: HistoryLists) : RecyclerView.Adap
 
                 historyListsViewHolder.communicationLogo.setImageDrawable(context.vicinityInformation.loadCountryFlag(publicMessengerData[position].vicinityCountry))
 
+                historyListsViewHolder.rootViewItem.setOnClickListener {
+
+                    PublicCommunity.open(
+                        context = context,
+                        currentCommunityCoordinates = LatLng(publicMessengerData[position].vicinityLatitude.toString().toDouble(), publicMessengerData[position].vicinityLongitude.toString().toDouble()),
+                        nameOfCountry = publicMessengerData[position].vicinityCountry,
+                    )
+
+                }
+
             }
             HistoryType.PRIVATE -> {
 
@@ -89,6 +103,28 @@ class HistoryListsAdapter(private val context: HistoryLists) : RecyclerView.Adap
                         .load(privateMessengerData[position].PersonOneProfileImage)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(historyListsViewHolder.communicationLogo)
+
+                }
+
+                historyListsViewHolder.rootViewItem.setOnClickListener {
+
+                    val selfUid = context.firebaseUser.uid
+                    val selfUsername = context.firebaseUser.displayName
+                    val selfProfileImage = context.firebaseUser.photoUrl.toString()
+
+                    val otherUid = privateMessengerData[position].PersonOne
+                    val otherUsername = privateMessengerData[position].PersonOneUsername
+                    val otherProfileImage = privateMessengerData[position].PersonOneProfileImage
+
+                    val privateMessengerName = privateMessengerName(selfUid, otherUid)
+
+                    PrivateMessenger.open(
+                        context = context,
+                        privateMessengerName = privateMessengerName,
+                        otherUid = otherUid,
+                        otherUsername = otherUsername,
+                        otherProfileImage = otherProfileImage
+                    )
 
                 }
 

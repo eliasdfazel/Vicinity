@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 9:03 AM
- * Last modified 10/18/20 9:02 AM
+ * Created by Elias Fazel on 10/18/20 10:15 AM
+ * Last modified 10/18/20 10:08 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -180,41 +180,40 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
 
         Handler(Looper.getMainLooper()).postDelayed({
 
-            vicinityInformation.knownLocationName(communityCenterVicinity)
-                ?.let { knownLocationName ->
+            vicinityInformation.knownLocationName(communityCenterVicinity)?.let { knownLocationName ->
 
-                    if (knownLocationName.length > 1) {
+                if (knownLocationName.length > 1) {
 
-                        publicCommunityViewBinding.communicationName.text = "${knownLocationName}"
-                        publicCommunityViewBinding.communicationName.icon =
-                            vicinityInformation.loadCountryFlag(deviceSystemInformation.getCountryIso())
+                    publicCommunityViewBinding.communicationName.text = "${knownLocationName}"
+                    publicCommunityViewBinding.communicationName.icon =
+                        vicinityInformation.loadCountryFlag(deviceSystemInformation.getCountryIso())
 
-                        publicCommunityViewBinding.communicationName.post {
+                    publicCommunityViewBinding.communicationName.post {
 
-                            publicCommunityViewBinding.communicationName.visibility = View.VISIBLE
+                        publicCommunityViewBinding.communicationName.visibility = View.VISIBLE
 
-                            val valueAnimatorKnownName = ValueAnimator.ofInt(
-                                1,
-                                publicCommunityViewBinding.communicationName.width
-                            )
-                            valueAnimatorKnownName.duration = 777
-                            valueAnimatorKnownName.addUpdateListener { animator ->
-                                val animatorValue = animator.animatedValue as Int
+                        val valueAnimatorKnownName = ValueAnimator.ofInt(
+                            1,
+                            publicCommunityViewBinding.communicationName.width
+                        )
+                        valueAnimatorKnownName.duration = 777
+                        valueAnimatorKnownName.addUpdateListener { animator ->
+                            val animatorValue = animator.animatedValue as Int
 
-                                val vicinityKnownNameLayoutParams =
-                                    publicCommunityViewBinding.communicationName.layoutParams as ConstraintLayout.LayoutParams
-                                vicinityKnownNameLayoutParams.width = animatorValue
-                                publicCommunityViewBinding.communicationName.layoutParams =
-                                    vicinityKnownNameLayoutParams
-
-                            }
-                            valueAnimatorKnownName.start()
+                            val vicinityKnownNameLayoutParams =
+                                publicCommunityViewBinding.communicationName.layoutParams as ConstraintLayout.LayoutParams
+                            vicinityKnownNameLayoutParams.width = animatorValue
+                            publicCommunityViewBinding.communicationName.layoutParams =
+                                vicinityKnownNameLayoutParams
 
                         }
+                        valueAnimatorKnownName.start()
 
                     }
 
                 }
+
+            }
 
         }, 1000)
 
