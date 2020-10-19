@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 5:38 AM
- * Last modified 10/18/20 5:28 AM
+ * Created by Elias Fazel on 10/19/20 6:53 AM
+ * Last modified 10/19/20 6:53 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -39,6 +39,7 @@ import com.google.firebase.ktx.Firebase
 import net.geeksempire.chat.vicinity.Util.MapsUtil.LocationCoordinatesUpdater
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformationIO
+import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.Endpoint.CommunicationHistoryEndpoint
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.HistoryUI.HistoryLists
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoint.PublicCommunicationEndpoint
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.PublicCommunityUI.PublicCommunity
@@ -221,6 +222,41 @@ class MapsOfSociety : AppCompatActivity(), NetworkConnectionListenerInterface,
 
     override fun onResume() {
         super.onResume()
+
+        if (!mapsViewBinding.communicationHistory.isShown) {
+
+            firestoreDatabase
+                .collection(CommunicationHistoryEndpoint.publicVicinityArchiveDatabasePath(firebaseUser.uid))
+                .get()
+                .addOnSuccessListener {
+
+                    if (!it.isEmpty) {
+
+                        if (!mapsViewBinding.communicationHistory.isShown) {
+                            mapsViewBinding.communicationHistory.visibility = View.VISIBLE
+                        }
+
+                    }
+
+                }
+
+            firestoreDatabase
+                .collection(CommunicationHistoryEndpoint.privateVicinityArchiveDatabasePath(firebaseUser.uid))
+                .get()
+                .addOnSuccessListener {
+
+                    if (!it.isEmpty) {
+
+                        if (!mapsViewBinding.communicationHistory.isShown) {
+                            mapsViewBinding.communicationHistory.visibility = View.VISIBLE
+                        }
+
+                    }
+
+                }
+
+        }
+
     }
 
     override fun onPause() {
