@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/29/20 11:40 AM
- * Last modified 9/29/20 11:30 AM
+ * Created by Elias Fazel on 10/19/20 10:59 AM
+ * Last modified 10/19/20 10:59 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -20,7 +20,7 @@ import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.DataStructure.
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.Operations.VicinityUserInformation
 import net.geeksempire.vicinity.android.Utils.Location.LocationCheckpoint
 
-fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitude: LatLng) {
+fun MapsOfSociety.loadVicinityData(countryName: String, userLocationLatitudeLongitude: LatLng) {
 
     firestoreDatabase
         .collection(PublicCommunicationEndpoint.publicCommunityCollectionEndpoint(countryName))
@@ -96,7 +96,7 @@ fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitud
                             )
 
                             createVicinity.create(
-                                PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName, locationLatitudeLongitude),
+                                PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName, userLocationLatitudeLongitude),
                                 vicinityData,
                                 userInformationData,
                                 userLatitudeLongitude
@@ -134,7 +134,7 @@ fun MapsOfSociety.loadVicinityData(countryName: String, locationLatitudeLongitud
                         )
 
                         createVicinity.create(
-                            PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName, locationLatitudeLongitude),
+                            PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(countryName, userLocationLatitudeLongitude),
                             vicinityData,
                             userInformationData,
                             userLatitudeLongitude
