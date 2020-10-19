@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/19/20 6:53 AM
- * Last modified 10/19/20 6:53 AM
+ * Created by Elias Fazel on 10/19/20 10:39 AM
+ * Last modified 10/19/20 10:39 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -180,7 +180,7 @@ class MapsOfSociety : AppCompatActivity(), NetworkConnectionListenerInterface,
         val builderStrictMode = StrictMode.VmPolicy.Builder()
         StrictMode.setVmPolicy(builderStrictMode.build())
 
-        mapsLiveData.currentLocationData.observe(this@MapsOfSociety, Observer { location ->
+        mapsLiveData.currentLocationData.observe(this@MapsOfSociety, { location ->
 
             location?.let {
                 Log.d(this@MapsOfSociety.javaClass.simpleName, "Location Updated ${location}")
@@ -195,12 +195,45 @@ class MapsOfSociety : AppCompatActivity(), NetworkConnectionListenerInterface,
 
                 if (nameOfCountry != null && PublicCommunicationEndpoint.CurrentCommunityCoordinates != null) {
 
+                    mapsLiveData.calculateVicinityCoordinates(location, PublicCommunicationEndpoint.CurrentCommunityCoordinates!!)
+
                     val vicinityUserInformation = VicinityUserInformation(firestoreDatabase,
                         PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(nameOfCountry!!, PublicCommunicationEndpoint.CurrentCommunityCoordinates!!))
 
                     vicinityUserInformation.updateLocation(firebaseUser.uid,
                         location.latitude.toString(), location.longitude.toString(),
                         vicinityName(PublicCommunicationEndpoint.CurrentCommunityCoordinates!!), PublicCommunicationEndpoint.CurrentCommunityCoordinates!!)
+
+                }
+
+            }
+
+        })
+
+        mapsLiveData.vicinityNotice.observe(this@MapsOfSociety, Observer {
+
+            it?.let { vicinityNotice ->
+
+                if (vicinityNotice.enteredNewVicinity) {
+
+                    SnackbarBuilder(applicationContext).show (
+                        rootView = mapsViewBinding.rootView,
+                        messageText= getString(R.string.enteredNewVicinity),
+                        messageDuration = Snackbar.LENGTH_INDEFINITE,
+                        actionButtonText = R.string.joinText,
+                        autoDismiss = true,
+                        autoDismissDuration = 5555,
+                        snackbarActionHandlerInterface = object : SnackbarActionHandlerInterface {
+
+                            override fun onActionButtonClicked(snackbar: Snackbar) {
+                                super.onActionButtonClicked(snackbar)
+
+                                //Join New Vicinity
+
+                            }
+
+                        }
+                    )
 
                 }
 
