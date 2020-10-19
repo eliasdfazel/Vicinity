@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/19/20 10:39 AM
- * Last modified 10/19/20 10:39 AM
+ * Created by Elias Fazel on 10/19/20 10:57 AM
+ * Last modified 10/19/20 10:57 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -21,7 +21,6 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -210,7 +209,7 @@ class MapsOfSociety : AppCompatActivity(), NetworkConnectionListenerInterface,
 
         })
 
-        mapsLiveData.vicinityNotice.observe(this@MapsOfSociety, Observer {
+        mapsLiveData.vicinityNotice.observe(this@MapsOfSociety, {
 
             it?.let { vicinityNotice ->
 
@@ -228,7 +227,23 @@ class MapsOfSociety : AppCompatActivity(), NetworkConnectionListenerInterface,
                             override fun onActionButtonClicked(snackbar: Snackbar) {
                                 super.onActionButtonClicked(snackbar)
 
-                                //Join New Vicinity
+                                val countryIso = deviceSystemInformation.getCountryIso()
+
+                                if (countryIso != "Undefined") {
+
+                                    vicinityInformation.getCurrentCountryName(deviceSystemInformation.getCountryIso(), object : CountryInformationInterface {
+
+                                        override fun countryNameReady(nameOfCountry: String) {
+
+                                            this@MapsOfSociety.nameOfCountry = nameOfCountry
+
+                                            loadVicinityData(nameOfCountry, vicinityNotice.userCurrentLocation)
+
+                                        }
+
+                                    })
+
+                                }
 
                             }
 
