@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/8/20 7:59 AM
- * Last modified 10/8/20 7:37 AM
+ * Created by Elias Fazel on 10/23/20 6:03 AM
+ * Last modified 10/23/20 5:46 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,15 +10,18 @@
 
 package net.geeksempire.vicinity.android.CommunicationConfiguration.Private.DataStructure
 
+import androidx.annotation.Keep
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ServerTimestamp
 
+@Keep
 object Unknown {
     const val unknownUserDisplayName = "Unknown ⚠"
     const val unknownProfileImage = "https://i.imgur.com/Vj8gLtW.jpg"
 
 }
 
+@Keep
 class PrivateMessageData {
 
     var userIdentifier: String? = null
@@ -33,8 +36,10 @@ class PrivateMessageData {
     @ServerTimestamp var userMessageDate: Timestamp? = null
     @ServerTimestamp var userMessageEditDate: Timestamp? = null
 
+    @Keep
     constructor() {/*  */}
 
+    @Keep
     constructor(userIdentifier: String, userProfileImage: String, userDisplayName: String, userMessageTextContent: String, userMessageImageContent: String,
                 privateMessengerStorageImagesItemEndpoint: String,
                 userMessageDate: Timestamp, userMessageEditDate: Timestamp) {

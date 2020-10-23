@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 9:14 AM
- * Last modified 10/18/20 9:06 AM
+ * Created by Elias Fazel on 10/23/20 6:03 AM
+ * Last modified 10/23/20 5:48 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -10,8 +10,10 @@
 
 package net.geeksempire.vicinity.android.AccountManager.DataStructure
 
+import androidx.annotation.Keep
 import com.google.firebase.firestore.FieldValue
 
+@Keep
 object UserInformationDataStructure {
     const val userIdentification = "userIdentification"
     const val userEmailAddress = "userEmailAddress"
@@ -28,12 +30,14 @@ object UserInformationDataStructure {
     const val userJointDate = "userJointDate"
 }
 
+@Keep
 data class UserInformationData (var userIdentification: String, var userEmailAddress: String, var userDisplayName: String, var userProfileImage: String,
                                 var userLatitude: String, var userLongitude: String,
                                 var userState: String,
                                 var userLastSignIn:  FieldValue,
                                 var userJointDate:  FieldValue = FieldValue.serverTimestamp())
 
+@Keep
 data class UserInformationProfileData (var privacyAgreement: Boolean? = false,
                                        var userIdentification: String, var userEmailAddress: String, var userDisplayName: String, var userProfileImage: String,
                                        var instagramAccount: String?,
@@ -42,10 +46,12 @@ data class UserInformationProfileData (var privacyAgreement: Boolean? = false,
                                        var phoneNumberVerified: Boolean? = false,
                                        var userJointDate:  FieldValue = FieldValue.serverTimestamp())
 
+@Keep
 data class UserInformationVicinityArchiveData (var vicinityCountry: String, var vicinityName: String, var vicinityKnownName: String,
                                                var vicinityLatitude: String, var vicinityLongitude: String,
                                                var lastLatitude: String, var lastLongitude: String,
                                                var userJointDate:  FieldValue = FieldValue.serverTimestamp())
 
+@Keep
 data class UserInformationPrivateMessengerArchiveData (var privateMessengerName: String,
                                                        var selfUid: String, var otherUid: String)
