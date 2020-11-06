@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/6/20 7:14 AM
- * Last modified 11/6/20 7:12 AM
+ * Created by Elias Fazel on 11/6/20 7:20 AM
+ * Last modified 11/6/20 7:20 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -25,7 +25,9 @@ class BusinessInvitation (val context: Context) {
 
             link = Uri.parse("https://www.geeksempire.net/")
                 .buildUpon()
-                .appendQueryParameter(InvitationConstant.UniqueUserId, firebaseUser.uid).build()
+                .appendQueryParameter(InvitationConstant.InvitationType, InvitationConstant.InvitationTypes.Business)
+                .appendQueryParameter(InvitationConstant.UniqueUserId, firebaseUser.uid)
+                .build()
 
             domainUriPrefix = "https://geeksempire.page.link"
 
