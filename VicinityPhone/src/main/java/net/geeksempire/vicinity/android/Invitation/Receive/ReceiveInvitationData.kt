@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/6/20 7:11 AM
- * Last modified 11/6/20 7:11 AM
+ * Created by Elias Fazel on 11/6/20 7:14 AM
+ * Last modified 11/6/20 7:14 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -29,7 +29,22 @@ class ReceiveInvitationData : AppCompatActivity() {
 
                     pendingDynamicLinkData.link?.also { dynamicLinkUri ->
 
+                        val invitationType = dynamicLinkUri.getQueryParameter(InvitationConstant.InvitationType)
+
                         val uniqueUserId = dynamicLinkUri.getQueryParameter(InvitationConstant.UniqueUserId)
+
+                        when (invitationType) {
+                            InvitationConstant.InvitationType.Business -> {
+
+
+
+                            }
+                            InvitationConstant.InvitationType.Personal -> {
+
+
+
+                            }
+                        }
 
                     }
 
