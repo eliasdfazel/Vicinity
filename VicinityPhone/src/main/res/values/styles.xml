@@ -1,8 +1,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 10/18/20 8:25 AM
-  ~ Last modified 10/18/20 8:09 AM
+  ~ Created by Elias Fazel on 11/6/20 7:11 AM
+  ~ Last modified 11/6/20 7:06 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -117,6 +117,19 @@
 
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
+
+    </style>
+
+    <style name="GeeksEmpire.Material.Transparent" parent="@style/GeeksEmpire.Material">
+
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
 
     </style>
 
