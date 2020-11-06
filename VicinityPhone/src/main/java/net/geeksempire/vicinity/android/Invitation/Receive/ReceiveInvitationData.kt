@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/6/20 9:07 AM
- * Last modified 11/6/20 9:01 AM
+ * Created by Elias Fazel on 11/6/20 9:08 AM
+ * Last modified 11/6/20 9:08 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -48,13 +48,7 @@ class ReceiveInvitationData : AppCompatActivity() {
                             when (invitationType) {
                                 InvitationConstant.InvitationTypes.Business -> {
 
-                                    PrivateMessenger.open(
-                                        context = applicationContext,
-                                        privateMessengerName = privateMessengerName,
-                                        otherUid = uniqueUserId,
-                                        otherUsername = userDisplayName,
-                                        otherProfileImage = userProfileImage
-                                    )
+
 
                                 }
                                 InvitationConstant.InvitationTypes.Personal -> {
@@ -63,6 +57,14 @@ class ReceiveInvitationData : AppCompatActivity() {
 
                                 }
                             }
+
+                            PrivateMessenger.open(
+                                context = applicationContext,
+                                privateMessengerName = privateMessengerName,
+                                otherUid = uniqueUserId,
+                                otherUsername = userDisplayName,
+                                otherProfileImage = userProfileImage
+                            )
 
                         } else {
 
