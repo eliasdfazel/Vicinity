@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/23/20 6:03 AM
- * Last modified 10/23/20 5:46 AM
+ * Created by Elias Fazel on 11/6/20 9:07 AM
+ * Last modified 11/6/20 9:04 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -18,7 +18,6 @@ import com.google.firebase.firestore.ServerTimestamp
 object Unknown {
     const val unknownUserDisplayName = "Unknown ⚠"
     const val unknownProfileImage = "https://i.imgur.com/Vj8gLtW.jpg"
-
 }
 
 @Keep

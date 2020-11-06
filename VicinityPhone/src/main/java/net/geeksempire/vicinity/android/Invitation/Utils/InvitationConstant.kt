@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/6/20 7:41 AM
- * Last modified 11/6/20 7:41 AM
+ * Created by Elias Fazel on 11/6/20 9:07 AM
+ * Last modified 11/6/20 9:00 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -23,6 +23,8 @@ class InvitationConstant {
         const val InvitationType: String = "InvitationType"
 
         const val UniqueUserId: String = "UniqueUserId"
+        const val UserDisplayName: String = "UserDisplayName"
+        const val UserProfileImage: String = "UserProfileImage"
 
         fun generateBusinessInvitationText(dynamicLinkUri: Uri, businessDisplayName: String) : String {
 
