@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/6/20 7:41 AM
- * Last modified 11/6/20 7:41 AM
+ * Created by Elias Fazel on 11/6/20 8:22 AM
+ * Last modified 11/6/20 8:05 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -14,12 +14,18 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.net.Uri
+import android.view.ViewGroup
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.dynamiclinks.ktx.*
 import com.google.firebase.ktx.Firebase
 import net.geeksempire.vicinity.android.Invitation.Utils.InvitationConstant
+import net.geeksempire.vicinity.android.Invitation.Utils.ShareIt
+import net.geeksempire.vicinity.android.R
+import net.geeksempire.vicinity.android.Utils.UI.NotifyUser.SnackbarActionHandlerInterface
+import net.geeksempire.vicinity.android.Utils.UI.NotifyUser.SnackbarBuilder
 
-class BusinessInvitation (val context: Context) {
+class BusinessInvitation (val context: Context, val rootView: ViewGroup) {
 
     fun invite(firebaseUser: FirebaseUser) {
 
@@ -55,7 +61,28 @@ class BusinessInvitation (val context: Context) {
             InvitationConstant.generateBusinessInvitationText(dynamicLinkUri, firebaseUser.displayName.toString()),
             InvitationConstant.generateBusinessInvitationHtmlText(dynamicLinkUri, firebaseUser.displayName.toString())
         )
-        clipboardManager.setPrimaryClip(clipData)
+        clipboardManager.setPrimaryClip(clipData).also {
+
+            SnackbarBuilder(context).show (
+                rootView = rootView,
+                messageText= context.getString(R.string.invitationDataReady),
+                messageDuration = Snackbar.LENGTH_INDEFINITE,
+                actionButtonText = R.string.inviteAction,
+                snackbarActionHandlerInterface = object : SnackbarActionHandlerInterface {
+
+                    override fun onActionButtonClicked(snackbar: Snackbar) {
+                        super.onActionButtonClicked(snackbar)
+
+                        ShareIt(context)
+                            .invoke(InvitationConstant.generateBusinessInvitationText(dynamicLinkUri, firebaseUser.displayName.toString()))
+
+                    }
+
+                }
+            )
+
+
+        }
 
     }
 
