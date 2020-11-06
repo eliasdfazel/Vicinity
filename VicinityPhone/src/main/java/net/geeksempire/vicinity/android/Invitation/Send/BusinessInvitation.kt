@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/6/20 7:20 AM
- * Last modified 11/6/20 7:20 AM
+ * Created by Elias Fazel on 11/6/20 7:24 AM
+ * Last modified 11/6/20 7:24 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -35,11 +35,11 @@ class BusinessInvitation (val context: Context) {
 
             }
 
-            androidParameters(context.packageName) {
+            androidParameters("net.geeksempire.vicinity".plus(".android")) {
 
             }
 
-            iosParameters(context.packageName) {
+            iosParameters("net.geeksempire.vicinity".plus(".ios")) {
 
             }
 
