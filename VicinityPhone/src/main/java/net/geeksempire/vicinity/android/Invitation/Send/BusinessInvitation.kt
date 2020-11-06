@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/6/20 8:22 AM
- * Last modified 11/6/20 8:05 AM
+ * Created by Elias Fazel on 11/6/20 8:35 AM
+ * Last modified 11/6/20 8:32 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -31,7 +31,7 @@ class BusinessInvitation (val context: Context, val rootView: ViewGroup) {
 
         val dynamicLink = Firebase.dynamicLinks.dynamicLink {
 
-            link = Uri.parse("https://www.geeksempire.net/")
+            link = Uri.parse("https://www.geeksempire.net/VicinityInvitation.html")
                 .buildUpon()
                 .appendQueryParameter(InvitationConstant.InvitationType, InvitationConstant.InvitationTypes.Business)
                 .appendQueryParameter(InvitationConstant.UniqueUserId, firebaseUser.uid)
