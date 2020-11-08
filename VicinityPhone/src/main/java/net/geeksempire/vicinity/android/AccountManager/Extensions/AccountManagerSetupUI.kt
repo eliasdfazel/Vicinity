@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/16/20 12:10 PM
- * Last modified 10/16/20 12:07 PM
+ * Created by Elias Fazel on 11/8/20 9:53 AM
+ * Last modified 11/8/20 9:47 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -30,6 +30,7 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationProfileData
 import net.geeksempire.vicinity.android.AccountManager.UI.AccountInformation
@@ -199,12 +200,11 @@ fun AccountInformation.createUserProfile() {
 
                 if (!accountViewBinding.phoneNumberAddressView.text.isNullOrEmpty()) {
 
-                    PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                        accountViewBinding.phoneNumberAddressView.text.toString(),
-                        120,
-                        TimeUnit.SECONDS,
-                        this@createUserProfile,
-                        object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                    val phoneAuthOptions = PhoneAuthOptions.Builder(firebaseAuth).apply {
+                        setPhoneNumber(accountViewBinding.phoneNumberAddressView.text.toString())
+                        setTimeout(120, TimeUnit.SECONDS)
+                        setActivity(this@createUserProfile)
+                        setCallbacks(object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
                             override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
                                 Log.d(this@createUserProfile.javaClass.simpleName, "Phone Number Verified")
@@ -272,6 +272,9 @@ fun AccountInformation.createUserProfile() {
                             }
 
                         })
+                    }
+
+                    PhoneAuthProvider.verifyPhoneNumber(phoneAuthOptions.build())
 
                 } else {
 

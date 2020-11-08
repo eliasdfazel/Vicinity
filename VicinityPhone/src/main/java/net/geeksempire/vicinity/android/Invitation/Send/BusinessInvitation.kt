@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/6/20 9:07 AM
- * Last modified 11/6/20 9:06 AM
+ * Created by Elias Fazel on 11/8/20 9:53 AM
+ * Last modified 11/8/20 9:53 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -19,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.dynamiclinks.ktx.*
 import com.google.firebase.ktx.Firebase
+import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformationIO
 import net.geeksempire.vicinity.android.Invitation.Utils.InvitationConstant
 import net.geeksempire.vicinity.android.Invitation.Utils.ShareIt
 import net.geeksempire.vicinity.android.R
@@ -27,13 +28,15 @@ import net.geeksempire.vicinity.android.Utils.UI.NotifyUser.SnackbarBuilder
 
 class BusinessInvitation (val context: Context, val rootView: ViewGroup) {
 
+    private val userInformationIO = UserInformationIO(context)
+
     fun invite(firebaseUser: FirebaseUser) {
 
         val dynamicLink = Firebase.dynamicLinks.dynamicLink {
 
             link = Uri.parse("https://www.geeksempire.net/VicinityInvitation.html")
                 .buildUpon()
-                .appendQueryParameter(InvitationConstant.InvitationType, InvitationConstant.InvitationTypes.Business)
+                .appendQueryParameter(InvitationConstant.InvitationType, userInformationIO.readAccountType())
                 .appendQueryParameter(InvitationConstant.UniqueUserId, firebaseUser.uid)
                 .appendQueryParameter(InvitationConstant.UserDisplayName, firebaseUser.displayName)
                 .appendQueryParameter(InvitationConstant.UserProfileImage, firebaseUser.photoUrl.toString())

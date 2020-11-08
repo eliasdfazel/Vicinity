@@ -1,8 +1,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 11/6/20 8:22 AM
-  ~ Last modified 11/6/20 8:07 AM
+  ~ Created by Elias Fazel on 11/8/20 9:53 AM
+  ~ Last modified 11/8/20 5:02 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -55,6 +55,7 @@
     <string name="inviteAction">Invite</string>
     <string name="inviteTitle">Invite To Vicinity</string>
     <string name="invitationDataReady">Invitation Data Copied &amp; Ready To Share</string>
+    <string name="switchAccountType">Click Here To Switch Account Type To Business &amp; Personal</string>
 
     <string name="inAppUpdateDescription">An Update Has Just Been Installed</string>
     <string name="inAppUpdateAction">

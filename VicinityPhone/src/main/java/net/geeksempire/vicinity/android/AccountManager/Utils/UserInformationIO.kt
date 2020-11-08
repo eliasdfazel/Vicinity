@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 9/29/20 6:43 AM
- * Last modified 9/29/20 6:40 AM
+ * Created by Elias Fazel on 11/8/20 9:53 AM
+ * Last modified 11/8/20 5:05 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,6 +12,7 @@ package net.geeksempire.vicinity.android.AccountManager.Utils
 
 import android.content.Context
 import com.google.android.gms.maps.model.LatLng
+import net.geeksempire.vicinity.android.Invitation.Utils.InvitationConstant
 import net.geeksempire.vicinity.android.Utils.Preferences.ReadPreferences
 import net.geeksempire.vicinity.android.Utils.Preferences.SavePreferences
 
@@ -73,6 +74,31 @@ class UserInformationIO(private val context: Context) {
         val readPreferences = ReadPreferences(context)
 
         return readPreferences.readPreference("UserInformation", "PrivacyAgreement", false)
+    }
+
+    /**
+     * Account Type;
+     * InvitationConstant.InvitationTypes.Personal
+     * InvitationConstant.InvitationTypes.Business
+     **/
+    fun saveAccountType(accountType: String) {
+
+        val savePreferences = SavePreferences(context)
+
+        savePreferences.savePreference("UserInformation", "AccountType", accountType)
+
+    }
+
+    /**
+     * Account Type;
+     * InvitationConstant.InvitationTypes.Personal
+     * InvitationConstant.InvitationTypes.Business
+     **/
+    fun readAccountType() : String {
+
+        val readPreferences = ReadPreferences(context)
+
+        return readPreferences.readPreference("UserInformation", "AccountType", InvitationConstant.InvitationTypes.Personal)?:InvitationConstant.InvitationTypes.Personal
     }
 
 }

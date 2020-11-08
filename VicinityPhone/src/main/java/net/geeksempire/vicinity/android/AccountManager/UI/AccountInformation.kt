@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/16/20 4:40 AM
- * Last modified 10/16/20 4:27 AM
+ * Created by Elias Fazel on 11/8/20 9:53 AM
+ * Last modified 11/8/20 9:53 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -15,6 +15,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
@@ -23,11 +24,14 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.account_view.*
 import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationDataStructure
 import net.geeksempire.vicinity.android.AccountManager.Extensions.accountManagerSetupUI
 import net.geeksempire.vicinity.android.AccountManager.Extensions.createUserProfile
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformationIO
+import net.geeksempire.vicinity.android.Invitation.Send.BusinessInvitation
+import net.geeksempire.vicinity.android.Invitation.Utils.InvitationConstant
 import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.Utils.Location.LocationCheckpoint
@@ -109,6 +113,59 @@ class AccountInformation : AppCompatActivity(), NetworkConnectionListenerInterfa
                             accountViewBinding.twitterAddressView.setText(documentData.data?.get(UserInformationDataStructure.twitterAccount).toString())
 
                             accountViewBinding.phoneNumberAddressView.setText(documentData.data?.get(UserInformationDataStructure.phoneNumber).toString())
+
+                            accountViewBinding.inviteDirectlyPrivateMessage.visibility = View.VISIBLE
+                            accountViewBinding.inviteDirectlyPrivateMessage.setOnClickListener {
+
+                                BusinessInvitation(applicationContext, accountViewBinding.rootView)
+                                    .invite(firebaseUser)
+
+                            }
+
+                            accountViewBinding.accountTypeText.text = userInformationIO.readAccountType()
+                            accountViewBinding.accountTypeCheckbox.setOnClickListener {
+
+                                accountViewBinding.accountTypeText.text = userInformationIO.readAccountType()
+
+                                firestoreDatabase
+                                    .document(UserInformation.userProfileDatabasePath(firebaseUser.uid))
+                                    .update(
+                                        "accountType", userInformationIO.readAccountType(),
+                                    )
+
+                                when (userInformationIO.readAccountType()) {
+                                    InvitationConstant.InvitationTypes.Personal -> {
+
+                                        userInformationIO.saveAccountType(InvitationConstant.InvitationTypes.Business)
+
+                                        accountViewBinding.accountTypeCheckbox.setAnimation(R.raw.business_account_animation)
+                                        accountViewBinding.accountTypeCheckbox.playAnimation()
+
+                                    }
+                                    InvitationConstant.InvitationTypes.Business -> {
+
+                                        userInformationIO.saveAccountType(InvitationConstant.InvitationTypes.Personal)
+
+                                        accountViewBinding.accountTypeCheckbox.setAnimation(R.raw.personal_account_animation)
+                                        accountViewBinding.accountTypeCheckbox.playAnimation()
+
+                                    }
+                                    else -> {
+
+
+                                        accountViewBinding.accountTypeCheckbox.playAnimation()
+
+                                    }
+                                }
+
+                            }
+
+                            accountTypeCheckbox.setOnLongClickListener {
+
+                                Toast.makeText(applicationContext, getString(R.string.switchAccountType), Toast.LENGTH_LONG).show()
+
+                                true
+                            }
 
                         }
 

@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 9/17/20 10:19 AM
-  ~ Last modified 9/17/20 10:16 AM
+  ~ Created by Elias Fazel on 11/8/20 9:53 AM
+  ~ Last modified 11/8/20 9:45 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -48,6 +48,34 @@
         apps:layout_constraintStart_toStartOf="parent"
         apps:layout_constraintEnd_toEndOf="parent"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/inviteDirectlyPrivateMessage"
+        android:layout_width="91dp"
+        android:layout_height="91dp"
+        android:layout_margin="3dp"
+        android:contentDescription="@string/inviteTitle"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        android:visibility="invisible"
+
+        apps:cornerRadius="51dp"
+        apps:elevation="23dp"
+        apps:icon="@drawable/share_icon"
+        apps:iconSize="79dp"
+        apps:iconGravity="textStart"
+        apps:iconTint="@android:color/transparent"
+        apps:iconTintMode="add"
+        apps:iconPadding="0dp"
+        apps:rippleColor="@color/cyberGreen"
+        apps:backgroundTint="@color/default_color_transparent"
+
+        apps:layout_constraintTop_toTopOf="@id/profileImageView"
+        apps:layout_constraintBottom_toBottomOf="@id/profileImageView"
+        apps:layout_constraintStart_toStartOf="parent"
+        apps:layout_constraintEnd_toStartOf="@id/profileImageView"/>
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/welcomeTextView"
         android:layout_width="match_parent"
@@ -68,7 +96,7 @@
         android:layout_width="173dp"
         android:layout_height="173dp"
         android:layout_marginVertical="17dp"
-        android:visibility="gone"
+        android:visibility="invisible"
 
         apps:lottie_loop="true"
         apps:lottie_repeatMode="restart"
@@ -86,7 +114,7 @@
         android:requiresFadingEdge="vertical"
         android:fadingEdge="vertical"
         android:fadingEdgeLength="7dp"
-        android:visibility="gone"
+        android:visibility="invisible"
 
         apps:layout_constraintTop_toBottomOf="@id/welcomeTextView"
         apps:layout_constraintBottom_toBottomOf="parent">
@@ -289,6 +317,39 @@
 
                 apps:layout_constraintTop_toBottomOf="@id/phoneNumberAddressLayout"
                 apps:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- Account Type -->
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/accountTypeCheckbox"
+                android:layout_width="113dp"
+                android:layout_height="113dp"
+                android:layout_marginVertical="7dp"
+                android:padding="7dp"
+                android:contentDescription="@string/switchAccountType"
+
+                apps:lottie_autoPlay="true"
+                apps:lottie_repeatCount="3"
+                apps:lottie_repeatMode="restart"
+                apps:lottie_rawRes="@raw/personal_account_animation"
+
+                apps:layout_constraintTop_toBottomOf="@id/phoneNumberAddressLayout"
+                apps:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/accountTypeText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="7dp"
+                android:ellipsize="end"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/default_color"
+                android:fontFamily="monospace"
+
+                apps:layout_constraintTop_toTopOf="@id/accountTypeCheckbox"
+                apps:layout_constraintBottom_toBottomOf="@id/accountTypeCheckbox"
+                apps:layout_constraintStart_toEndOf="@id/accountTypeCheckbox"
+                apps:layout_constraintEnd_toStartOf="@id/nextSubmitView"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
