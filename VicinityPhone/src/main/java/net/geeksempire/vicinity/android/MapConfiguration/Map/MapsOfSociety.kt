@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/19/20 10:57 AM
- * Last modified 10/19/20 10:57 AM
+ * Created by Elias Fazel on 11/16/20 12:09 PM
+ * Last modified 11/16/20 12:09 PM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -36,6 +36,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.firestoreSettings
 import com.google.firebase.ktx.Firebase
 import net.geeksempire.chat.vicinity.Util.MapsUtil.LocationCoordinatesUpdater
+import net.geeksempire.vicinity.android.AccountManager.UserState.OnlineOffline
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformationIO
 import net.geeksempire.vicinity.android.CommunicationConfiguration.HistoryConfiguration.Endpoint.CommunicationHistoryEndpoint
@@ -132,6 +133,10 @@ class MapsOfSociety : AppCompatActivity(), NetworkConnectionListenerInterface,
 
     val userInformationIO: UserInformationIO by lazy {
         UserInformationIO(applicationContext)
+    }
+
+    val onlineOffline: OnlineOffline by lazy {
+        OnlineOffline(Firebase.firestore)
     }
 
     val deviceSystemInformation: DeviceSystemInformation by lazy {
@@ -319,6 +324,16 @@ class MapsOfSociety : AppCompatActivity(), NetworkConnectionListenerInterface,
     }
 
     override fun onBackPressed() {
+
+        if (nameOfCountry != null && PublicCommunicationEndpoint.CurrentCommunityCoordinates != null) {
+
+            onlineOffline.startUserStateProcess(
+                PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(nameOfCountry!!, PublicCommunicationEndpoint.CurrentCommunityCoordinates!!),
+                firebaseUser.uid,
+                false
+            )
+
+        }
 
         startActivity(Intent(Intent.ACTION_MAIN).apply {
             this.addCategory(Intent.CATEGORY_HOME)
