@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 10:15 AM
- * Last modified 10/18/20 10:05 AM
+ * Created by Elias Fazel on 11/16/20 11:32 AM
+ * Last modified 11/16/20 11:30 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -126,9 +126,13 @@ class VicinityUserInformation (private val firestoreDatabase: FirebaseFirestore,
 
                                     context.runOnUiThread {
 
-                                        resource?.let {
+                                        resource?.let { resource ->
 
-                                            val resourcesBitmap = getCircularBitmapWithWhiteBorder(drawableToBitmap(it), 7, context.getColor(R.color.default_color_light))
+                                            val resourcesBitmap = getCircularBitmapWithWhiteBorder(drawableToBitmap(resource), 7, if (documentSnapshot[UserInformationDataStructure.userState].toString().toBoolean()) {
+                                                context.getColor(R.color.default_color_light)
+                                            } else {
+                                                context.getColor(R.color.default_color_dark)
+                                            })
                                             val bitmapDescriptorIcon: BitmapDescriptor = BitmapDescriptorFactory.fromBitmap(resourcesBitmap)
 
                                             userMapMarker.position = (LatLng(userLatitude, userLongitude))
