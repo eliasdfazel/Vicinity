@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/16/20 12:09 PM
- * Last modified 11/16/20 11:50 AM
+ * Created by Elias Fazel on 11/19/20 11:39 AM
+ * Last modified 11/19/20 11:31 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -19,6 +19,16 @@ class OnlineOffline (private val firestoreDatabase: FirebaseFirestore) {
 
         firestoreDatabase
             .document(UserInformation.uniqueUserInformationDatabasePath(vicinityDatabasePath, userIdentification))
+            .update(
+                "userState", userOnlineOfflineState,
+            ).addOnSuccessListener {
+
+
+
+            }
+
+        firestoreDatabase
+            .document(UserInformation.userProfileDatabasePath(userIdentification))
             .update(
                 "userState", userOnlineOfflineState,
             ).addOnSuccessListener {

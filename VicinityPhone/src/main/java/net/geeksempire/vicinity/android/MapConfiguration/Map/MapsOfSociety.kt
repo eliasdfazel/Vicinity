@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/19/20 11:29 AM
- * Last modified 11/19/20 11:26 AM
+ * Created by Elias Fazel on 11/19/20 11:39 AM
+ * Last modified 11/19/20 11:39 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -270,6 +270,21 @@ class MapsOfSociety : AppCompatActivity(), NetworkConnectionListenerInterface,
         /*Invoke In Applicatio Update*/
         InApplicationUpdateProcess(this@MapsOfSociety, mapsViewBinding.rootView)
             .initialize()
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if (nameOfCountry != null && PublicCommunicationEndpoint.CurrentCommunityCoordinates != null) {
+
+            onlineOffline.startUserStateProcess(
+                PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(nameOfCountry!!, PublicCommunicationEndpoint.CurrentCommunityCoordinates!!),
+                firebaseUser.uid,
+                true
+            )
+
+        }
 
     }
 
