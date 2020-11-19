@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/16/20 12:09 PM
- * Last modified 11/16/20 12:09 PM
+ * Created by Elias Fazel on 11/19/20 11:29 AM
+ * Last modified 11/19/20 11:26 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -314,16 +314,6 @@ class MapsOfSociety : AppCompatActivity(), NetworkConnectionListenerInterface,
 
     override fun onPause() {
         super.onPause()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        networkConnectionListener.unregisterDefaultNetworkCallback()
-
-    }
-
-    override fun onBackPressed() {
 
         if (nameOfCountry != null && PublicCommunicationEndpoint.CurrentCommunityCoordinates != null) {
 
@@ -334,6 +324,17 @@ class MapsOfSociety : AppCompatActivity(), NetworkConnectionListenerInterface,
             )
 
         }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        networkConnectionListener.unregisterDefaultNetworkCallback()
+
+    }
+
+    override fun onBackPressed() {
 
         startActivity(Intent(Intent.ACTION_MAIN).apply {
             this.addCategory(Intent.CATEGORY_HOME)

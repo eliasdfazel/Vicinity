@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 9:29 AM
- * Last modified 10/18/20 9:20 AM
+ * Created by Elias Fazel on 11/19/20 11:29 AM
+ * Last modified 11/19/20 11:24 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -82,7 +82,6 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
         const val OtherUsername: String = "OtherUsername"
         const val OtherProfileImage: String = "OtherProfileImage"
         const val PrivateMessengerDatabasePath: String = "PrivateMessengerDatabasePath"
-
         const val NotificationCloudFunction: String = "privateNewMessageNotification"
     }
 

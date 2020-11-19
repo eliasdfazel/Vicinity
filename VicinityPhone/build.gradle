@@ -1,8 +1,8 @@
-/*
+ /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/16/20 12:09 PM
- * Last modified 11/16/20 11:56 AM
+ * Created by Elias Fazel on 11/19/20 11:29 AM
+ * Last modified 11/19/20 10:58 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -28,7 +28,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 30
 
-        versionCode 18
+        versionCode 19
         versionName "${majorVersion}." + getDateMonth() + "." + getDateDay() + "." + getDateYear() + ".${versionCode}"
 
         wearAppUnbundled true
@@ -131,21 +131,21 @@ dependencies {
 
 
     implementation 'com.google.firebase:firebase-analytics:18.0.0'
-    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
+    implementation 'com.google.firebase:firebase-crashlytics:17.3.0'
 
     implementation 'com.google.firebase:firebase-firestore-ktx:22.0.0'
     implementation 'com.google.firebase:firebase-database-ktx:19.5.1'
 
     implementation 'com.google.firebase:firebase-storage-ktx:19.2.0'
 
-    implementation 'com.google.firebase:firebase-auth-ktx:20.0.0'
+    implementation 'com.google.firebase:firebase-auth-ktx:20.0.1'
 
     implementation 'com.google.firebase:firebase-functions:19.1.0'
 
     implementation 'com.google.firebase:firebase-dynamic-links-ktx:19.1.1'
     implementation 'com.google.firebase:firebase-appindexing:19.1.0'
 
-    implementation 'com.google.firebase:firebase-config-ktx:20.0.0'
+    implementation 'com.google.firebase:firebase-config-ktx:20.0.1'
 
     implementation 'com.google.firebase:firebase-messaging:21.0.0'
     implementation 'com.google.firebase:firebase-inappmessaging-display-ktx:19.1.2'

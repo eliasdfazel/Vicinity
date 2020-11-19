@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 10:15 AM
- * Last modified 10/18/20 10:08 AM
+ * Created by Elias Fazel on 11/19/20 11:29 AM
+ * Last modified 11/19/20 11:28 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -48,6 +48,7 @@ import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.ktx.storage
+import net.geeksempire.vicinity.android.AccountManager.UserState.OnlineOffline
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.DataStructure.PublicMessageData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoint.PublicCommunicationEndpoint
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Extensions.publicCommunityPrepareMessage
@@ -136,6 +137,12 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
         DeviceSystemInformation(applicationContext)
     }
 
+    private val onlineOffline: OnlineOffline by lazy {
+        OnlineOffline(Firebase.firestore)
+    }
+
+    var publicCommunityCountryName: String? = null
+
     @Inject lateinit var networkCheckpoint: NetworkCheckpoint
 
     @Inject lateinit var networkConnectionListener: NetworkConnectionListener
@@ -171,7 +178,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
             "/Messages"
         )
 
-        val publicCommunityCountryName: String? = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityCountryName)
+        publicCommunityCountryName = intent.getStringExtra(PublicCommunity.Configurations.PublicCommunityCountryName)
 
         val communityCenterVicinity = LatLng(
             intent.getDoubleExtra(PublicCommunity.Configurations.PublicCommunityCenterLocationLatitude, 0.0),
@@ -328,7 +335,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                                                         sendNotificationToOthers(
                                                             messageContent,
                                                             publicCommunityName,
-                                                            publicCommunityCountryName,
+                                                            publicCommunityCountryName!!,
                                                             communityCenterVicinity
                                                         )
 
@@ -400,7 +407,7 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
                                 sendNotificationToOthers(
                                     messageContent,
                                     publicCommunityName,
-                                    publicCommunityCountryName,
+                                    publicCommunityCountryName!!,
                                     communityCenterVicinity
                                 )
 
@@ -548,6 +555,25 @@ class PublicCommunity : AppCompatActivity(), NetworkConnectionListenerInterface 
             publicCommunityViewBinding.imageCapture.startAnimation(AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out))
 
             startImageCapture(this@PublicCommunity)
+
+        }
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if (publicCommunityCountryName != null && PublicCommunicationEndpoint.CurrentCommunityCoordinates != null) {
+
+            if (!this@PublicCommunity.isFinishing) {
+
+                onlineOffline.startUserStateProcess(
+                    PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(publicCommunityCountryName!!, PublicCommunicationEndpoint.CurrentCommunityCoordinates!!),
+                    firebaseUser.uid,
+                    true
+                )
+
+            }
 
         }
 
