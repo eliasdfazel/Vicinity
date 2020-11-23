@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 11/19/20 11:29 AM
- * Last modified 11/19/20 11:24 AM
+ * Created by Elias Fazel on 11/23/20 8:53 AM
+ * Last modified 11/23/20 8:53 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -49,6 +49,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.ktx.storage
 import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationDataStructure
+import net.geeksempire.vicinity.android.AccountManager.UserState.OnlineOffline
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.DataStructure.PrivateMessageData
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Private.DataStructure.PrivateMessengerData
@@ -126,6 +127,10 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
     val messageImagesViewer = MessageImagesViewer()
 
     var sentMessagePathForImages: String? = null
+
+    private val onlineOffline: OnlineOffline by lazy {
+        OnlineOffline(Firebase.firestore)
+    }
 
     @Inject lateinit var networkCheckpoint: NetworkCheckpoint
 
@@ -566,6 +571,21 @@ class PrivateMessenger : AppCompatActivity(), NetworkConnectionListenerInterface
             privateMessengerViewBinding.imageCapture.startAnimation(AnimationUtils.loadAnimation(applicationContext, android.R.anim.fade_out))
 
             startImageCapture(this@PrivateMessenger)
+
+        }
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if (!this@PrivateMessenger.isFinishing) {
+
+            onlineOffline.startUserStateProcess(
+                null,
+                firebaseUser.uid,
+                true
+            )
 
         }
 
