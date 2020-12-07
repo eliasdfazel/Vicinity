@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 12/7/20 4:25 AM
- * Last modified 12/7/20 4:24 AM
+ * Created by Elias Fazel on 12/7/20 6:02 AM
+ * Last modified 12/7/20 6:02 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -17,7 +17,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import net.geeksempire.vicinity.android.R
+import net.geeksempire.vicinity.android.databinding.PeopleListViewBinding
 
 class ListOfPeople : Fragment() {
 
@@ -32,7 +36,7 @@ class ListOfPeople : Fragment() {
             }
 
             listOfPeople.arguments = Bundle().apply {
-                putString("VsicinityDatabasePath", vicinityDatabasePath)
+                putString("VicinityDatabasePath", vicinityDatabasePath)
             }
 
             activity.supportFragmentManager
@@ -45,9 +49,17 @@ class ListOfPeople : Fragment() {
 
     }
 
+    val firestoreDatabase: FirebaseFirestore = Firebase.firestore
+
+    private var peopleFirestoreCollectionPath: String? = null
+
+
+    lateinit var peopleListViewBinding: PeopleListViewBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        peopleFirestoreCollectionPath = arguments?.getString("VicinityDatabasePath") ?: "https://media.giphy.com/media/ZCemAxolHlLetaTqLh/giphy.gif"
 
     }
 
@@ -58,18 +70,34 @@ class ListOfPeople : Fragment() {
         StrictMode.setVmPolicy(vmBuilder.build())
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(layoutInflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view = inflater.inflate(R.layout.people_list_view, container, false)
+        peopleListViewBinding = PeopleListViewBinding.inflate(layoutInflater)
 
-
-
-        return view
+        return peopleListViewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        peopleFirestoreCollectionPath?.let {
+
+            firestoreDatabase
+                .collection(it)
+                .get().addOnSuccessListener { querySnapshot ->
+
+                    if (!querySnapshot.isEmpty) {
+
+
+
+                    }
+
+                }.addOnFailureListener { exception ->
+                    exception.printStackTrace()
+
+                }
+
+        }
 
     }
 

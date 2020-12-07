@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 12/7/20 4:25 AM
- * Last modified 12/7/20 4:21 AM
+ * Created by Elias Fazel on 12/7/20 6:02 AM
+ * Last modified 12/7/20 6:02 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -13,8 +13,12 @@ package net.geeksempire.vicinity.android.MapConfiguration.Extensions
 import android.app.ActivityOptions
 import android.content.Intent
 import androidx.constraintlayout.widget.ConstraintLayout
+import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
+import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoint.PublicCommunicationEndpoint
 import net.geeksempire.vicinity.android.MapConfiguration.Map.MapsOfSociety
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.People.UI.ListOfPeople
 import net.geeksempire.vicinity.android.Preferences.PreferencesControl
+import net.geeksempire.vicinity.android.Utils.UI.Display.navigationBarHeight
 import net.geeksempire.vicinity.android.Utils.UI.Display.statusBarHeight
 import net.geeksempire.vicinity.android.Utils.UI.Theme.ThemeType
 import kotlin.math.roundToInt
@@ -38,6 +42,10 @@ fun MapsOfSociety.mapsOfSocietySetupUI() {
     communicationHistoryLayoutParams.setMargins(0, communicationHistoryLayoutParams.topMargin + statusBarHeight(applicationContext), 0, 0)
     mapsViewBinding.communicationHistory.layoutParams = communicationHistoryLayoutParams
 
+    val showPeopleLayoutParams = mapsViewBinding.showPeopleView.layoutParams as ConstraintLayout.LayoutParams
+    showPeopleLayoutParams.setMargins(0, 0, 0, showPeopleLayoutParams.bottomMargin + navigationBarHeight(applicationContext))
+    mapsViewBinding.showPeopleView.layoutParams = showPeopleLayoutParams
+
     clicksSetup()
 
 }
@@ -54,7 +62,10 @@ fun MapsOfSociety.clicksSetup() {
 
     mapsViewBinding.showPeopleView.setOnClickListener {
 
-
+        ListOfPeople.openListOfPeople(
+            this@clicksSetup,
+            UserInformation.allUsersInformationDatabasePath(PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(nameOfCountry!!, PublicCommunicationEndpoint.CurrentCommunityCoordinates!!))
+        )
 
     }
 
