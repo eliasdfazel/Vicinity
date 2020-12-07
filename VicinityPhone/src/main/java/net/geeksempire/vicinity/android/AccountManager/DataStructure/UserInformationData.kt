@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/23/20 6:03 AM
- * Last modified 10/23/20 5:48 AM
+ * Created by Elias Fazel on 12/7/20 7:41 AM
+ * Last modified 12/7/20 6:32 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -36,6 +36,12 @@ data class UserInformationData (var userIdentification: String, var userEmailAdd
                                 var userState: String,
                                 var userLastSignIn:  FieldValue,
                                 var userJointDate:  FieldValue = FieldValue.serverTimestamp())
+
+@Keep
+data class PeopleData (var userIdentification: String, var userEmailAddress: String, var userDisplayName: String, var userProfileImage: String,
+                       var userLatitude: String, var userLongitude: String,
+                       var userState: String,
+                       var userLastSignIn:  String)
 
 @Keep
 data class UserInformationProfileData (var privacyAgreement: Boolean? = false,

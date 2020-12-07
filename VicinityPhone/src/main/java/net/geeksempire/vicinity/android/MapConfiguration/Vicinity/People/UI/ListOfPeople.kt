@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 12/7/20 6:02 AM
- * Last modified 12/7/20 6:02 AM
+ * Created by Elias Fazel on 12/7/20 7:41 AM
+ * Last modified 12/7/20 7:41 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,14 +12,21 @@ package net.geeksempire.vicinity.android.MapConfiguration.Vicinity.People.UI
 
 import android.os.Bundle
 import android.os.StrictMode
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.People.DataProcess.PeopleDataProcess
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.People.UI.Adapter.PeopleListAdapter
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.databinding.PeopleListViewBinding
 
@@ -51,7 +58,12 @@ class ListOfPeople : Fragment() {
 
     val firestoreDatabase: FirebaseFirestore = Firebase.firestore
 
+
     private var peopleFirestoreCollectionPath: String? = null
+
+    private val peopleDataProcessLiveData: PeopleDataProcess by lazy {
+        ViewModelProvider(this@ListOfPeople).get(PeopleDataProcess::class.java)
+    }
 
 
     lateinit var peopleListViewBinding: PeopleListViewBinding
@@ -59,7 +71,7 @@ class ListOfPeople : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        peopleFirestoreCollectionPath = arguments?.getString("VicinityDatabasePath") ?: "https://media.giphy.com/media/ZCemAxolHlLetaTqLh/giphy.gif"
+        peopleFirestoreCollectionPath = arguments?.getString("VicinityDatabasePath")
 
     }
 
@@ -80,15 +92,42 @@ class ListOfPeople : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        peopleFirestoreCollectionPath?.let {
+        peopleListViewBinding.recyclerViewPeople.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+
+        peopleFirestoreCollectionPath?.let { collectionPath ->
 
             firestoreDatabase
-                .collection(it)
+                .collection(collectionPath)
                 .get().addOnSuccessListener { querySnapshot ->
+                    Log.d(this@ListOfPeople.javaClass.simpleName, querySnapshot.documents.toString())
 
                     if (!querySnapshot.isEmpty) {
 
+                        peopleDataProcessLiveData.userInformationProfiles.observe(viewLifecycleOwner, Observer { peopleData ->
 
+                            println(">>>>>>>>>>>>>>>>>>>>> xxxxxxxxxxxxxxxxxx")
+
+                            if (peopleData.isNotEmpty()) {
+
+                                println(">>>>>>>>>>>>>>>>>>>>> 1111111111111111")
+
+                                val peopleListAdapter = PeopleListAdapter(requireContext())
+
+                                peopleListAdapter.peopleArrayList.clear()
+                                peopleListAdapter.peopleArrayList.addAll(peopleData)
+
+
+                                peopleListViewBinding.recyclerViewPeople.adapter = peopleListAdapter
+
+                            } else {
+
+                                println(">>>>>>>>>>>>>>>>>>>>> 0000000000000000")
+
+                            }
+
+                        })
+
+                        peopleDataProcessLiveData.preparePeopleData(querySnapshot.documents)
 
                     }
 

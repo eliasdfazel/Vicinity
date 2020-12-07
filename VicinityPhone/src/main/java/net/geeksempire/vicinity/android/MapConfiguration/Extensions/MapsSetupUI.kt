@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 12/7/20 6:02 AM
- * Last modified 12/7/20 6:02 AM
+ * Created by Elias Fazel on 12/7/20 7:41 AM
+ * Last modified 12/7/20 7:06 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -12,6 +12,7 @@ package net.geeksempire.vicinity.android.MapConfiguration.Extensions
 
 import android.app.ActivityOptions
 import android.content.Intent
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import net.geeksempire.vicinity.android.AccountManager.Utils.UserInformation
 import net.geeksempire.vicinity.android.CommunicationConfiguration.Public.Endpoint.PublicCommunicationEndpoint
@@ -66,6 +67,8 @@ fun MapsOfSociety.clicksSetup() {
             this@clicksSetup,
             UserInformation.allUsersInformationDatabasePath(PublicCommunicationEndpoint.publicCommunityDocumentEndpoint(nameOfCountry!!, PublicCommunicationEndpoint.CurrentCommunityCoordinates!!))
         )
+
+        mapsViewBinding.peopleListContainer.visibility = View.VISIBLE
 
     }
 
