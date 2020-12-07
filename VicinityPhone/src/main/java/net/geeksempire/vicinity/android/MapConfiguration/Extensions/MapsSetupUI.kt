@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 10/18/20 8:38 AM
- * Last modified 10/18/20 8:36 AM
+ * Created by Elias Fazel on 12/7/20 4:25 AM
+ * Last modified 12/7/20 4:21 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -49,6 +49,12 @@ fun MapsOfSociety.clicksSetup() {
         startActivity(Intent(applicationContext, PreferencesControl::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }, ActivityOptions.makeScaleUpAnimation(mapsViewBinding.preferenceView, mapsViewBinding.preferenceView.x.roundToInt(), mapsViewBinding.preferenceView.y.roundToInt(), mapsViewBinding.preferenceView.width, mapsViewBinding.preferenceView.height).toBundle())
+
+    }
+
+    mapsViewBinding.showPeopleView.setOnClickListener {
+
+
 
     }
 
