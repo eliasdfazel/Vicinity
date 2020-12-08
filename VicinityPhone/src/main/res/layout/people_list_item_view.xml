@@ -2,8 +2,8 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 12/7/20 7:41 AM
-  ~ Last modified 12/7/20 7:09 AM
+  ~ Created by Elias Fazel on 12/8/20 11:28 AM
+  ~ Last modified 12/8/20 11:27 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
@@ -15,18 +15,19 @@
     android:layout_width="match_parent"
     android:layout_height="91dp"
     android:layout_margin="11dp"
-    android:background="@color/default_color_transparent">
+    android:background="@color/default_color_transparent_twice">
 
     <net.geekstools.imageview.customshapes.ShapesImage
         android:id="@+id/userProfileImage"
-        android:layout_width="91dp"
-        android:layout_height="match_parent"
-        android:padding="7dp"
+        android:layout_width="81dp"
+        android:layout_height="81dp"
+        android:layout_marginHorizontal="3dp"
         android:scaleType="centerCrop"
 
         apps:shape="circle"
 
         apps:layout_constraintTop_toTopOf="parent"
+        apps:layout_constraintBottom_toBottomOf="parent"
         apps:layout_constraintStart_toStartOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatTextView

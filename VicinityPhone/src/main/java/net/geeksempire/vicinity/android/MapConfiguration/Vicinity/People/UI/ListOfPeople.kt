@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 12/7/20 7:41 AM
- * Last modified 12/7/20 7:41 AM
+ * Created by Elias Fazel on 12/8/20 11:28 AM
+ * Last modified 12/8/20 11:18 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -27,6 +27,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.People.DataProcess.PeopleDataProcess
 import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.People.UI.Adapter.PeopleListAdapter
+import net.geeksempire.vicinity.android.MapConfiguration.Vicinity.People.UI.Extensions.peopleSetupUserInterface
 import net.geeksempire.vicinity.android.R
 import net.geeksempire.vicinity.android.databinding.PeopleListViewBinding
 
@@ -92,40 +93,36 @@ class ListOfPeople : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        peopleSetupUserInterface()
+
         peopleListViewBinding.recyclerViewPeople.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
 
         peopleFirestoreCollectionPath?.let { collectionPath ->
 
+            peopleDataProcessLiveData.userInformationProfiles.observe(viewLifecycleOwner, Observer { peopleData ->
+
+                if (peopleData.isNotEmpty()) {
+
+                    val peopleListAdapter = PeopleListAdapter(requireContext())
+
+                    peopleListAdapter.peopleArrayList.clear()
+                    peopleListAdapter.peopleArrayList.addAll(peopleData)
+
+
+                    peopleListViewBinding.recyclerViewPeople.adapter = peopleListAdapter
+
+                } else {
+
+                }
+
+            })
+
             firestoreDatabase
                 .collection(collectionPath)
                 .get().addOnSuccessListener { querySnapshot ->
-                    Log.d(this@ListOfPeople.javaClass.simpleName, querySnapshot.documents.toString())
+                    Log.d(this@ListOfPeople.javaClass.simpleName, querySnapshot.documents.size.toString())
 
                     if (!querySnapshot.isEmpty) {
-
-                        peopleDataProcessLiveData.userInformationProfiles.observe(viewLifecycleOwner, Observer { peopleData ->
-
-                            println(">>>>>>>>>>>>>>>>>>>>> xxxxxxxxxxxxxxxxxx")
-
-                            if (peopleData.isNotEmpty()) {
-
-                                println(">>>>>>>>>>>>>>>>>>>>> 1111111111111111")
-
-                                val peopleListAdapter = PeopleListAdapter(requireContext())
-
-                                peopleListAdapter.peopleArrayList.clear()
-                                peopleListAdapter.peopleArrayList.addAll(peopleData)
-
-
-                                peopleListViewBinding.recyclerViewPeople.adapter = peopleListAdapter
-
-                            } else {
-
-                                println(">>>>>>>>>>>>>>>>>>>>> 0000000000000000")
-
-                            }
-
-                        })
 
                         peopleDataProcessLiveData.preparePeopleData(querySnapshot.documents)
 

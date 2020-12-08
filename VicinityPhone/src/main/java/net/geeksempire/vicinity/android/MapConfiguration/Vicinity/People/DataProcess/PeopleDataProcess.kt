@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 12/7/20 7:41 AM
- * Last modified 12/7/20 7:38 AM
+ * Created by Elias Fazel on 12/8/20 11:28 AM
+ * Last modified 12/8/20 11:28 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -16,10 +16,9 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import net.geeksempire.vicinity.android.AccountManager.DataStructure.PeopleData
 import net.geeksempire.vicinity.android.AccountManager.DataStructure.UserInformationDataStructure
-import net.geeksempire.vicinity.android.Utils.Calendar.formatToCurrentTimeZone
 
 class PeopleDataProcess : ViewModel() {
 
@@ -27,7 +26,7 @@ class PeopleDataProcess : ViewModel() {
         MutableLiveData<ArrayList<PeopleData>>()
     }
 
-    fun preparePeopleData(documentSnapshots: List<DocumentSnapshot>) = CoroutineScope(Dispatchers.IO).async {
+    fun preparePeopleData(documentSnapshots: List<DocumentSnapshot>) = CoroutineScope(Dispatchers.IO).launch {
 
         val documentSnapshotsList = ArrayList<PeopleData>()
 
@@ -41,7 +40,7 @@ class PeopleDataProcess : ViewModel() {
                 userProfileImage = documentSnapshot[UserInformationDataStructure.userProfileImage].toString(),
                 userLatitude = documentSnapshot[UserInformationDataStructure.userLatitude].toString(),
                 userLongitude = documentSnapshot[UserInformationDataStructure.userLongitude].toString(),
-                userLastSignIn = documentSnapshot[UserInformationDataStructure.userLastSignIn].toString().formatToCurrentTimeZone().toString(),
+                userLastSignIn = ""/*documentSnapshot[UserInformationDataStructure.userLastSignIn].toString().formatToCurrentTimeZone().toString()*/,
                 userState = documentSnapshot[UserInformationDataStructure.userLongitude].toString()
             ))
 

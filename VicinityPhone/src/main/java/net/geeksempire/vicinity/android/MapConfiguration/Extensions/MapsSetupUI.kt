@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 12/7/20 7:41 AM
- * Last modified 12/7/20 7:06 AM
+ * Created by Elias Fazel on 12/8/20 11:28 AM
+ * Last modified 12/8/20 11:28 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -46,6 +46,8 @@ fun MapsOfSociety.mapsOfSocietySetupUI() {
     val showPeopleLayoutParams = mapsViewBinding.showPeopleView.layoutParams as ConstraintLayout.LayoutParams
     showPeopleLayoutParams.setMargins(0, 0, 0, showPeopleLayoutParams.bottomMargin + navigationBarHeight(applicationContext))
     mapsViewBinding.showPeopleView.layoutParams = showPeopleLayoutParams
+
+    mapsViewBinding.informationWindowContainer.bringToFront()
 
     clicksSetup()
 

@@ -1,8 +1,8 @@
 /*
  * Copyright © 2020 By Geeks Empire.
  *
- * Created by Elias Fazel on 12/7/20 7:41 AM
- * Last modified 12/7/20 7:12 AM
+ * Created by Elias Fazel on 12/8/20 11:28 AM
+ * Last modified 12/8/20 11:13 AM
  *
  * Licensed Under MIT License.
  * https://opensource.org/licenses/MIT
@@ -33,8 +33,6 @@ class PeopleListAdapter (val context: Context) : RecyclerView.Adapter<PeopleList
     }
 
     override fun onBindViewHolder(peopleListViewHolder: PeopleListViewHolder, position: Int) {
-
-        println(">>>>>>>>>>>>>>>>>> " + position)
 
         peopleListViewHolder.userDisplayName.text = peopleArrayList[position].userDisplayName
         peopleListViewHolder.userEmailAddress.text = peopleArrayList[position].userEmailAddress

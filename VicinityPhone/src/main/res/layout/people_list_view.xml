@@ -2,26 +2,18 @@
 <!--
   ~ Copyright © 2020 By Geeks Empire.
   ~
-  ~ Created by Elias Fazel on 12/7/20 7:41 AM
-  ~ Last modified 12/7/20 6:07 AM
+  ~ Created by Elias Fazel on 12/8/20 11:28 AM
+  ~ Last modified 12/8/20 11:28 AM
   ~
   ~ Licensed Under MIT License.
   ~ https://opensource.org/licenses/MIT
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:apps="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent">
-
-    <net.geeksempire.blurry.effect.view.RealtimeBlurView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        apps:realtimeBlurRadius="13dp"
-        apps:realtimeOverlayColor="@color/default_color_transparent"/>
+    android:background="@color/default_color_transparent_twice">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewPeople"
